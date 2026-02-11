@@ -1,0 +1,109 @@
+// 🌐 海外版本 Link 组件核心样式
+
+.link-attr-color(@theme) {
+  // 状态 - 主题 颜色
+  @theme-default: e("link-color-@{theme}");
+  @theme-hover: e("link-color-@{theme}-hover");
+  @theme-active: e("link-color-@{theme}-active");
+  @theme-disabled: e("link-color-@{theme}-disabled");
+  @theme-focus: e("link-color-@{theme}-focus");
+
+  color: @@theme-default;
+  // active 相关样式
+  &:active {
+    color: @@theme-active;
+  }
+  // hover - underline
+  &.t-link--hover-underline {
+    text-decoration: underline;
+
+    &:hover::after {
+      opacity: 1;
+    }
+
+    &:active::after {
+      opacity: 1;
+      border-color: @@theme-active;
+    }
+  }
+  // hover - color
+  &.t-link--hover-color {
+    &:hover {
+      color: @@theme-hover;
+    }
+    // 下划线场景 hover active时 需要改动颜色
+    &.t-is-underline:hover::after {
+      border-color: @@theme-hover;
+    }
+    &.t-is-underline:active::after {
+      border-color: @@theme-active;
+    }
+
+    &:active {
+      color: @@theme-active;
+    }
+  }
+  // 下划线样式 优先级高于 t-link--hover-underline 需要放在后面 否则opacity 被覆盖 无法显示下划线
+  &.t-is-underline {
+    text-decoration: underline;
+  }
+  // 禁用样式 优先级最高 所以放在最后
+  &.t-is-disabled {
+    cursor: not-allowed;
+    color: @@theme-disabled;
+
+    &:hover,
+    &:active {
+      color: @@theme-disabled;
+    }
+    &.t-is-underline::after {
+      border-color: @@theme-disabled;
+    }
+  }
+}
+// size 相关样式
+.link-attr-size(@size) {
+  @font-size: e("link-font-@{size}");
+  @icon-margin-size: e("link-icon-margin-@{size}");
+
+  font: @@font-size;
+
+  .t-link__prefix-icon {
+    margin-right: @@icon-margin-size;
+  }
+
+  .t-link__suffix-icon {
+    margin-left: @@icon-margin-size;
+  }
+}
+.t-link {
+  display: inline-flex;
+  cursor: pointer;
+  align-items: center;
+  position: relative;
+  text-decoration: none;
+  outline: none;
+  padding: 0;
+  transition: all @anim-duration-base linear;
+
+  // size 相关样式
+  .link-attr-size("default");
+  &.t-size-s {
+    .link-attr-size("s");
+  }
+  &.t-size-l {
+    .link-attr-size("l");
+  }
+
+  &--theme-default {
+    .link-attr-color("default");
+  }
+
+  &--theme-primary {
+    .link-attr-color("primary");
+  }
+
+  &--theme-danger {
+    .link-attr-color("danger");
+  }
+}

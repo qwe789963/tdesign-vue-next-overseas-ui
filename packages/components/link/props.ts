@@ -28,7 +28,7 @@ export default {
   /** 链接悬浮态样式，有 文本颜色变化、添加下划线等 2 种方法 */
   hover: {
     type: String as PropType<TdLinkProps['hover']>,
-    default: 'underline' as TdLinkProps['hover'],
+    default: 'color' as TdLinkProps['hover'],
     validator(val: TdLinkProps['hover']): boolean {
       if (!val) return true;
       return ['color', 'underline'].includes(val);
@@ -61,13 +61,13 @@ export default {
     type: String,
     default: '',
   },
-  /** 组件风格，依次为默认色、品牌色、危险色、警告色、成功色 */
+  /** 组件风格，依次为默认色、品牌色、危险色 */
   theme: {
     type: String as PropType<TdLinkProps['theme']>,
-    default: 'default' as TdLinkProps['theme'],
+    default: 'primary' as TdLinkProps['theme'],
     validator(val: TdLinkProps['theme']): boolean {
       if (!val) return true;
-      return ['default', 'primary', 'danger', 'warning', 'success'].includes(val);
+      return ['default', 'primary', 'danger'].includes(val);
     },
   },
   /** 普通状态是否显示链接下划线 */
