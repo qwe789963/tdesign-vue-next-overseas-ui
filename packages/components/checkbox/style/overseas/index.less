@@ -1,0 +1,161 @@
+// 组件允许单个组件打包，因此默认引入公共基础样式
+
+@import "../../../../../../overseas/style/base.less";
+@import "./_var.less";
+@import "./_mixin.less";
+@import "../../../../../../overseas/style/mixins/_layout.less";
+@import "../../../../../../overseas/style/mixins/_reset.less";
+
+// <name> 替换为组件名
+.t-checkbox-group {
+  .reset;
+
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: @checkbox-group-gap;
+}
+
+.t-checkbox {
+  .reset;
+  padding-left: 6px;
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  color: @checkbox-label-color;
+
+  & + .t-checkbox {
+    margin-left: @checkbox-margin;
+  }
+
+  &__former {
+    .input-visually-hidden();
+  }
+
+  &__input {
+    position: relative;
+    display: inline-block;
+    width: @checkbox-size;
+    height: @checkbox-size;
+    vertical-align: middle;
+    border: 1px solid @checkbox-border-color;
+    border-radius: @checkbox-border-radius;
+    background-color: @checkbox-input-color;
+    box-sizing: border-box;
+    .focusBox {
+      box-sizing: border-box;
+      position: absolute;
+      display: none;
+      width: @checkbox-size + 10px;
+      height: @checkbox-size + 10px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 6px;
+      border: 2px solid @checkbox-input-color-checked;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      opacity: 0;
+      box-sizing: border-box;
+    }
+  }
+
+  &__label {
+    display: inline-block;
+    margin-left: @checkbox-input-label-spacer;
+    vertical-align: middle;
+    font: @checkbox-font;
+  }
+
+  &:hover {
+
+    .t-checkbox__input {
+      border-color: @checkbox-border-color-hover;
+      transition: border-color @anim-duration-base linear;
+    }
+  }
+
+  &.@{prefix}-is-checked {
+
+    .t-checkbox__input {
+      border-color: @checkbox-border-color-checked;
+      background-color: @checkbox-input-color-checked;
+      transition: background-color @anim-duration-base @anim-time-fn-ease-in;
+      &.normalClass {
+        .focusBox { 
+          display: none;
+        }
+      }
+      &.focusClass {
+        .focusBox { 
+          display: inline-block;
+        }
+      }
+      &::after {
+        opacity: 1;
+        top: ((@checkbox-size) / 2 - 2px);
+        left: ((@checkbox-size) / 2 - 5px);
+        width: @checkbox-check-width;
+        height: @checkbox-check-height;
+        border: 2px solid @checkbox-check-color;
+        border-radius: 0 0 1px;
+        border-top: 0;
+        border-left: 0;
+        transform: rotate(45deg) scale(1) translate(-50%, -50%);
+        background: transparent;
+      }
+    }
+  }
+
+  &.@{prefix}-is-indeterminate {
+
+    .t-checkbox__input {
+      border-color: @checkbox-input-color-indeterminate;
+      background-color: @checkbox-input-color-indeterminate;
+      transition: background-color @anim-duration-base @anim-time-fn-ease-in;
+
+      &::after {
+        opacity: 1;
+        width: @checkbox-indeterminate-width;
+        height: @checkbox-indeterminate-height;
+        right: 0;
+        top: ((@checkbox-size - 2 - @checkbox-indeterminate-height) * .5);
+        border: unset;
+        transform: scale(.5);
+        background-color: @checkbox-indeterminate-color;
+      }
+    }
+  }
+
+  &.@{prefix}-is-disabled {
+    cursor: not-allowed;
+
+    .t-checkbox__label {
+      color: @checkbox-check-color-disabled;
+    }
+
+    .t-checkbox__input {
+      background-color: @checkbox-input-color-disabled;
+      border: 1px solid #CED3D9;
+    }
+
+    &.@{prefix}-is-checked {
+
+      .t-checkbox__input {
+        border-color: #A1AAB3;
+        background-color: #A1AAB3;
+      }
+    }
+
+    &.@{prefix}-is-indeterminate {
+
+      .t-checkbox__input {
+        border-color: #A1AAB3;
+        background-color: #A1AAB3;
+      }
+    }
+  }
+}

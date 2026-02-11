@@ -14,6 +14,7 @@ import {
 import { CheckboxGroupInjectionKey } from './constants';
 import useCheckboxLazyLoad from './hooks/useCheckboxLazyLoad';
 import useKeyboardEvent from './hooks/useKeyboardEvent';
+import { useFocusHandler } from './hooks/use-focus-handler';
 
 export default defineComponent({
   name: 'TCheckbox',
@@ -142,15 +143,27 @@ export default defineComponent({
     const { showCheckbox } = useCheckboxLazyLoad(labelRef, lazyLoad);
     const { onCheckboxFocus, onCheckboxBlur } = useKeyboardEvent(handleChange);
 
+    // 🌐 海外版本 Focus 视觉反馈 (复刻 Vue2 实现)
+    const { inputRef: focusInputRef, handleFocus, handleBlur } = useFocusHandler();
+
     return () => {
       const titleAttr = isString(props.title) && props.title ? props.title : null;
       return (
         <label
-          ref={labelRef}
+          ref={(el) => {
+            labelRef.value = el as HTMLElement;
+            focusInputRef.value = el as HTMLLabelElement;
+          }}
           class={labelClasses.value}
           tabindex={isDisabled.value ? undefined : '0'}
-          onFocus={onCheckboxFocus}
-          onBlur={onCheckboxBlur}
+          onFocus={(e) => {
+            onCheckboxFocus(e);
+            handleFocus();
+          }}
+          onBlur={(e) => {
+            onCheckboxBlur(e);
+            handleBlur();
+          }}
           onClick={handleLabelClick}
           title={titleAttr}
         >
@@ -175,7 +188,9 @@ export default defineComponent({
                   class={`${COMPONENT_NAME.value}__input`}
                   key="input-span"
                   onClick={props.stopLabelTrigger && handleChange} // stopLabelTrigger 情况下，仍需保证真正的 input 触发 change
-                />,
+                >
+                  <span class="focusBox"></span>
+                </span>,
                 <span class={`${COMPONENT_NAME.value}__label`} key="label">
                   {renderContent('default', 'label')}
                 </span>,
