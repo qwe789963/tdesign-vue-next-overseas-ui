@@ -1,0 +1,33 @@
+// Breadcrumb 面包屑组件 Mixin
+// 与 Vue2 版本保持一致
+
+.breadcrumb() {
+  font: @breadcrumb-font-base;
+  display: flex;
+  align-items: center;
+}
+
+.v-inlineblock() {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.t-overflow() {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.color-change() {
+  animation: @anim-duration-base linear changeColor;
+}
+
+@keyframes changeColor {
+  from {
+    color: @brand-color-hover;
+  }
+
+  to {
+    color: @brand-color-active;
+  }
+}
