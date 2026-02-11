@@ -54,7 +54,7 @@ export interface TdButtonProps {
   loadingProps?: Partial<LoadingProps>;
   /**
    * 按钮形状，有 4 种：长方形、正方形、圆角长方形、圆形
-   * @default rectangle
+   * @default round
    */
   shape?: 'rectangle' | 'square' | 'round' | 'circle';
   /**
@@ -80,10 +80,10 @@ export interface TdButtonProps {
    */
   type?: 'submit' | 'reset' | 'button';
   /**
-   * 按钮形式，基础、线框、虚线、文字
+   * 按钮形式，基础、线框、文字
    * @default base
    */
-  variant?: 'base' | 'outline' | 'dashed' | 'text';
+  variant?: 'base' | 'outline' | 'text';
   /**
    * 点击时触发
    */

@@ -48,7 +48,7 @@ export default {
   /** 按钮形状，有 4 种：长方形、正方形、圆角长方形、圆形 */
   shape: {
     type: String as PropType<TdButtonProps['shape']>,
-    default: 'rectangle' as TdButtonProps['shape'],
+    default: 'round' as TdButtonProps['shape'],
     validator(val: TdButtonProps['shape']): boolean {
       if (!val) return true;
       return ['rectangle', 'square', 'round', 'circle'].includes(val);
@@ -92,13 +92,13 @@ export default {
       return ['submit', 'reset', 'button'].includes(val);
     },
   },
-  /** 按钮形式，基础、线框、虚线、文字 */
+  /** 按钮形式，基础、线框、文字 */
   variant: {
     type: String as PropType<TdButtonProps['variant']>,
     default: 'base' as TdButtonProps['variant'],
     validator(val: TdButtonProps['variant']): boolean {
       if (!val) return true;
-      return ['base', 'outline', 'dashed', 'text'].includes(val);
+      return ['base', 'outline', 'text'].includes(val);
     },
   },
   /** 点击时触发 */

@@ -1,6 +1,10 @@
 <template>
   <t-space>
-    <t-button disabled>填充按钮</t-button>
-    <t-button loading>加载中</t-button>
+    <t-button disabled>Button</t-button>
+    <t-button theme="default" variant="outline" disabled>Button</t-button>
+    <t-button theme="default" variant="text" shape="rectangle" disabled>Button</t-button>
+    <t-button theme="danger" disabled>Button</t-button>
+    <t-button theme="danger" disabled variant="outline">Button</t-button>
+    <t-button loading>Loading</t-button>
   </t-space>
 </template>
