@@ -15,15 +15,5 @@
       <t-button variant="outline" theme="danger">描边按钮</t-button>
       <t-button variant="text" theme="danger">文字按钮</t-button>
     </t-space>
-    <t-space>
-      <t-button theme="warning">填充按钮</t-button>
-      <t-button variant="outline" theme="warning">描边按钮</t-button>
-      <t-button variant="text" theme="warning">文字按钮</t-button>
-    </t-space>
-    <t-space>
-      <t-button theme="success">填充按钮</t-button>
-      <t-button variant="outline" theme="success">描边按钮</t-button>
-      <t-button variant="text" theme="success">文字按钮</t-button>
-    </t-space>
   </t-space>
 </template>
