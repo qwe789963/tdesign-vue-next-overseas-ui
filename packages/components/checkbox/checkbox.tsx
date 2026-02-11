@@ -143,8 +143,8 @@ export default defineComponent({
     const { showCheckbox } = useCheckboxLazyLoad(labelRef, lazyLoad);
     const { onCheckboxFocus, onCheckboxBlur } = useKeyboardEvent(handleChange);
 
-    // 🌐 海外版本 Focus 视觉反馈 (复刻 Vue2 实现)
-    const { focusClasses, handleFocus, handleBlur } = useFocusHandler();
+    // 🌐 海外版本 Focus 视觉反馈 (增强 Vue2 实现)
+    const { focusClasses, handleFocus, handleBlur, handleMouseDown } = useFocusHandler();
 
     return () => {
       const titleAttr = isString(props.title) && props.title ? props.title : null;
@@ -153,6 +153,7 @@ export default defineComponent({
           ref={labelRef}
           class={labelClasses.value}
           tabindex={isDisabled.value ? undefined : '0'}
+          onMousedown={handleMouseDown}
           onFocus={(e) => {
             onCheckboxFocus(e);
             handleFocus();
