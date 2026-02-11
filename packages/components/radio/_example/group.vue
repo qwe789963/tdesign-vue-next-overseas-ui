@@ -1,25 +1,13 @@
 <template>
   <t-space direction="vertical">
-    <t-radio-group v-model="value" allow-uncheck name="city" :options="options" @change="onChange"></t-radio-group>
+    <t-radio-group v-model="value" name="city" :options="options" allow-uncheck @change="onChange"></t-radio-group>
 
-    <t-radio-group default-value="选项一" name="city" :options="itemOptions" @change="onChange"></t-radio-group>
-
-    <t-radio-group default-value="1" @change="onChange">
+    <t-radio-group v-model="value2" @change="onChange2">
       <t-radio value="1">选项一</t-radio>
       <t-radio value="2">选项二</t-radio>
       <t-radio value="3">选项三</t-radio>
       <t-radio value="4" disabled>选项四</t-radio>
     </t-radio-group>
-
-    <h5>可取消选中单选框组</h5>
-    <t-radio-group default-value="1" @change="onChange">
-      <t-radio allow-uncheck value="1">可取消选中项一</t-radio>
-      <t-radio allow-uncheck value="2">可取消选中项二</t-radio>
-      <t-radio allow-uncheck value="3">可取消选中项三</t-radio>
-      <t-radio value="4">不可取消选中项</t-radio>
-    </t-radio-group>
-
-    <t-radio-group default-value="2" allow-uncheck :options="options" theme="button" @change="onChange"></t-radio-group>
   </t-space>
 </template>
 
@@ -30,7 +18,6 @@ const options = [
   {
     value: '1',
     label: '选项一',
-    disabled: true,
   },
   {
     value: '2',
@@ -48,8 +35,12 @@ const options = [
 const itemOptions = ['选项一', '选项二', '选项三', '选项四'];
 
 const value = ref('');
+const value2 = ref('');
 const onChange = (checkedValues) => {
-  console.log('checkedValues:', value.value, checkedValues);
+  value.value = checkedValues;
+};
+const onChange2 = (checkedValues) => {
+  value2.value = checkedValues;
 };
 </script>
 

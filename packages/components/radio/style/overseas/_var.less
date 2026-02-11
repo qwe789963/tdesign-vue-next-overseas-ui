@@ -1,0 +1,99 @@
+/**
+ * Radio 海外版本 CSS 变量定义
+ * 
+ * @description 完全对齐 Vue2 版本的实现，包括 Radio 和 Radio Button
+ * @author @v_genyin
+ * @date 2026-02-10
+ */
+
+// 1. 导入 TDesign 基础变量
+@import '../../../common/style/web/_variables.less';
+
+// 2. 组件类名前缀
+@radio-cls: ~"@{prefix}-radio";
+@radio-button--cls: ~"@{prefix}-radio-button";
+
+// ============================================
+// Radio 基础变量
+// ============================================
+
+// 尺寸
+@radio-size: 18px;
+@radio-dot-size: (@radio-size / 2);  // 9px
+@radio-input-label-spacer: 12px;
+@radio-margin-right: @comp-margin-xxl;
+
+// 颜色
+@radio-border-color: @border-level-2-color;
+@radio-input-color: @bg-color-container;
+@radio-input-color-disabled: #F0F1F2;
+@radio-dot-color: @brand-color-active;
+@radio-dot-color-disabled-checked: #CED3D9;
+@radio-label-color: @text-color-primary;
+@radio-label-color-disabled: @text-color-disabled;
+
+// 边框和动画
+@radio-input-border: 1px solid @radio-border-color;
+@radio-input-transition: border @anim-duration-base @anim-time-fn-ease-out;
+@radio-opacity-transparent: 0;
+@radio-border-radius-circle: @border-radius-circle;
+
+// ============================================
+// Radio Button 变量
+// ============================================
+
+// 颜色
+@radio-button-border-color-default: #7b858f;  // 与 Radio 一致
+@radio-button-border-color-hover: @brand-color-hover;
+@radio-button-color-outline-hover: @brand-color-hover;
+@radio-button-border-color-checked: @brand-color;
+@radio-button-color-outline-checked: @brand-color;
+@radio-button-background-color-disabled: @bg-color-component-disabled;
+@radio-button-color-disabled: @text-color-disabled;
+@radio-button-background-color-outline-disabled-checked: @bg-color-specialcomponent;
+@radio-button-color-disabled-checked: @text-color-disabled;
+
+// Filled 类型颜色
+@radio-button-group-background-color-filled: @bg-color-component;
+@radio-button-color-filled: @text-color-secondary;
+@radio-button-color-filled-hover: @text-color-primary;
+@radio-button-color-default-filled-checked: @text-color-primary;
+@radio-button-color-primary-filled-checked: @text-color-anti;
+@radio-button-color-default-filled-disabled-checked: @text-color-disabled;
+@radio-button-background-color-default-filled-checked: @bg-color-container-select;
+@radio-button-background-color-primary-filled-checked: @brand-color;
+@radio-button-background-color-default-filled-disabled-checked: @bg-color-component-disabled;
+@radio-button-background-color-primary-filled-disabled-checked: @brand-color-disabled;
+
+// 尺寸
+@radio-button-border-radius: @border-radius-small;
+@radio-outline-height-small: @comp-size-xs;
+@radio-outline-height-medium: @comp-size-m;
+@radio-outline-height-large: @comp-size-xl;
+@radio-height-small: calc(@comp-size-xs - @comp-paddingTB-xs);
+@radio-height-medium: calc(@comp-size-m - @comp-paddingTB-xs);
+@radio-height-large: calc(@comp-size-xl - @comp-paddingTB-xs);
+@radio-button-before-width: 1px;
+
+// 字号
+@radio-button-font-small: @font-body-small;
+@radio-button-font-medium: @font-body-medium;
+@radio-button-font-large: @font-body-large;
+
+// Padding
+@radio-button-padding-small: 0px @comp-paddingLR-s;
+@radio-button-padding-medium: @comp-paddingTB-xs @comp-paddingLR-l;
+@radio-button-padding-large: @comp-paddingTB-s @comp-paddingLR-xl;
+@radio-button-before-left: 0px;
+@radio-button-before-top: 50%;
+@radio-button-border: 1px solid;
+
+// Radio Group
+@radio-group-padding: @comp-paddingTB-xxs @comp-paddingLR-xxs;
+@radio-group-filled-bg-block-left: 2px;
+@radio-group-filled-bg-block-top: 2px;
+
+// 动画 & 过渡
+@radio-group-transition: all @anim-duration-base @anim-time-fn-easing;
+@radio-button-before-transform: translateY(-50%);
+@radio-button-transition: color @anim-duration-base @anim-time-fn-ease-out;

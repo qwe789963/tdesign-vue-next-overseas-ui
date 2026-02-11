@@ -49,6 +49,7 @@
     "@babel/preset-env": "catalog:bundle",
     "@commitlint/cli": "catalog:lint",
     "@commitlint/config-conventional": "catalog:lint",
+    "@tencent/s2-spec-kit-core": "^1.1.4",
     "@types/node": "catalog:types",
     "@typescript-eslint/eslint-plugin": "catalog:lint",
     "@typescript-eslint/parser": "catalog:lint",

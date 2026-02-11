@@ -1,0 +1,459 @@
+/**
+ * Radio 海外版本样式
+ * 
+ * @description 完全对齐 Vue2 版本的实现，包括 Radio 和 Radio Button 的所有状态
+ * @author @v_genyin
+ * @date 2026-02-10
+ */
+
+@import './_var.less';
+
+// ============================================
+// Radio 基础样式（完全独立实现，不依赖 TDesign 官方样式）
+// ============================================
+
+.@{radio-cls} {
+  /**
+   * Radio 容器
+   */
+  padding-left: 6px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+
+  /**
+   * 原生 input 元素（隐藏）
+   */
+  &__former {
+    position: absolute;
+    width: 0;
+    height: 0;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    opacity: 0;
+  }
+
+  /**
+   * 自定义样式容器(外圈)
+   */
+  &__input {
+    position: relative;
+    display: inline-block;
+    width: @radio-size;
+    height: @radio-size;
+    vertical-align: middle;
+    border: @radio-input-border;
+    border-radius: @radio-border-radius-circle;
+    background-color: @radio-input-color;
+    box-sizing: border-box;
+    transition: @radio-input-transition;
+
+    /**
+     * Focus 外圈元素（与 Vue2 完全一致）
+     */
+    .focusBox {
+      box-sizing: border-box;
+      position: absolute;
+      display: none;
+      width: @radio-size + 10px;
+      height: @radio-size + 10px;
+      top: -6px;
+      left: -6px;
+      border-radius: @radio-border-radius-circle;
+      border: 2px solid @brand-color;
+      pointer-events: none;
+    }
+
+    /**
+     * 内圈圆环（::after 伪元素）
+     */
+    &::after {
+      content: '';
+      box-sizing: border-box;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: @radio-size;
+      height: @radio-size;
+      margin-top: -@radio-dot-size;
+      margin-left: -@radio-dot-size;
+      transform: none;
+      background-color: #ffffff;
+      border: 5px solid @brand-color;
+      opacity: @radio-opacity-transparent;
+      border-radius: @radio-border-radius-circle;
+      transition: all @anim-duration-base @anim-time-fn-ease-out;
+    }
+  }
+
+  /**
+   * 标签文本
+   */
+  &__label {
+    display: inline-block;
+    margin-left: @radio-input-label-spacer;
+    color: @radio-label-color;
+    vertical-align: middle;
+    font-size: 14px;
+    line-height: 22px;
+    white-space: nowrap;
+    user-select: none;
+  }
+}
+
+// ============================================
+// Radio Hover 态样式
+// ============================================
+
+.@{radio-cls}:hover:not(.@{prefix}-is-disabled) {
+  .@{radio-cls}__input {
+    border-color: @brand-color;
+  }
+}
+
+// ============================================
+// Radio 选中态样式
+// ============================================
+
+.@{radio-cls}.@{prefix}-is-checked {
+  .focusInput {
+    .focusBox {
+      display: inline-block;
+    }
+  }
+
+  .normalInput {
+    .focusBox {
+      display: none;
+    }
+  }
+
+  .@{radio-cls}__input {
+    border-color: @brand-color;
+
+    &::after {
+      opacity: 1;
+    }
+  }
+}
+
+// ============================================
+// Radio 禁用态样式
+// ============================================
+
+.@{radio-cls}.@{prefix}-is-disabled {
+  cursor: not-allowed;
+
+  .@{radio-cls}__label {
+    color: @radio-label-color-disabled;
+    cursor: not-allowed;
+  }
+
+  .@{radio-cls}__input {
+    background-color: @radio-input-color-disabled;
+    border-color: @radio-dot-color-disabled-checked;
+    cursor: not-allowed;
+  }
+}
+
+.@{radio-cls}.@{prefix}-is-disabled.@{prefix}-is-checked {
+  .@{radio-cls}__input {
+    &::after {
+      background-color: #ffffff;
+      border: 5px solid @text-color-disabled;
+    }
+  }
+}
+
+// ============================================
+// Radio Group 基础样式
+// ============================================
+
+.@{radio-cls}-group {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-radius: @border-radius-default;
+
+  .@{radio-cls} {
+    margin-right: @radio-margin-right;
+  }
+}
+
+// ============================================
+// Radio Button 基础样式（Outline 类型）
+// ============================================
+
+.@{radio-button--cls} {
+  cursor: pointer;
+  position: relative;
+  border: @radio-button-border;
+  border-color: @radio-button-border-color-default;
+  border-right: 0;
+  display: inline-flex;
+  align-items: center;
+  transition: @radio-button-transition;
+  color: @radio-label-color;
+  white-space: nowrap;
+  box-sizing: border-box;
+
+  &:first-child {
+    border-radius: @radio-button-border-radius 0 0 @radio-button-border-radius;
+  }
+
+  &:last-child {
+    border-right: @radio-button-border;
+    border-right-color: @radio-button-border-color-default;
+    border-radius: 0 @radio-button-border-radius @radio-button-border-radius 0;
+  }
+
+  &__former {
+    opacity: @radio-opacity-transparent;
+    height: 0;
+    width: 0;
+  }
+
+  &:hover:not(.@{prefix}-is-disabled) {
+    color: @radio-button-color-outline-checked;
+  }
+
+  &.@{prefix}-is-checked {
+    border-right: @radio-button-border;
+    border-color: @radio-button-border-color-checked;
+    transition: border-color @anim-duration-base @anim-time-fn-ease-out;
+
+    + .@{radio-button--cls} {
+      border-left: 0;
+    }
+  }
+
+  &.@{prefix}-is-disabled {
+    cursor: not-allowed;
+    color: @radio-button-color-disabled;
+    background-color: @radio-button-background-color-disabled;
+
+    &:hover {
+      border-color: @radio-button-border-color-default;
+      color: @radio-button-color-disabled;
+    }
+
+    &.@{prefix}-is-checked {
+      color: @radio-button-color-disabled-checked;
+    }
+  }
+}
+
+// ============================================
+// Radio Group Outline 类型样式
+// ============================================
+
+.@{radio-cls}-group.@{radio-cls}-group__outline {
+  min-height: 30px;
+  flex-wrap: wrap;
+  row-gap: @comp-margin-xs;
+
+  .@{radio-button--cls} {
+    &:first-child {
+      border-radius: @border-radius-default 0 0 @border-radius-default;
+    }
+
+    &:last-child {
+      border-radius: 0 @border-radius-default @border-radius-default 0;
+    }
+
+    &.@{prefix}-is-checked {
+      color: @radio-button-color-outline-checked;
+    }
+
+    &.@{prefix}-is-disabled {
+      color: @radio-button-color-disabled; // 对齐 Vue2（未选中状态）
+      
+      &.@{prefix}-is-checked {
+        color: @brand-color-disabled;
+        border-color: @brand-color-disabled;
+        background-color: @radio-button-background-color-outline-disabled-checked;
+      }
+    }
+  }
+}
+
+// ============================================
+// Radio Group Filled 类型样式（Default）
+// ============================================
+
+.@{radio-cls}-group.@{radio-cls}-group--filled {
+  border-color: @radio-button-group-background-color-filled;
+  padding: @radio-group-padding;
+  border-radius: @border-radius-default;
+  background-color: @radio-button-group-background-color-filled;
+  position: relative;
+
+  .@{radio-cls}-group__bg-block {
+    position: absolute;
+    left: @radio-group-filled-bg-block-left;
+    top: @radio-group-filled-bg-block-top;
+    width: 0;
+    height: calc(100% - 4px);
+    background-color: @radio-button-background-color-default-filled-checked;
+    transition: @radio-group-transition;
+    border-radius: @radio-button-border-radius;
+  }
+
+  .@{radio-button--cls} {
+    color: @radio-button-color-filled;
+    border: 0;
+    background-color: transparent;
+
+    &:hover:not(.@{prefix}-is-disabled) {
+      color: @radio-button-color-filled-hover;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: @radio-button-before-left;
+      top: @radio-button-before-top;
+      transform: @radio-button-before-transform;
+      width: @radio-button-before-width;
+      height: calc(100% - 16px);
+      background-color: @component-border;
+      transition: opacity @anim-duration-base @anim-time-fn-ease-out;
+    }
+
+    &:first-child {
+      &::before {
+        opacity: @radio-opacity-transparent;
+      }
+    }
+
+    &.@{prefix}-is-checked {
+      position: relative;
+      color: @radio-button-color-default-filled-checked;
+      z-index: 1;
+      border: 0;
+      transition: color @anim-duration-base linear;
+
+      &::before {
+        opacity: @radio-opacity-transparent;
+      }
+
+      & + label {
+        &::before {
+          opacity: @radio-opacity-transparent;
+        }
+      }
+    }
+
+    &.@{prefix}-is-disabled {
+      color: @radio-button-color-disabled; // 对齐 Vue2（未选中状态）
+      background-color: transparent;
+
+      &.@{prefix}-is-checked {
+        color: @radio-button-color-default-filled-disabled-checked;
+      }
+
+      &.@{prefix}-is-checked ~ .@{radio-cls}-group__bg-block {
+        background-color: @radio-button-background-color-default-filled-disabled-checked;
+      }
+    }
+  }
+}
+
+// ============================================
+// Radio Group Filled 类型样式（Primary）
+// ============================================
+
+.@{radio-cls}-group.@{radio-cls}-group--primary-filled {
+  .@{radio-cls}-group__bg-block {
+    background-color: @radio-button-background-color-primary-filled-checked;
+  }
+
+  .@{radio-button--cls} {
+    &.@{prefix}-is-checked {
+      color: @radio-button-color-primary-filled-checked;
+    }
+
+    &.@{prefix}-is-disabled {
+      color: @radio-button-color-disabled; // 对齐 Vue2（未选中状态）
+      
+      &.@{prefix}-is-checked {
+        color: @radio-button-color-primary-filled-checked;
+      }
+
+      &.@{prefix}-is-checked ~ .@{radio-cls}-group__bg-block {
+        background-color: @radio-button-background-color-primary-filled-disabled-checked;
+      }
+    }
+  }
+}
+
+// ============================================
+// Radio Group 尺寸样式（Outline 类型）
+// ============================================
+
+.@{radio-cls}-group.@{radio-cls}-group__outline {
+  &.@{prefix}-size-s {
+    .@{radio-button--cls} {
+      height: @radio-outline-height-small;
+    }
+  }
+
+  &.@{prefix}-size-m {
+    .@{radio-button--cls} {
+      height: @radio-outline-height-medium;
+    }
+  }
+
+  &.@{prefix}-size-l {
+    .@{radio-button--cls} {
+      height: @radio-outline-height-large;
+    }
+  }
+}
+
+// ============================================
+// Radio Group 尺寸样式（通用）
+// ============================================
+
+.@{radio-cls}-group {
+  &.@{prefix}-size-s {
+    .@{radio-button--cls} {
+      height: @radio-height-small;
+      padding: @radio-button-padding-small;
+      font: @radio-button-font-small;
+
+      &::before {
+        height: calc(100% - 16px);
+      }
+    }
+  }
+
+  &.@{prefix}-size-m {
+    .@{radio-button--cls} {
+      height: @radio-height-medium;
+      padding: @radio-button-padding-medium;
+      font: @radio-button-font-medium;
+
+      &::before {
+        height: calc(100% - 20px);
+      }
+    }
+  }
+
+  &.@{prefix}-size-l {
+    .@{radio-button--cls} {
+      height: @radio-height-large;
+      padding: @radio-button-padding-large;
+      font: @radio-button-font-large;
+
+      &::before {
+        height: calc(100% - 24px);
+      }
+    }
+  }
+}

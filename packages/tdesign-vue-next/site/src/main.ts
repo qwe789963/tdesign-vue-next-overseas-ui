@@ -18,7 +18,8 @@ import '@tdesign/site-components/lib/styles/style.css';
 import '@tdesign/site-components/lib/styles/prism-theme.less';
 import '@tdesign/site-components/lib/styles/prism-theme-dark.less';
 
-import '@tdesign/theme-generator';
+// 主题生成器挂件（海外版本不需要，已禁用）
+// import '@tdesign/theme-generator';
 // @ts-ignore
 import { registerLocaleChange } from '@tdesign/site-components';
 
