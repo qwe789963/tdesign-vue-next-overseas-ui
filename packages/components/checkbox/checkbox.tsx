@@ -144,16 +144,13 @@ export default defineComponent({
     const { onCheckboxFocus, onCheckboxBlur } = useKeyboardEvent(handleChange);
 
     // 🌐 海外版本 Focus 视觉反馈 (复刻 Vue2 实现)
-    const { inputRef: focusInputRef, handleFocus, handleBlur } = useFocusHandler();
+    const { focusClasses, handleFocus, handleBlur } = useFocusHandler();
 
     return () => {
       const titleAttr = isString(props.title) && props.title ? props.title : null;
       return (
         <label
-          ref={(el) => {
-            labelRef.value = el as HTMLElement;
-            focusInputRef.value = el as HTMLLabelElement;
-          }}
+          ref={labelRef}
           class={labelClasses.value}
           tabindex={isDisabled.value ? undefined : '0'}
           onFocus={(e) => {
@@ -181,11 +178,13 @@ export default defineComponent({
                   value={props.value ? props.value : undefined}
                   checked={tChecked.value}
                   onChange={handleChange}
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
                   onClick={(e: MouseEvent) => e.stopPropagation()}
                   key="input"
                 ></input>,
                 <span
-                  class={`${COMPONENT_NAME.value}__input`}
+                  class={[`${COMPONENT_NAME.value}__input`, focusClasses.value]}
                   key="input-span"
                   onClick={props.stopLabelTrigger && handleChange} // stopLabelTrigger 情况下，仍需保证真正的 input 触发 change
                 >
