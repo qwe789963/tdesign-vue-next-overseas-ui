@@ -1,0 +1,364 @@
+// 组件允许单个组件打包，因此默认引入公共基础样式
+
+@import '../../../../overseas/style/base.less';
+@import './_var.less';
+@import './_mixin.less';
+@import '../../../../overseas/style/mixins/_text.less';
+@import '../../../../overseas/style/mixins/_reset.less';
+
+.t-input {
+  .reset;
+
+  display: flex;
+  align-items: baseline;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  height: @input-height-default;
+  // padding: 0 @comp-paddingLR-s !important;
+  .input-base();
+
+  &--focused {
+    // border-color: @input-border-color-default-focus;
+    border-color: @brand-color !important;  // 覆盖 input-base() 引入的hover效果
+    border-width: 2px;
+    // box-shadow: @input-box-shadow-focus;
+    z-index: 1;
+  }
+
+  :focus-visible {
+    outline: none;
+  }
+
+  // 真正的输入框
+  &__inner {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0;
+    max-width: 100%;
+    min-width: 0;
+    color: @input-text-color-default;
+    font: inherit;
+    background-color: transparent;
+    box-sizing: border-box;
+    .text-ellipsis();
+
+    &::placeholder {
+      color: @input-placeholder-color;
+    }
+
+    &:placeholder-shown {
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+
+    // 隐藏Edge浏览器默认的密码框样式
+    &[type='password']::-ms-reveal {
+      display: none;
+    }
+
+    &[type='search']::-webkit-search-decoration,
+    &[type='search']::-webkit-search-cancel-button,
+    &[type='search']::-webkit-search-results-button,
+    &[type='search']::-webkit-search-results-decoration {
+      appearance: none;
+    }
+  }
+  // 底部的额外消息
+  &__extra {
+    font: @input-extra-font;
+    color: @input-extra-color-default;
+  }
+
+  // 输入框后面的状态图标
+  &__status {
+    position: absolute;
+    right: @input-status-position-right;
+    top: 0;
+  }
+
+  &.t-input--suffix > span.t-input__clear {
+    opacity: 0;
+    visibility: hidden;
+    transition: @input-inner-transition;
+  }
+
+  &.t-input--suffix:hover > span.t-input__clear {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  // 输入框状态
+  .input-status(success);
+  .input-status(warning);
+  .input-status(error);
+  .input-readonly();
+  .input-disabled();
+
+  // 输入框的前置、后置图标
+  .input-fix-position(prefix);
+  .input-fix-position(suffix);
+
+  .t-input__suffix-clear {
+    cursor: pointer;
+  }
+
+  // 输入框大小
+  &.t-size-l {
+    height: @input-height-l;
+    font: @input-font;
+    // padding: @input-padding-l;
+  }
+
+  &.t-size-s {
+    height: @input-height-s;
+    font: @input-font-s;
+  }
+
+  .t-input__prefix,
+  .t-input__suffix {
+    > .t-icon {
+      font-size: @input-inner-icon-font-size;
+    }
+  }
+
+  .t-input__prefix {
+    > .t-icon {
+      font-size: @icon-default;
+      color: @input-inner-prefix-icon-color;
+    }
+
+    &:not(:empty) {
+      margin-right: @comp-margin-s;
+    }
+  }
+
+  .t-input__suffix {
+    > .t-icon {
+      color: @input-inner-suffix-icon-color;
+      transition: all @anim-duration-base linear;
+      cursor: pointer;
+
+      &:hover {
+        color: @input-inner-suffix-icon-color-hover;
+        transition: all @anim-duration-base linear;
+      }
+    }
+
+    &:not(:empty) {
+      margin-left: @comp-margin-s;
+      text-wrap: nowrap;
+    }
+  }
+
+  // 输入框被聚焦
+  &.t-is-focused {
+    .t-input__prefix {
+      > .t-icon {
+        color: @input-border-color-default-focus;
+      }
+    }
+    .t-input__suffix {
+      // 只有time-picker、date-picker特殊使用的suffix icon需要改变颜色 若后续有新增组件继续扩展这个枚举
+      > .t-icon-time,
+      .t-icon-calendar {
+        color: @input-border-color-default-focus;
+      }
+    }
+  }
+}
+
+.t-input-group {
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+
+  .t-input__wrap {
+    border-radius: 0;
+
+    &:first-child {
+      border-radius: @input-border-radius 0 0 @input-border-radius;
+    }
+
+    &:last-child {
+      border-radius: 0 @border-radius-default @border-radius-default 0;
+    }
+  }
+
+  .t-button,
+  .t-select {
+    border-radius: 0;
+
+    &:not(:first-child) {
+      margin-left: @input-group-first-child-margin-left;
+    }
+  }
+  .t-input__wrap {
+    &:not(:first-child) {
+      .t-input {
+        margin-left: @input-group-first-child-margin-left;
+      }
+    }
+
+    &:first-child {
+      .t-input {
+        border-radius: @input-border-radius 0 0 @input-border-radius;
+      }
+    }
+
+    &:last-child {
+      .t-input {
+        border-radius: 0 @input-border-radius @input-border-radius 0;
+      }
+    }
+  }
+
+  .t-button,
+  .t-select {
+    &:first-child {
+      border-radius: @input-border-radius 0 0 @input-border-radius;
+    }
+
+    &:last-child {
+      border-radius: 0 @input-border-radius @input-border-radius 0;
+    }
+  }
+
+  &--separate {
+    .t-input__wrap + .t-input__wrap {
+      margin-left: @input-margin-distance-default;
+    }
+
+    .t-button,
+    .t-select {
+      border-radius: @input-border-radius;
+
+      &:first-child {
+        border-radius: @input-border-radius 0 0 @input-border-radius;
+      }
+
+      &:last-child {
+        border-radius: 0 @input-border-radius @input-border-radius 0;
+      }
+    }
+
+    .t-input__wrap {
+      .t-input {
+        border-radius: @input-border-radius;
+
+        &:first-child {
+          border-radius: @input-border-radius;
+        }
+
+        &:last-child {
+          border-radius: @input-border-radius;
+        }
+      }
+    }
+  }
+
+  .t-input__inner,
+  .t-button,
+  .t-select {
+    position: relative;
+    z-index: 0;
+
+    &:hover,
+    &:focus,
+    &:active {
+      z-index: 1;
+    }
+  }
+}
+
+.t-input__wrap {
+  width: 100%;
+  position: relative;
+}
+
+.t-input__tips {
+  height: auto;
+  min-height: @input-tips-min-height;
+  font: @input-tips-font;
+  position: absolute;
+  top: calc(@input-height-default + 4px); // 默认尺寸：36px + 4px = 40px
+}
+
+.t-input__tips--default {
+  color: @input-text-color-tips;
+}
+
+.t-input__tips--success {
+  color: @input-text-color-success;
+}
+
+.t-input__tips--warning {
+  color: @input-text-color-warning;
+}
+
+.t-input__tips--error {
+  color: @input-text-color-error;
+}
+
+// Vue3 兼容：t-is-* 类名（Vue3 使用 t-is-error，Vue2 使用 t-input__tips--error）
+.t-input__tips.t-is-default,
+.t-tips.t-is-default {
+  color: @input-text-color-tips;
+}
+
+.t-input__tips.t-is-success,
+.t-tips.t-is-success {
+  color: @input-text-color-success;
+}
+
+.t-input__tips.t-is-warning,
+.t-tips.t-is-warning {
+  color: @input-text-color-warning;
+}
+
+.t-input__tips.t-is-error,
+.t-tips.t-is-error {
+  color: @input-text-color-error;
+}
+
+// 小尺寸输入框的提示位置
+.t-input__wrap:has(.t-input.t-size-s) .t-input__tips {
+  top: calc(@input-height-s + 4px); // 小尺寸：28px + 4px = 32px
+}
+
+// 大尺寸输入框的提示位置
+.t-input__wrap:has(.t-input.t-size-l) .t-input__tips {
+  top: calc(@input-height-l + 4px); // 大尺寸：40px + 4px = 44px
+}
+
+.t-align-center > .t-input__inner {
+  text-align: center;
+}
+
+.t-align-right > .t-input__inner {
+  text-align: right;
+}
+
+.t-input__input-pre {
+  position: absolute;
+  visibility: hidden;
+  white-space: pre;
+  display: block;
+}
+
+.t-input--auto-width {
+  width: fit-content;
+  min-width: 60px;
+}
+
+// 字数限制数字
+.t-input__limit-number {
+  font: @input-font;
+  color: @input-limit-color;
+  background: @input-bg-color-default;
+
+  &.t-is-disabled {
+    background: @input-bg-color-disabled;
+  }
+}
