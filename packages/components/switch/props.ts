@@ -31,7 +31,7 @@ export default {
   /** 开关尺寸 */
   size: {
     type: String as PropType<TdSwitchProps['size']>,
-    default: 'medium' as TdSwitchProps['size'],
+    default: 'large' as TdSwitchProps['size'],
     validator(val: TdSwitchProps['size']): boolean {
       if (!val) return true;
       return ['small', 'medium', 'large'].includes(val);

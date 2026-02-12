@@ -1,4 +1,4 @@
-import { defineComponent, h, VNodeChild, computed, watch, toRefs } from 'vue';
+import { defineComponent, h, VNodeChild, computed, watch, toRefs, ref } from 'vue';
 import { useVModel, useDisabled, usePrefixClass, useCommonClassName } from '@tdesign/shared-hooks';
 import TLoading from '../loading';
 import props from './props';
@@ -18,6 +18,9 @@ export default defineComponent({
     // values
     const { value, modelValue } = toRefs(props);
     const [innerValue, setSwitchVal] = useVModel(value, modelValue, props.defaultValue, props.onChange);
+
+    // 焦点状态管理
+    const focusBoxRef = ref<HTMLElement>();
 
     const activeValue = computed(() => {
       if (props.customValue && props.customValue.length > 0) {
@@ -57,6 +60,21 @@ export default defineComponent({
           throw new Error(`Switch: some error occurred: ${e}`);
         });
     }
+
+    // 焦点处理方法（对齐 Vue2 版本）
+    const handleFocus = () => {
+      if (focusBoxRef.value) {
+        focusBoxRef.value.classList.add('focusInput');
+        focusBoxRef.value.classList.remove('normalInput');
+      }
+    };
+
+    const handleBlur = () => {
+      if (focusBoxRef.value) {
+        focusBoxRef.value.classList.add('normalInput');
+        focusBoxRef.value.classList.remove('focusInput');
+      }
+    };
 
     // classes
     const classes = computed(() => [
@@ -131,9 +149,12 @@ export default defineComponent({
       }
 
       return (
-        <div class={classes.value} onClick={toggle}>
+        <div class={classes.value} onClick={toggle} tabindex={-1} onFocus={handleFocus} onBlur={handleBlur}>
           <span class={nodeClasses.value}>{loadingContent}</span>
           <div class={contentClasses.value}>{switchContent}</div>
+          <div ref={focusBoxRef} class="focusBoxParrent" style="display: contents">
+            <span class="focusBox"></span>
+          </div>
         </div>
       );
     };
