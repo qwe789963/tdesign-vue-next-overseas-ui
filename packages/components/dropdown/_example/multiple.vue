@@ -1,12 +1,12 @@
 <template>
-  <t-space class="tdesign-demo-dropdown">
+  <div class="tdesign-dropdown">
     <t-dropdown :options="options" :max-column-width="120" :max-height="200" @click="clickHandler">
-      <t-button variant="text">
-        下拉菜单
-        <template #suffix><chevron-down-icon size="16" /></template>
-      </t-button>
+      <t-link size="large">
+        More
+        <chevron-down-icon />
+      </t-link>
     </t-dropdown>
-  </t-space>
+  </div>
 </template>
 <script setup>
 import { ChevronDownIcon } from 'tdesign-icons-vue-next';

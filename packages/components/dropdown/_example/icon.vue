@@ -1,55 +1,47 @@
 <template>
-  <t-space>
+  <div class="tdesign-dropdown">
     <t-dropdown :options="options" @click="clickHandler">
       <t-space>
-        <t-button variant="text">
-          更多
-          <template #suffix> <t-icon name="chevron-down" size="16" /></template>
-        </t-button>
+        <t-link size="large">
+          More
+          <chevron-down-icon />
+        </t-link>
       </t-space>
     </t-dropdown>
-  </t-space>
+  </div>
 </template>
-<script setup lang="jsx">
-import { MessagePlugin } from 'tdesign-vue-next';
-import { DiscountIcon } from 'tdesign-icons-vue-next';
+<script lang="jsx">
+import { ChevronDownIcon, LocationIcon } from 'tdesign-icons-vue-next';
 
-const options = [
-  {
-    content: '选项一',
-    value: 1,
-    prefixIcon: () => <DiscountIcon />,
+export default {
+  components: {
+    ChevronDownIcon,
   },
-  {
-    content: '选项二',
-    value: 2,
-    prefixIcon: () => <DiscountIcon />,
+  data() {
+    return {
+      options: [
+        {
+          content: 'Fifth Tab',
+          value: 1,
+          prefixIcon: () => <LocationIcon />,
+        },
+        {
+          content: 'Sixth Tab',
+          value: 2,
+          prefixIcon: () => <LocationIcon />,
+        },
+        {
+          content: 'Seventh Tab',
+          value: 3,
+          prefixIcon: () => <LocationIcon />,
+        },
+      ],
+    };
   },
-  {
-    content: '选项三',
-    value: 3,
-    prefixIcon: () => <DiscountIcon />,
+  methods: {
+    clickHandler() {
+      // console.log(`checked【${data.value}】`);
+    },
   },
-  {
-    content: '选项四',
-    value: 4,
-    prefixIcon: () => <DiscountIcon />,
-    children: [
-      {
-        content: '选项五',
-        value: 5,
-        prefixIcon: () => <DiscountIcon />,
-      },
-      {
-        content: '选项六',
-        value: 6,
-        prefixIcon: () => <DiscountIcon />,
-      },
-    ],
-  },
-];
-
-const clickHandler = (data) => {
-  MessagePlugin.success(`选中【${data.content}】`);
 };
 </script>

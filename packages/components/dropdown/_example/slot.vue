@@ -1,9 +1,12 @@
 <template>
   <t-space direction="vertical">
-    <t-space direction="vertical">
+    <div class="tdesign-dropdown">
       <h4>支持直接使用 t-dropdown-menu</h4>
       <t-dropdown :min-column-width="88" @click="clickHandler">
-        <t-button variant="text">下拉菜单</t-button>
+        <t-link size="large">
+          More
+          <chevron-down-icon />
+        </t-link>
         <t-dropdown-menu>
           <t-dropdown-item :value="1">
             操作一
@@ -39,11 +42,14 @@
           <t-dropdown-item :value="3"> 操作三 </t-dropdown-item>
         </t-dropdown-menu>
       </t-dropdown>
-    </t-space>
-    <t-space direction="vertical">
+    </div>
+    <div class="tdesign-dropdown">
       <h4>兼容历史版本 通过 dropdown 具名插槽的使用</h4>
       <t-dropdown :min-column-width="88" @click="clickHandler">
-        <t-button variant="text">下拉菜单</t-button>
+        <t-link size="large">
+          More
+          <chevron-down-icon />
+        </t-link>
         <template #dropdown>
           <t-dropdown-menu>
             <t-dropdown-item :value="1">
@@ -64,11 +70,12 @@
           </t-dropdown-menu>
         </template>
       </t-dropdown>
-    </t-space>
+    </div>
   </t-space>
 </template>
 <script setup>
 import { ref } from 'vue';
+import { ChevronDownIcon } from 'tdesign-icons-vue-next';
 import { MessagePlugin } from 'tdesign-vue-next';
 
 const operationMenu = ref([

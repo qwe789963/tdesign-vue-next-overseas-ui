@@ -1,11 +1,15 @@
 <template>
-  <t-space>
+  <div class="tdesign-dropdown">
     <t-dropdown :options="options" :min-column-width="88">
-      <t-button variant="text">下拉菜单</t-button>
+      <t-link size="large">
+        More
+        <chevron-down-icon />
+      </t-link>
     </t-dropdown>
-  </t-space>
+  </div>
 </template>
 <script setup>
+import { ChevronDownIcon } from 'tdesign-icons-vue-next';
 import { MessagePlugin } from 'tdesign-vue-next';
 
 const options = [

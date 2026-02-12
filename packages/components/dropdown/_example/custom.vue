@@ -1,11 +1,16 @@
 <template>
-  <t-space>
+  <div class="tdesign-dropdown">
     <t-dropdown :options="options" trigger="click" :hide-after-item-click="false" :min-column-width="100">
-      <t-button variant="text">下拉菜单</t-button>
+      <t-link size="large">
+        More
+        <chevron-down-icon />
+      </t-link>
     </t-dropdown>
-  </t-space>
+  </div>
 </template>
 <script setup lang="ts">
+import { ChevronDownIcon } from 'tdesign-icons-vue-next';
+
 const options = [
   {
     content: '选项一',
