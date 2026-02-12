@@ -1,1 +1,1 @@
-import '@tdesign/common-style/web/components/textarea/_index.less';
+import './overseas/index.less';
