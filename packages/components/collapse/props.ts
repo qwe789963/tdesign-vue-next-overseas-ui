@@ -9,7 +9,10 @@ import { PropType } from 'vue';
 
 export default {
   /** 是否为无边框模式 */
-  borderless: Boolean,
+  borderless: {
+    type: Boolean,
+    default: true,
+  },
   /** 默认是否展开全部 */
   defaultExpandAll: Boolean,
   /** 是否禁用面板展开/收起操作 */
