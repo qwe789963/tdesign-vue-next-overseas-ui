@@ -69,7 +69,7 @@ export default defineComponent({
 
     const renderCardItem = () => {
       return (
-        <div class={navItemClass.value} onClick={onClickNav} ref={itemRef}>
+        <div class={navItemClass.value} onClick={onClickNav} ref={itemRef} tabindex="0">
           <span class={`${COMPONENT_NAME.value}-text-wrapper`}>{props.label}</span>
           {removeBtn()}
         </div>
@@ -77,7 +77,7 @@ export default defineComponent({
     };
     const renderNormalItem = () => {
       return (
-        <div class={navItemClass.value} onClick={onClickNav}>
+        <div class={navItemClass.value} onClick={onClickNav} tabindex="0">
           <div
             class={[
               `${COMPONENT_NAME.value}-wrapper`,
