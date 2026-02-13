@@ -1,1 +1,1 @@
-import '@tdesign/common-style/web/components/tooltip/_index.less';
+import './overseas/index.less';
