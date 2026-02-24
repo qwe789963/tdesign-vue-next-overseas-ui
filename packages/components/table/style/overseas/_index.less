@@ -1,0 +1,181 @@
+// 导入本地变量和混合器
+@import './_var.less';
+@import './_mixin.less';
+
+@border: 1px solid @table-border-color;
+
+.@{prefix}-table {
+  // 基础颜色和字体
+  font: @table-font;
+  color: #494949;
+  background-color: @table-bg;
+
+  .t-icon {
+    font-size: @table-icon-size;
+  }
+
+  // 单元格基础样式
+  th,
+  td {
+    box-shadow: 0 0 0 0.5px var(--td-component-border);
+    line-height: @table-line-height;
+    height: 50px;
+  }
+
+  // 表头样式
+  thead td,
+  th {
+    color: #494949 !important; // 表头字体颜色（强制覆盖官方样式）
+    font-weight: 700; // 表头字体加粗
+  }
+
+  tr {
+    background-color: @table-bg;
+  }
+
+  // 边框线表格
+  &--bordered {
+    // 禁用所有单元格的 border-left（与 Vue2 一致，避免多出 1px）
+    td,
+    th {
+      border-left-width: 0 !important; // 强制禁用 border-left
+      
+      &.@{prefix}-table__cell--fixed-left-last {
+        border-right: @border;
+      }
+    }
+
+    .@{prefix}-table__content {
+      border: @border;
+      // border-radius: @border-radius-default; // 可选：如果需要圆角
+    }
+
+    // 移除固定列的 ::after 边框（与 Vue2 一致）
+    .@{prefix}-table__cell--fixed-right-first::after {
+      border-left: 0 !important;
+    }
+
+    .@{prefix}-table__cell--fixed-left-last::after {
+      border-right: 0 !important;
+    }
+  }
+
+  // 斑马纹表格
+  &--striped {
+    // 表头背景色
+    thead tr {
+      background-color: @gray-color-3;
+    }
+
+    // 奇数行白色背景（重要：提高优先级）
+    > .t-table__content > table > tbody > tr,
+    tbody > tr {
+      background-color: @table-bg !important; // 使用 !important 确保生效
+    }
+
+    // 偶数行浅灰色
+    > .t-table__content > table > tbody > tr:nth-of-type(even),
+    tbody > tr:nth-of-type(even) {
+      background-color: @gray-color-1 !important;
+    }
+
+    &.@{prefix}-table--header-fixed {
+      > .t-table__content > table > tbody tr:nth-of-type(even) {
+        background-color: @table-highlight-bg-color;
+      }
+    }
+
+    &.@{prefix}-table--hoverable {
+      &.@{prefix}-table__header--fixed {
+        tbody tr:nth-of-type(even):hover {
+          background-color: @table-highlight-bg-color--hover;
+        }
+      }
+
+      &:not(.@{prefix}-table__header--fixed) {
+        > .t-table__content > table > tbody tr:nth-of-type(odd):hover {
+          background-color: @table-highlight-bg-color--hover;
+        }
+      }
+
+      > .t-table__content > table > tbody {
+        tr {
+          transition: background-color @anim-duration-base linear;
+
+          &:hover {
+            background-color: @table-highlight-dark-bg-color;
+          }
+        }
+      }
+    }
+  }
+
+  // 可悬停表格
+  &--hoverable {
+    tbody {
+      tr {
+        transition: background-color @anim-duration-base linear;
+
+        &:hover {
+          background-color: @table-highlight-dark-bg-color;
+        }
+      }
+    }
+  }
+
+  // 列高亮
+  .@{prefix}-table__cell--highlight {
+    background-color: @table-highlight-bg-color;
+  }
+
+  // 数据行禁用
+  .@{prefix}-table__row--disabled {
+    color: @table-row-disabled-color;
+  }
+
+  // 排序背景色
+  .@{prefix}-table__cell--sortable {
+    &.@{prefix}-table__cell--sorted {
+      background-color: @table-sort-bg-color;
+    }
+  }
+
+  // 空数据提示
+  .@{prefix}-table__empty {
+    color: @table-color-empty;
+  }
+
+  // 吸顶表头背景色
+  .@{prefix}-table__affixed-header-elm {
+    background-color: @table-bg;
+  }
+
+  // 斑马纹表格的吸顶表头背景色
+  &--striped .@{prefix}-table__affixed-header-elm {
+    thead tr {
+      background-color: @gray-color-3;
+    }
+  }
+
+  // 固定列阴影（用于视觉区分）
+  .@{prefix}-table__cell--fixed-left-last {
+    &.@{prefix}-table__cell--fixed-left-last--shadow {
+      &::after {
+        box-shadow: inset 10px 0 8px -8px rgba(0, 0, 0, 0.15);
+      }
+    }
+  }
+
+  .@{prefix}-table__cell--fixed-right-first {
+    &.@{prefix}-table__cell--fixed-right-first--shadow {
+      &::after {
+        box-shadow: inset -10px 0 8px -8px rgba(0, 0, 0, 0.15);
+      }
+    }
+  }
+}
+
+// 加载进度条颜色
+.@{prefix}-table__loading-progressbar {
+  background-color: @brand-color;
+}
