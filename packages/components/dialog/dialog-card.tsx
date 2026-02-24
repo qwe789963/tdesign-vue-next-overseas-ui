@@ -92,13 +92,9 @@ export default defineComponent({
         // @ts-ignore
         return confirmBtn.value?.loading || confirmLoading.value;
       });
+      // Vue2 Overseas 对齐：确认按钮在左，取消按钮在右
       const defaultFooter = (
         <div>
-          {getCancelBtn({
-            cancelBtn: cancelBtn.value as TdDialogProps['cancelBtn'],
-            globalCancel: globalConfig.value.cancel,
-            className: `${COMPONENT_NAME.value}__cancel`,
-          })}
           {getConfirmBtn({
             theme: props?.theme,
             confirmBtn: confirmBtn.value as TdDialogProps['confirmBtn'],
@@ -106,6 +102,11 @@ export default defineComponent({
             globalConfirmBtnTheme: globalConfig.value.confirmBtnTheme,
             className: `${COMPONENT_NAME.value}__confirm`,
             confirmLoading: confirmBtnLoading.value,
+          })}
+          {getCancelBtn({
+            cancelBtn: cancelBtn.value as TdDialogProps['cancelBtn'],
+            globalCancel: globalConfig.value.cancel,
+            className: `${COMPONENT_NAME.value}__cancel`,
           })}
         </div>
       );

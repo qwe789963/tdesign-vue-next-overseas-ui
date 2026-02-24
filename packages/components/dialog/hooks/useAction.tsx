@@ -56,10 +56,12 @@ export function useAction(action: BtnAction) {
     return props;
   };
   // 全局配置属性综合
+  // Vue2 Overseas 对齐：取消按钮使用 variant: 'outline' 描边样式
   const getDefaultCancelBtnProps = (options: MixinsCancelBtn): ButtonProps => {
     const { globalCancel } = options;
     let props: ButtonProps = {
       theme: 'default',
+      variant: 'outline',
       size: options.size,
       onClick: (e) => {
         action.cancelBtnAction(e);

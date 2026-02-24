@@ -1,1 +1,2 @@
-import '@tdesign/common-style/web/components/dialog/_index.less';
+// Overseas 版本：使用自定义样式
+import './overseas/index.less';
