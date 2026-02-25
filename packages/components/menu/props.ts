@@ -48,6 +48,25 @@ export default {
       return ['light', 'dark'].includes(val);
     },
   },
+  /** S2 规范模式：启用 Drawer 抽屉菜单 */
+  s2: {
+    type: Boolean,
+    default: true,
+  },
+  /** 鼠标移入触发展开（S2 规范） */
+  mouseOverTrigger: {
+    type: Boolean,
+    default: false,
+  },
+  /** 三级菜单展开方式（S2 规范）：normal-平铺展开，popup-浮层展开 */
+  thirdExpandType: {
+    type: String as PropType<'normal' | 'popup'>,
+    default: 'popup' as 'normal' | 'popup',
+    validator(val: 'normal' | 'popup'): boolean {
+      if (!val) return true;
+      return ['normal', 'popup'].includes(val);
+    },
+  },
   /** 激活菜单项 */
   value: {
     type: [String, Number] as PropType<TdMenuProps['value']>,

@@ -36,12 +36,30 @@ export default defineComponent({
     const instance = getCurrentInstance();
     const menu = inject<TdMenuInterface>('TdMenu');
     const { value } = toRefs(props);
-    const { theme, activeValues, expandValues, isHead, open } = menu;
+    const { theme, activeValues, expandValues, isHead, open, thirdMode, mouseOverTrigger } = menu;
 
     const submenu = inject<TdSubMenuInterface>('TdSubmenu', {});
     const { setSubPopup, closeParentPopup, cancelHideTimer } = submenu;
 
-    const mode = computed(() => attrs.expandType || menu.mode.value);
+    // S2 规范：根据当前层级和 thirdMode 判断展开方式
+    const currentMode = computed(() => {
+      // attrs.expandType 优先级最高（组件级别配置）
+      if (attrs.expandType) return attrs.expandType as string;
+
+      // HeadMenu 始终使用 menu.mode
+      if (isHead) return menu.mode.value;
+
+      // 一级菜单（popup 模式下）始终浮层展开
+      if (menu.mode.value === 'popup') return 'popup';
+
+      // 二级菜单：如果父级是 undefined（说明是一级子菜单），使用 normal
+      if (submenu.value === undefined) return 'normal';
+
+      // 三级及以上菜单：根据 thirdMode 决定
+      return thirdMode?.value || 'popup';
+    });
+
+    const mode = computed(() => currentMode.value);
 
     const menuItems = ref([]); // 因composition-api的缺陷，不用reactive， 详见：https://github.com/vuejs/composition-api/issues/637
     const isActive = computed(() => activeValues.value.indexOf(props.value) > -1);
@@ -49,7 +67,7 @@ export default defineComponent({
     const isCursorInPopup = ref(false);
     const rippleColor = computed(() => (theme.value === 'light' ? '#E7E7E7' : '#383838'));
     const isOpen = computed(() => {
-      if (mode.value === 'popup') {
+      if (currentMode.value === 'popup') {
         return popupVisible.value;
       }
       return expandValues ? expandValues.value?.includes(props.value) : false;

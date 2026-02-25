@@ -55,6 +55,9 @@ export default defineComponent({
         });
       }
       submenu?.closeParentPopup?.(e);
+
+      // S2 规范：点击菜单项后关闭 Drawer（如果存在 hidden 方法）
+      menu.hidden?.();
     };
 
     // lifetimes
