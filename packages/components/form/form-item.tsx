@@ -436,7 +436,12 @@ export default defineComponent({
       <div class={classes.value}>
         {renderLabel()}
         <div class={contentClasses.value} style={contentStyle.value}>
-          <div class={CLASS_NAMES.value.controlsContent}>
+          <div
+            class={[
+              CLASS_NAMES.value.controlsContent,
+              needRequiredMark.value ? `${CLASS_NAMES.value.controlsContent}--required` : '',
+            ]}
+          >
             {renderContent('default')}
             {renderSuffixIcon()}
           </div>
