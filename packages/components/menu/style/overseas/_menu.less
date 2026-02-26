@@ -108,7 +108,8 @@ a.@{prefix}-menu__item {
     line-height: @head-menu-item-height;
     padding: 0 @comp-paddingLR-l;
     justify-content: center;
-    transition: all @anim-duration-slow cubic-bezier(.645, .045, .355, 1);
+    // S2 规范：head-menu 的菜单项不使用任何过渡动画，避免点击效果有动画
+    transition: none;
   }
 
   &__submenu {
@@ -329,9 +330,10 @@ a.@{prefix}-menu__item {
     height: @default-menu-item-height;
     line-height: @menu-item-line-height;
     border-bottom: 0;
+    border-radius: 0; // S2 规范：菜单项使用直角，不使用圆角
     text-align: left;
-    transition: background-color @anim-duration-slow @anim-time-fn-easing,
-      padding @anim-duration-slow @anim-time-fn-easing;
+    // S2 规范：default-menu 的菜单项不使用过渡动画，避免点击效果有动画
+    transition: none;
     box-sizing: border-box;
 
     &:first-child {
@@ -603,17 +605,38 @@ a.@{prefix}-menu__item {
       color: @menu-item-active-color--light;
       background-color: @menu-item-active-bg--light;
     }
+    
+    // S2 规范：popup 模式下的 active 菜单项保持背景色
+    &.@{prefix}-is-active.@{prefix}-menu__popup-trigger {
+      color: @default-menu-active-color;
+      background-color: @menu-item-active-bg--light;
+      &::before {
+        content: '';
+        display: block;
+        height: @default-menu-item-height;
+        width: 6px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-color: @default-menu-active-color;
+      }
+      .t-icon {
+        color: @default-menu-active-color;
+      }
+    }
 
     &.@{prefix}-is-opened {
       color: @menu-item-active-color--light;
     }
 
-    &:hover:not(.@{prefix}-is-active):not(.@{prefix}-is-opened):not(.@{prefix}-is-disabled) {
+    &:hover:not(.@{prefix}-is-active):not(.@{prefix}-is-opened):not(.@{prefix}-is-disabled):not(.@{prefix}-menu__click) {
       background-color: @menu-item-hover-bg--light;
     }
     &.@{prefix}-menu__click {
       color: @font-white-1 !important;
       background-color: @default-menu-active-color !important;
+      border-radius: 0 !important; // S2 规范：点击时的蓝色背景使用直角，不使用圆角
+      transition: none !important; // S2 规范：点击效果不使用过渡动画，立即显示/隐藏
       .@{prefix}-fake-arrow {
         color: @font-white-1;
       }
@@ -633,10 +656,8 @@ a.@{prefix}-menu__item {
   &__content {
     white-space: pre-wrap;
     word-break: break-word;
-    margin-right: @menu-trigger-gap-size;
-    &:last-child {
-      margin-right: calc(@menu-trigger-gap-size + @menu-item-icon-size2);
-    }
+    // S2 规范：固定 margin-right，避免点击时因 :last-child 伪类导致宽度变化（与 Vue2 对齐）
+    margin-right: calc(@menu-trigger-gap-size + @menu-item-icon-size2);
   }
 
   .t-icon + &__content,
@@ -740,6 +761,8 @@ a.@{prefix}-menu__item {
 
     &.@{prefix}-is-vertical {
       min-width: var(--popup-width, 160px);
+      // S2 规范：不设置 width，让 popup 由内容自然撑开（与 Vue2 对齐）
+      // 移除 width: max-content，避免点击时触发宽度重新计算导致闪烁
     }
 
     &.@{prefix}-is-horizontal {
@@ -762,13 +785,27 @@ a.@{prefix}-menu__item {
       color: @menu-popup-item-color;
       height: @default-menu-item-height;
       line-height: @default-menu-item-height;
+      // S2 规范：移除 width: 100%，避免点击最长菜单项时宽度变窄（与 Vue2 对齐）
+      box-sizing: border-box; // S2 规范：确保 padding 包含在宽度内
+      overflow: hidden; // S2 规范：防止长文本内容超出菜单项宽度
+      border-radius: 0; // S2 规范：popup 菜单项使用直角，不使用圆角
 
       + .@{prefix}-menu__item {
         margin-left: 0;
       }
 
-      &:hover:not(.@{prefix}-is-active) {
+      &:hover:not(.@{prefix}-is-active):not(.@{prefix}-menu__click) {
         background-color: @menu-popup-item-hover-bg;
+      }
+
+      &.@{prefix}-menu__click {
+        color: @font-white-1 !important;
+        background-color: @default-menu-active-color !important;
+        border-radius: 0 !important; // S2 规范：点击时的蓝色背景使用直角，不使用圆角
+        transition: none !important; // S2 规范：点击效果不使用过渡动画，立即显示/隐藏
+        .@{prefix}-fake-arrow {
+          color: @font-white-1;
+        }
       }
     }
 
@@ -778,6 +815,8 @@ a.@{prefix}-menu__item {
 
     .@{prefix}-menu__content {
       white-space: nowrap;
+      overflow: hidden; // S2 规范：防止长文本超出
+      text-overflow: ellipsis; // S2 规范：超出部分显示省略号
     }
 
     // popup 中 被激活的元素

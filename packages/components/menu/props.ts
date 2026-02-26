@@ -83,7 +83,7 @@ export default {
   /** 菜单宽度。值类型为数组时，分别表示菜单展开和折叠的宽度。[ 展开时的宽度, 折叠时的宽度 ]，示例：['200px', '80px'] */
   width: {
     type: [String, Number, Array] as PropType<TdMenuProps['width']>,
-    default: '232px',
+    default: '400px',
   },
   /** 激活菜单项发生变化时触发 */
   onChange: Function as PropType<TdMenuProps['onChange']>,

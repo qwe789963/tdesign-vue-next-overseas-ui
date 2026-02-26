@@ -236,6 +236,8 @@ export default defineComponent({
     return () => {
       const logo = props.logo?.(h) || ctx.slots.logo?.();
       const operations = props.operations?.(h) || ctx.slots.operations?.() || ctx.slots.options?.();
+      // S2 规范：渲染 s2Menu 插槽内容（用于 Drawer 触发按钮）
+      const s2Menu = props.s2Menu?.(h) || ctx.slots.s2Menu?.();
 
       // TODO: 判断逻辑不够完善 影响封装组件的子菜单样式渲染 暂时先不执行 待调整实现方案
       // const content = formatContent();
@@ -245,6 +247,8 @@ export default defineComponent({
       return (
         <div class={menuClass.value}>
           <div class={`${classPrefix.value}-head-menu__inner`} ref={innerRef}>
+            {/* S2 规范：渲染 s2Menu 插槽（通常包含 TMenu 的 Drawer 触发按钮） */}
+            {s2Menu && <div class={`${classPrefix.value}-menu__trigger`}>{s2Menu}</div>}
             {logo && (
               <div class={`${classPrefix.value}-menu__logo`} ref={logoRef}>
                 {logo}

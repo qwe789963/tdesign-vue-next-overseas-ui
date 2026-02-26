@@ -1,10 +1,24 @@
-:: BASE_DOC ::
+---
+title: Menu 导航菜单
+description: 用于承载网站的架构，并提供跳转的菜单列表。
+isComponent: true
+usage: { title: '', description: '' }
+spline: navigation
+---
 
-### 可设置宽度的侧边导航
+### S2 导航栏
 
-通过 `width` 设置侧边导航的宽度。
+S2 规范的顶部导航，支持鼠标移入触发菜单展开。
 
-{{ side-menu-width }}
+{{ s2-menu }}
+
+### 侧边导航
+
+#### 平铺式侧边导航
+
+将 `s2` 设置为 `false`，可以显示侧边导航。侧边导航可承载1-3级页面导航，并平铺展示。适用于层级较深的网站。可通过 `thirdExpandType` 设置三级导航展开方式，默认为 `popup`。
+
+{{ multi-side }}
 
 ## API
 ### Menu Props
@@ -14,14 +28,17 @@
 collapsed | Boolean | false | 是否收起菜单 | N
 expandMutex | Boolean | false | 同级别互斥展开 | N
 expandType | String | normal | 二级菜单展开方式，平铺展开和浮层展开。可选项：normal/popup | N
+thirdExpandType | String | popup | 三级菜单展开方式，平铺展开和浮层展开。可选项：popup/normal。若 `expandType` 为 `popup`，则此选项无效 | N
+s2 | Boolean | true | 是否为 S2 海外系统展示方式，为 `false` 时将直接平铺显示 | N
+mouseOverTrigger | Boolean | false | 是否可鼠标移入打开左侧菜单栏，为 `true` 时触发 | N
+trigger | Slot / Function | - | S2 菜单触发按钮。TS 类型：`TNode`。[通用类型定义](https://github.com/Tencent/tdesign-vue-next/blob/develop/packages/components/common.ts) | N
 expanded | Array | [] | 子菜单展开的导航集合。支持语法糖 `v-model:expanded`。TS 类型：`Array<MenuValue>` | N
 defaultExpanded | Array | [] | 子菜单展开的导航集合。非受控属性。TS 类型：`Array<MenuValue>` | N
 logo | Slot / Function | - | 站点 LOGO。TS 类型：`TNode`。[通用类型定义](https://github.com/Tencent/tdesign-vue-next/blob/develop/packages/components/common.ts) | N
 operations | Slot / Function | - | 导航操作区域。TS 类型：`TNode`。[通用类型定义](https://github.com/Tencent/tdesign-vue-next/blob/develop/packages/components/common.ts) | N
-theme | String | light | 菜单风格，有亮色模式和暗色模式两种。当 `theme = global` 时，模式随整个组件库；当 `theme = system` 时，模式跟随系统。⚠️ `global/system` 正在开发中，暂勿使用。可选项：light/dark/global/system | N
 value | String / Number | - | 激活菜单项。支持语法糖 `v-model` 或 `v-model:value`。TS 类型：`MenuValue` `type MenuValue = string \| number`。[详细类型定义](https://github.com/Tencent/tdesign-vue-next/blob/develop/packages/components/menu/type.ts) | N
 defaultValue | String / Number | - | 激活菜单项。非受控属性。TS 类型：`MenuValue` `type MenuValue = string \| number`。[详细类型定义](https://github.com/Tencent/tdesign-vue-next/blob/develop/packages/components/menu/type.ts) | N
-width | String / Number / Array | '232px' | 菜单宽度。值类型为数组时，分别表示菜单展开和折叠的宽度。[ 展开时的宽度, 折叠时的宽度 ]，示例：['200px', '80px']。TS 类型：`string \| number \| Array<string \| number>` | N
+width | String / Number / Array | '400px' | 菜单宽度。值类型为数组时，分别表示菜单展开和折叠的宽度。[ 展开时的宽度, 折叠时的宽度 ]，示例：['200px', '80px']。TS 类型：`string \| number \| Array<string \| number>` | N
 onChange | Function |  | TS 类型：`(value: MenuValue) => void`<br/>激活菜单项发生变化时触发 | N
 onExpand | Function |  | TS 类型：`(value: Array<MenuValue>) => void`<br/>展开的菜单项发生变化时触发 | N
 
@@ -36,6 +53,7 @@ expand | `(value: Array<MenuValue>)` | 展开的菜单项发生变化时触发
 
 名称 | 类型 | 默认值 | 说明 | 必传
 -- | -- | -- | -- | --
+s2Menu | Function / Slot | - | S2 海外系统菜单。TS 类型：`TNode`。[通用类型定义](https://github.com/Tencent/tdesign-vue-next/blob/develop/packages/components/common.ts) | Y
 expandType | String | normal | 二级菜单展开方式，平铺展开和浮层展开。可选项：normal/popup | N
 expanded | Array | [] | 展开的子菜单集合。支持语法糖 `v-model:expanded`。TS 类型：`Array<MenuValue>` | N
 defaultExpanded | Array | [] | 展开的子菜单集合。非受控属性。TS 类型：`Array<MenuValue>` | N

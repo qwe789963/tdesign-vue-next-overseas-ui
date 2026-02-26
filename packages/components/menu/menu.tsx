@@ -3,7 +3,7 @@ import { ViewListIcon, CloseCircleIcon } from 'tdesign-icons-vue-next';
 import props from './props';
 import { MenuValue } from './type';
 import { TdMenuInterface, TdOpenType } from './types';
-import { useVModel, useContent, useTNodeJSX, usePrefixClass, useDefaultValue, useConfig } from '@tdesign/shared-hooks';
+import { useVModel, useContent, useTNodeJSX, usePrefixClass, useDefaultValue } from '@tdesign/shared-hooks';
 import { VMenu } from './utils';
 import log from '@tdesign/common-js/log/log';
 import { Drawer } from '../drawer';
@@ -17,7 +17,6 @@ export default defineComponent({
     const classPrefix = usePrefixClass();
     const renderTNodeJSX = useTNodeJSX();
     const renderContent = useContent();
-    const { globalConfig } = useConfig('menu');
     const mode = ref(props.expandType);
     const theme = computed(() => props.theme);
     const isMutex = computed(() => props.expandMutex);
@@ -159,7 +158,7 @@ export default defineComponent({
           onClick={handleTriggerClick}
           onMouseover={props.mouseOverTrigger ? handleTriggerClick : undefined}
         >
-          {trigger || [<ViewListIcon size="19px" />, <span>{globalConfig.value.menuBtn}</span>]}
+          {trigger || [<ViewListIcon size="19px" />, <span>MENU</span>]}
         </div>
       );
 
@@ -176,7 +175,7 @@ export default defineComponent({
             class={`${classPrefix.value}-s2-menu__drawer`}
             attach="body"
             placement="left"
-            header={globalConfig.value.menuBtn}
+            header="MENU"
             footer={false}
             size={props.collapsed ? expandWidth.value[1] : expandWidth.value[0]}
             showOverlay
