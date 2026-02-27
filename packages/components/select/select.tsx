@@ -5,6 +5,7 @@ import FakeArrow from '../common-components/fake-arrow';
 import SelectInput from '../select-input';
 import SelectPanel from './components/select-panel';
 import Tag from '../tag';
+import { BulletpointIcon } from 'tdesign-icons-vue-next';
 import props from './props';
 // hooks
 import {
@@ -128,6 +129,7 @@ export default defineComponent({
     const placeholderText = computed(
       () =>
         ((!props.multiple &&
+          !props.singleUseTag &&
           innerPopupVisible.value &&
           getSingleContent(innerValue.value, isRemoteSearch.value, currentSelectOptions, optionsMap)) ||
           props.placeholder) ??
@@ -486,6 +488,51 @@ export default defineComponent({
     });
 
     const renderValueDisplay = () => {
+      /**
+       * 海外版：单选时使用 Tag 标签样式展示选中值
+       */
+      const renderSingleTag = () => {
+        // 仅在单选模式且启用 singleUseTag 时渲染
+        if (props.multiple || !props.singleUseTag) {
+          return undefined;
+        }
+
+        // 无选中值时不渲染
+        if (innerValue.value === undefined || innerValue.value === null || innerValue.value === '') {
+          return undefined;
+        }
+
+        const option = currentSelectOptions.value.find((item) => item.value === innerValue.value);
+        const label = option ? option.label ?? option?.value : innerValue.value;
+
+        return (
+          <Tag
+            // 交互调整，禁用时还显示x但是不响应点击
+            // closable={!isDisabled.value && !isReadonly.value && props.clearable}
+            closable={!isReadonly.value && props.clearable}
+            size={props.size}
+            {...props.tagProps}
+            onClose={({ e }: { e: MouseEvent }) => {
+              if (isDisabled.value) {
+                return;
+              }
+              e.stopPropagation();
+              props.tagProps?.onClose?.({ e });
+              // 清空单选值
+              setInnerValue(undefined, {
+                option: null,
+                selectedOptions: [],
+                trigger: 'tag-remove',
+                e,
+              });
+            }}
+          >
+            {/* span 元素用于 CSS 选择器定位，样式由 .t-select--overseas 和 .t-select--option-warp 类控制 */}
+            <span>{label}</span>
+          </Tag>
+        );
+      };
+
       const renderTag = () => {
         if (!props.multiple || props.selectInputProps?.multiple === false) {
           return undefined;
@@ -503,16 +550,22 @@ export default defineComponent({
             return (
               <Tag
                 key={key}
-                closable={!option?.disabled && !isDisabled.value && !isReadonly.value}
+                // 交互调整，禁用时还显示x但是不响应点击
+                closable={!option?.disabled && !isReadonly.value}
+                // closable={!option?.disabled && !isDisabled.value && !isReadonly.value}
                 size={props.size}
                 {...props.tagProps}
                 onClose={({ e }: { e: MouseEvent }) => {
+                  if (isDisabled.value) {
+                    return;
+                  }
                   e.stopPropagation();
                   props.tagProps?.onClose?.({ e });
                   removeTag(key);
                 }}
               >
-                {option ? option.label ?? option?.value : v}
+                {/* span 元素用于 CSS 选择器定位，样式由 .t-select--overseas 和 .t-select--option-warp 类控制 */}
+                <span>{option ? option.label ?? option?.value : v}</span>
               </Tag>
             );
           });
@@ -521,7 +574,9 @@ export default defineComponent({
       return (
         renderTNodeJSX('valueDisplay', {
           params: valueDisplayParams.value,
-        }) || renderTag()
+        }) ||
+        renderSingleTag() ||
+        renderTag()
       );
     };
 
@@ -562,15 +617,29 @@ export default defineComponent({
         },
       });
 
+      // 海外版相关类名
+      const overseasClasses = computed(() => [
+        `${COMPONENT_NAME.value}__wrap`,
+        {
+          't-true-select': props.suffixIconOs, // 海外版选择器标识
+          't-select-tag-true': props.singleUseTag && !props.multiple, // 启用单选 Tag 样式
+          't-select--filterable': isFilterable.value, // 可过滤模式
+          't-select--overseas': props.suffixIconOs, // 海外版样式标识
+          't-select--option-warp': props.optionWarp, // 选项文本换行模式
+        },
+      ]);
+
       return (
-        <div class={`${COMPONENT_NAME.value}__wrap`}>
+        <div class={overseasClasses.value}>
           <SelectInput
             {...{
-              autoWidth: props.autoWidth,
+              // 海外屏蔽autoWidth 下拉框宽度要跟随输入框宽度
+              autoWidth: false,
+              // autoWidth: props.autoWidth,
               readonly: isReadonly.value,
               borderless: props.borderless,
               multiple: props.multiple,
-              clearable: props.clearable,
+              clearable: props.clearable, // 单选 Tag 模式下，使用 Tag 的关闭按钮
               loading: props.loading,
               status: props.status,
               tips: () => renderTNodeJSX('tips'),
@@ -597,11 +666,17 @@ export default defineComponent({
             }}
             tagInputProps={{
               size: props.size,
+              ...(props.optionWarp ? { excessTagsDisplayType: 'break-line' } : {}),
               ...(props.tagInputProps as TdSelectProps['tagInputProps']),
             }}
             tagProps={{ ...(props.tagProps as TdSelectProps['tagProps']) }}
             popupProps={{
-              overlayClassName: [`${COMPONENT_NAME.value}__dropdown`, overlayClassName],
+              overlayClassName: [
+                `${COMPONENT_NAME.value}__dropdown`,
+                overlayClassName,
+                // 海外版下拉面板标识
+                props.suffixIconOs && `${COMPONENT_NAME.value}__dropdown--overseas`,
+              ],
               ...popupEvents.value,
             }}
             label={props.label}
@@ -610,6 +685,21 @@ export default defineComponent({
             suffixIcon={() => {
               if (props.suffixIcon || slots.suffixIcon) {
                 return renderTNodeJSX('suffixIcon');
+              }
+
+              // 海外版：使用 bulletpoint 图标替换默认箭头图标
+              if (props.suffixIconOs) {
+                return (
+                  props.showArrow && (
+                    <BulletpointIcon
+                      class={[
+                        `${COMPONENT_NAME.value}__right-icon`,
+                        `${COMPONENT_NAME.value}__right-icon--overseas`,
+                        { [`${COMPONENT_NAME.value}__right-icon--active`]: innerPopupVisible.value },
+                      ]}
+                    />
+                  )
+                );
               }
 
               return (
@@ -642,6 +732,7 @@ export default defineComponent({
                     'filter',
                     'scroll',
                     'keys',
+                    'optionWarp',
                   ])}
                   inputValue={innerInputValue.value}
                   v-slots={slots}

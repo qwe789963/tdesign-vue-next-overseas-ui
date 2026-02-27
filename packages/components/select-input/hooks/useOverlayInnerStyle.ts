@@ -12,23 +12,15 @@ export type overlayInnerStyleProps = Pick<
   disabled?: boolean | Array<boolean>;
 };
 
-// 单位：px
-const MAX_POPUP_WIDTH = 1000;
-// 避免因滚动条出现文本省略，预留宽度 8
-const RESERVE_WIDTH = 0;
-
 export function useOverlayInnerStyle(props: overlayInnerStyleProps) {
   const { popupProps, autoWidth } = toRefs(props);
   const innerPopupVisible = ref(false);
   const disable = useDisabled();
   const isReadonly = useReadonly();
 
-  const matchWidthFunc = (triggerElement: HTMLElement, popupElement: HTMLElement) => {
-    const SCROLLBAR_WIDTH = popupElement.scrollHeight > popupElement.offsetHeight ? RESERVE_WIDTH : 0;
-    const width =
-      popupElement.offsetWidth + SCROLLBAR_WIDTH >= triggerElement.offsetWidth
-        ? popupElement.offsetWidth
-        : triggerElement.offsetWidth;
+  const matchWidthFunc = (triggerElement: HTMLElement, _popupElement: HTMLElement) => {
+    // 使用 getBoundingClientRect 获取精确的小数宽度，避免 offsetWidth 取整导致下拉框与 trigger 宽度不一致
+    const width = triggerElement.getBoundingClientRect().width;
     let otherOverlayInnerStyle: CSSProperties = {};
     if (
       popupProps.value &&
@@ -38,7 +30,7 @@ export function useOverlayInnerStyle(props: overlayInnerStyleProps) {
       otherOverlayInnerStyle = popupProps.value.overlayInnerStyle;
     }
     return {
-      width: `${Math.min(width, MAX_POPUP_WIDTH)}px`,
+      width: `${width}px`,
       ...otherOverlayInnerStyle,
     };
   };
@@ -58,8 +50,11 @@ export function useOverlayInnerStyle(props: overlayInnerStyleProps) {
   };
 
   const getAutoWidthPopupStyleWidth = (triggerElement: HTMLElement, popupElement: HTMLElement) => {
+    // 使用 getBoundingClientRect 获取精确的小数宽度
+    const triggerWidth = triggerElement.getBoundingClientRect().width;
+    const popupWidth = popupElement.getBoundingClientRect().width;
     return {
-      width: `${Math.max(triggerElement.offsetWidth, popupElement.offsetWidth)}px`,
+      width: `${Math.max(triggerWidth, popupWidth)}px`,
       ...popupProps.value?.overlayInnerStyle,
     };
   };

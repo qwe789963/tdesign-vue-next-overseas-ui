@@ -31,6 +31,7 @@ export function useCommonClassName() {
       visible: `${classPrefix.value}-is-visible`,
       expanded: `${classPrefix.value}-is-expanded`,
       indeterminate: `${classPrefix.value}-is-indeterminate`,
+      mouseDown: `${classPrefix.value}-is-mouseDown`,
     })),
   };
 }

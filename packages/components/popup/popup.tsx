@@ -565,7 +565,10 @@ export default defineComponent({
               <Transition
                 name={`${prefixCls.value}--animation${props.expandAnimation ? '-expand' : ''}`}
                 appear
-                onEnter={updatePopper}
+                onEnter={() => {
+                  updatePopper();
+                  updateOverlayInnerStyle();
+                }}
                 onAfterLeave={destroyPopper}
               >
                 {overlay}

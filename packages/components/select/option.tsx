@@ -32,6 +32,16 @@ export default defineComponent({
     isVirtual: Boolean,
     bufferSize: Number,
     checkAll: Boolean,
+    /**
+     * 海外版扩展属性：Option 选项文本是否换行显示
+     * - false: 文本超出时省略（ellipsis）
+     * - true: 文本超出时换行
+     * @default false
+     */
+    optionWarp: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['row-mounted'],
 
@@ -58,6 +68,7 @@ export default defineComponent({
     const liRef = ref<HTMLElement>();
 
     const isHover = ref(false);
+    const isMouseDown = ref(false);
 
     const isSelected = computed(() => {
       if (selectProvider.value.isCheckAll && !props.disabled) return true;
@@ -77,8 +88,9 @@ export default defineComponent({
       {
         [STATUS.value.disabled]: disabled.value,
         [STATUS.value.selected]: isSelected.value,
+        [STATUS.value.mouseDown]: isMouseDown.value,
         [`${selectName.value}-option__hover`]:
-          (isHover.value || selectProvider.value.hoverIndex === props.index) && !disabled.value,
+          (isHover.value || selectProvider.value.hoverIndex === props.index) && !disabled.value && !isSelected.value,
       },
     ]);
 
@@ -145,6 +157,35 @@ export default defineComponent({
       return null;
     };
 
+    /**
+     * 鼠标按下事件处理
+     * @param e 鼠标事件
+     */
+    const handleMouseDown = (e: MouseEvent) => {
+      if (props.disabled || disabled.value) return;
+      // 不阻止默认行为，否则会出现选中后下拉不关闭的问题
+      // e.preventDefault();
+      isMouseDown.value = true;
+    };
+
+    /**
+     * 鼠标松开事件处理
+     * @param e 鼠标事件
+     */
+    const handleMouseUp = (e: MouseEvent) => {
+      if (props.disabled || disabled.value) return;
+      e.preventDefault();
+      isMouseDown.value = false;
+    };
+
+    /**
+     * 鼠标离开事件处理 - 重置按下状态
+     */
+    const handleMouseLeave = () => {
+      isHover.value = false;
+      isMouseDown.value = false;
+    };
+
     // 处理虚拟滚动节点挂载
     onMounted(() => {
       const { trs, rowIndex, isVirtual } = props;
@@ -166,6 +207,8 @@ export default defineComponent({
 
     return () => {
       const optionChild = renderContent('default', 'content') || labelText.value;
+      // 根据 optionWarp 决定使用 wrap 还是 nowrap 类名
+      const wrapClass = props.optionWarp ? 'wrap' : 'nowrap';
 
       return (
         <li
@@ -173,7 +216,9 @@ export default defineComponent({
           class={classes.value}
           title={renderTitle()}
           onMouseenter={() => (isHover.value = true)}
-          onMouseleave={() => (isHover.value = false)}
+          onMouseleave={handleMouseLeave}
+          onMousedown={handleMouseDown}
+          onMouseup={handleMouseUp}
           onClick={handleClick}
         >
           {selectProvider && props.multiple ? (
@@ -183,10 +228,10 @@ export default defineComponent({
               onChange={handleCheckboxClick}
               indeterminate={isIndeterminate.value}
             >
-              {optionChild}
+              <span class={wrapClass}>{optionChild}</span>
             </Checkbox>
           ) : (
-            <span>{optionChild}</span>
+            <span class={wrapClass}>{optionChild}</span>
           )}
         </li>
       );

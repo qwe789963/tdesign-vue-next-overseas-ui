@@ -29,7 +29,7 @@ const useComponentClassName = () => {
 export default defineComponent({
   name: 'TTagInput',
   props,
-  setup(props: TdTagInputProps, { slots }) {
+  setup(props: TdTagInputProps, { slots, expose }) {
     const renderTNodeJSX = useTNodeJSX();
     const { NAME_CLASS, CLEAR_CLASS, BREAK_LINE_CLASS } = useComponentClassName();
     const { CloseCircleFilledIcon } = useGlobalIcon({ CloseCircleFilledIcon: TdCloseCircleFilledIcon });
@@ -171,6 +171,14 @@ export default defineComponent({
         else scrollElement.classList.remove(`${scrollElementClass}--scrollable`);
       },
     );
+
+    /**
+     * 暴露 focus/blur 方法
+     */
+    expose({
+      focus: () => tagInputRef.value?.focus?.(),
+      blur: () => tagInputRef.value?.blur?.(),
+    });
 
     return () => {
       const suffixIconNode = showClearIcon.value ? (
