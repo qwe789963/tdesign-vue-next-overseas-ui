@@ -45,6 +45,21 @@ export interface TdMenuProps {
    */
   theme?: 'light' | 'dark';
   /**
+   * S2 规范模式：启用 Drawer 抽屉菜单
+   * @default true
+   */
+  s2?: boolean;
+  /**
+   * 鼠标移入触发展开（S2 规范）
+   * @default false
+   */
+  mouseOverTrigger?: boolean;
+  /**
+   * 三级菜单展开方式（S2 规范）：normal-平铺展开，popup-浮层展开
+   * @default popup
+   */
+  thirdExpandType?: 'normal' | 'popup';
+  /**
    * 激活菜单项
    */
   value?: MenuValue;

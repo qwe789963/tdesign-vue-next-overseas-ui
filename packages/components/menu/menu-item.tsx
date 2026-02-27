@@ -24,6 +24,8 @@ export default defineComponent({
     const submenu = inject<TdSubMenuInterface>('TdSubmenu', null);
     const active = computed(() => menu.activeValue.value === props.value);
     const collapsed = computed(() => menu.collapsed?.value);
+    const isClick = ref(false); // S2 规范：点击状态（pointerdown 时设置为 true）
+
     const classes = computed(() => [
       `${classPrefix.value}-menu__item`,
       {
@@ -31,8 +33,18 @@ export default defineComponent({
         [`${classPrefix.value}-is-disabled`]: props.disabled,
         [`${classPrefix.value}-menu__item--plain`]: !ctx.slots.icon && !props.icon,
         [`${classPrefix.value}-submenu__item`]: !!submenu && !menu.isHead,
+        [`${classPrefix.value}-menu__click`]: isClick.value, // S2 规范：点击时的白色字体效果
       },
     ]);
+
+    // S2 规范：只有一级菜单和 normal 的二级菜单前面需要留箭头空格
+    const arrowSpace = computed(() => submenu === null || menu.thirdMode?.value === 'normal');
+    const arrowSpaceClass = computed(() => [
+      {
+        [`${classPrefix.value}-menu__arrow`]: arrowSpace.value,
+      },
+    ]);
+
     const router = computed(() => props.router || instance?.proxy.$router);
 
     const handleClick = (e: MouseEvent) => {
@@ -55,6 +67,25 @@ export default defineComponent({
         });
       }
       submenu?.closeParentPopup?.(e);
+
+      // S2 规范：点击菜单项后关闭 Drawer（如果存在 hidden 方法）
+      menu.hidden?.();
+    };
+
+    // S2 规范：鼠标按下时显示点击效果（白色字体 + 蓝色背景）
+    const handleMouseDown = (e: MouseEvent) => {
+      if (active.value || disabled.value) {
+        return;
+      }
+      if (e.button !== 0) return; // 只处理鼠标左键
+      isClick.value = true;
+    };
+
+    // S2 规范：鼠标释放或离开时清除点击效果
+    const handleMouseUp = () => {
+      setTimeout(() => {
+        isClick.value = false;
+      }, 100);
     };
 
     // lifetimes
@@ -68,7 +99,15 @@ export default defineComponent({
 
     return () => {
       const liContent = (
-        <li ref={itemRef} class={classes.value} onClick={handleClick}>
+        <li
+          ref={itemRef}
+          class={classes.value}
+          onClick={handleClick}
+          onPointerdown={handleMouseDown}
+          onPointerup={handleMouseUp}
+          onPointerleave={handleMouseUp}
+        >
+          <span class={arrowSpaceClass.value}></span>
           {renderTNodeJSX('icon')}
           {routerLink.value ? (
             <a

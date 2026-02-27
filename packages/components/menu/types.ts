@@ -18,6 +18,10 @@ export interface TdMenuInterface {
   isHead: boolean;
   vMenu?: VMenu;
   collapsed?: Ref<boolean>;
+  // S2 规范相关字段
+  thirdMode?: Ref<string>;
+  mouseOverTrigger?: Ref<boolean>;
+  s2MenuVisible?: Ref<boolean>;
   select: (val: MenuValue) => void;
   open?: (val: MenuValue, type?: TdOpenType) => boolean | void;
 }

@@ -1,10 +1,12 @@
 import { defineComponent, ref, computed, provide, watchEffect, watch, onMounted, toRefs } from 'vue';
+import { ViewListIcon, CloseCircleIcon } from 'tdesign-icons-vue-next';
 import props from './props';
 import { MenuValue } from './type';
 import { TdMenuInterface, TdOpenType } from './types';
 import { useVModel, useContent, useTNodeJSX, usePrefixClass, useDefaultValue } from '@tdesign/shared-hooks';
 import { VMenu } from './utils';
 import log from '@tdesign/common-js/log/log';
+import { Drawer } from '../drawer';
 
 import { isArray, isNumber } from 'lodash-es';
 
@@ -19,6 +21,21 @@ export default defineComponent({
     const theme = computed(() => props.theme);
     const isMutex = computed(() => props.expandMutex);
     const collapsed = computed(() => props.collapsed);
+
+    // S2 规范：Drawer 可见性状态
+    const s2MenuVisible = ref(false);
+
+    // S2 规范：三级菜单展开方式
+    const thirdMode = computed(() => {
+      // 当 expandType 为 'popup' 时，三级菜单始终浮层展开
+      if (props.expandType === 'popup') return 'popup';
+      // 当 expandType 为 'normal' 时，根据 thirdExpandType 决定
+      return props.thirdExpandType || 'popup';
+    });
+
+    // S2 规范：Drawer 相关样式类
+    const s2MenuClass = computed(() => [`${classPrefix.value}-s2-menu`]);
+
     const menuClass = computed(() => [
       `${classPrefix.value}-default-menu`,
       `${classPrefix.value}-menu--${props.theme}`,
@@ -60,9 +77,17 @@ export default defineComponent({
       isHead: false,
       vMenu,
       collapsed,
+      // S2 规范：传递三级菜单展开方式和鼠标触发配置
+      thirdMode,
+      mouseOverTrigger: computed(() => props.mouseOverTrigger),
+      s2MenuVisible,
       select: (value: MenuValue) => {
         if (value !== activeValue.value) {
           setActiveValue(value);
+        }
+        // S2 规范：选中菜单项后关闭 Drawer
+        if (props.s2) {
+          s2MenuVisible.value = false;
         }
       },
       open: (value: MenuValue, type: TdOpenType) => {
@@ -79,6 +104,9 @@ export default defineComponent({
           tmp.splice(index, 1);
           setExpand(tmp);
         }
+      },
+      hidden: () => {
+        s2MenuVisible.value = false;
       },
     });
 
@@ -113,17 +141,73 @@ export default defineComponent({
       activeValues.value = vMenu.select(activeValue.value);
     });
 
-    return () => {
+    // S2 规范：Drawer 触发和关闭事件
+    const handleTriggerClick = () => {
+      s2MenuVisible.value = true;
+    };
+    const handleCloseClick = () => {
+      s2MenuVisible.value = false;
+    };
+
+    // S2 规范：渲染 Drawer 模式
+    const renderS2Menu = () => {
+      const trigger = renderTNodeJSX('trigger');
+      const menuBtn = (
+        <div
+          class={`${classPrefix.value}-s2-menu__trigger`}
+          onClick={handleTriggerClick}
+          onMouseover={props.mouseOverTrigger ? handleTriggerClick : undefined}
+        >
+          {trigger || [<ViewListIcon size="19px" />, <span>MENU</span>]}
+        </div>
+      );
+
+      const drawerContent = (
+        <div class={menuClass.value} style={styles.value}>
+          <ul class={innerClasses.value}>{renderContent('default', 'content')}</ul>
+        </div>
+      );
+
+      return (
+        <>
+          <Drawer
+            visible={s2MenuVisible.value}
+            class={`${classPrefix.value}-s2-menu__drawer`}
+            attach="body"
+            placement="left"
+            header="MENU"
+            footer={false}
+            size={props.collapsed ? expandWidth.value[1] : expandWidth.value[0]}
+            showOverlay
+            closeOnOverlayClick
+            closeBtn={() => <CloseCircleIcon />}
+            onClose={handleCloseClick}
+          >
+            {drawerContent}
+          </Drawer>
+          {menuBtn}
+        </>
+      );
+    };
+
+    // 常规模式渲染
+    const renderNormalMenu = () => {
       const operations = renderContent('operations', 'options');
       const logo = renderTNodeJSX('logo');
 
       return (
-        <div class={menuClass.value} style={styles.value}>
-          <div class={`${classPrefix.value}-default-menu__inner`}>
-            {logo && <div class={`${classPrefix.value}-menu__logo`}>{logo}</div>}
-            <ul class={innerClasses.value}>{renderContent('default', 'content')}</ul>
-            {operations && <div class={`${classPrefix.value}-menu__operations`}>{operations}</div>}
-          </div>
+        <div class={`${classPrefix.value}-default-menu__inner`}>
+          {logo && <div class={`${classPrefix.value}-menu__logo`}>{logo}</div>}
+          <ul class={innerClasses.value}>{renderContent('default', 'content')}</ul>
+          {operations && <div class={`${classPrefix.value}-menu__operations`}>{operations}</div>}
+        </div>
+      );
+    };
+
+    return () => {
+      return (
+        <div class={props.s2 ? s2MenuClass.value : menuClass.value} style={props.s2 ? undefined : styles.value}>
+          {props.s2 ? renderS2Menu() : renderNormalMenu()}
         </div>
       );
     };

@@ -1,4 +1,18 @@
-:: BASE_DOC ::
+## Examples
+
+### S2 Navigation Bar
+
+S2 specification top navigation with mouse hover trigger support.
+
+{{ s2-menu }}
+
+### Side Navigation
+
+#### Tiled Side Navigation
+
+Set `s2` to `false` to display side navigation. Side navigation can host 1-3 levels of page navigation and display them in a tiled manner. Suitable for websites with deep hierarchies. You can set the expansion mode of third-level navigation through `thirdExpandType`, default is `popup`.
+
+{{ multi-side }}
 
 ## API
 
@@ -9,14 +23,17 @@ name | type | default | description | required
 collapsed | Boolean | false | \- | N
 expandMutex | Boolean | false | \- | N
 expandType | String | normal | options：normal/popup | N
+thirdExpandType | String | popup | Third-level menu expansion mode, tile expansion and floating layer expansion. Options: popup/normal. If `expandType` is `popup`, this option is invalid | N
+s2 | Boolean | true | Whether it is displayed in S2 overseas system mode. When `false`, it will be displayed directly in tile mode | N
+mouseOverTrigger | Boolean | false | Whether the left menu bar can be opened when the mouse is moved in. When `true`, it is triggered | N
+trigger | Slot / Function | - | S2 menu trigger button. Typescript：`TNode`。[see more ts definition](https://github.com/Tencent/tdesign-vue-next/blob/develop/packages/components/common.ts) | N
 expanded | Array | [] | `v-model:expanded` is supported。Typescript：`Array<MenuValue>` | N
 defaultExpanded | Array | [] | uncontrolled property。Typescript：`Array<MenuValue>` | N
 logo | Slot / Function | - | Typescript：`TNode`。[see more ts definition](https://github.com/Tencent/tdesign-vue-next/blob/develop/packages/components/common.ts) | N
 operations | Slot / Function | - | Typescript：`TNode`。[see more ts definition](https://github.com/Tencent/tdesign-vue-next/blob/develop/packages/components/common.ts) | N
-theme | String | light | Menu can be light mode or dark mode.。options：light/dark/global/system | N
 value | String / Number | - | `v-model` and `v-model:value` is supported。Typescript：`MenuValue` `type MenuValue = string \| number`。[see more ts definition](https://github.com/Tencent/tdesign-vue-next/blob/develop/packages/components/menu/type.ts) | N
 defaultValue | String / Number | - | uncontrolled property。Typescript：`MenuValue` `type MenuValue = string \| number`。[see more ts definition](https://github.com/Tencent/tdesign-vue-next/blob/develop/packages/components/menu/type.ts) | N
-width | String / Number / Array | '232px' | Typescript：`string \| number \| Array<string \| number>` | N
+width | String / Number / Array | '400px' | Typescript：`string \| number \| Array<string \| number>` | N
 onChange | Function |  | Typescript：`(value: MenuValue) => void`<br/> | N
 onExpand | Function |  | Typescript：`(value: Array<MenuValue>) => void`<br/> | N
 
@@ -31,6 +48,7 @@ expand | `(value: Array<MenuValue>)` | \-
 
 name | type | default | description | required
 -- | -- | -- | -- | --
+s2Menu | Function / Slot | - | S2 overseas system menu. Typescript：`TNode`。[see more ts definition](https://github.com/Tencent/tdesign-vue-next/blob/develop/packages/components/common.ts) | Y
 expandType | String | normal | options：normal/popup | N
 expanded | Array | [] | `v-model:expanded` is supported。Typescript：`Array<MenuValue>` | N
 defaultExpanded | Array | [] | uncontrolled property。Typescript：`Array<MenuValue>` | N

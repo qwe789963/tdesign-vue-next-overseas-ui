@@ -16,6 +16,7 @@ import {
 } from 'vue';
 import { isFunction } from 'lodash-es';
 import { useRipple, useContent, useTNodeJSX, usePrefixClass, useCollapseAnimation } from '@tdesign/shared-hooks';
+import { ChevronRightIcon, EllipsisIcon } from 'tdesign-icons-vue-next';
 
 import props from './submenu-props';
 import { TdMenuInterface, TdSubMenuInterface, TdMenuItem } from './types';
@@ -36,20 +37,39 @@ export default defineComponent({
     const instance = getCurrentInstance();
     const menu = inject<TdMenuInterface>('TdMenu');
     const { value } = toRefs(props);
-    const { theme, activeValues, expandValues, isHead, open } = menu;
+    const { theme, activeValues, expandValues, isHead, open, thirdMode, mouseOverTrigger } = menu;
 
     const submenu = inject<TdSubMenuInterface>('TdSubmenu', {});
     const { setSubPopup, closeParentPopup, cancelHideTimer } = submenu;
 
-    const mode = computed(() => attrs.expandType || menu.mode.value);
+    // S2 规范：根据当前层级和 thirdMode 判断展开方式
+    const currentMode = computed(() => {
+      // attrs.expandType 优先级最高（组件级别配置）
+      if (attrs.expandType) return attrs.expandType as string;
+
+      // HeadMenu 始终使用 menu.mode
+      if (isHead) return menu.mode.value;
+
+      // 一级菜单（popup 模式下）始终浮层展开
+      if (menu.mode.value === 'popup') return 'popup';
+
+      // 二级菜单：如果父级是 undefined（说明是一级子菜单），使用 normal
+      if (submenu.value === undefined) return 'normal';
+
+      // 三级及以上菜单：根据 thirdMode 决定
+      return thirdMode?.value || 'popup';
+    });
+
+    const mode = computed(() => currentMode.value);
 
     const menuItems = ref([]); // 因composition-api的缺陷，不用reactive， 详见：https://github.com/vuejs/composition-api/issues/637
     const isActive = computed(() => activeValues.value.indexOf(props.value) > -1);
     const popupVisible = ref(false);
     const isCursorInPopup = ref(false);
+    const isClick = ref(false); // S2 规范：点击状态（pointerdown 时设置为 true）
     const rippleColor = computed(() => (theme.value === 'light' ? '#E7E7E7' : '#383838'));
     const isOpen = computed(() => {
-      if (mode.value === 'popup') {
+      if (currentMode.value === 'popup') {
         return popupVisible.value;
       }
       return expandValues ? expandValues.value?.includes(props.value) : false;
@@ -116,17 +136,31 @@ export default defineComponent({
         [`${classPrefix.value}-is-disabled`]: props.disabled,
         [`${classPrefix.value}-is-opened`]: isOpen.value,
         [`${classPrefix.value}-is-active`]: isActive.value,
+        [`${classPrefix.value}-menu__popup-trigger`]: currentMode.value === 'popup',
+        [`${classPrefix.value}-menu__click`]: isClick.value, // S2 规范：点击时的白色字体效果
       },
     ]);
+
+    // S2 规范：箭头样式
+    const arrowClass = computed(() => [
+      `${classPrefix.value}-arrow`,
+      {
+        [`${classPrefix.value}-arrow--open`]: isOpen.value,
+      },
+    ]);
+
+    // S2 规范：只有一级菜单和 normal 的二级菜单前面需要留箭头空格
+    const arrowSpace = computed(() => submenu.value === undefined || currentMode.value === 'normal');
+    const arrowSpaceClass = computed(() => [
+      {
+        [`${classPrefix.value}-menu__arrow`]: arrowSpace.value,
+      },
+    ]);
+
     const subClass = computed(() => [
       `${classPrefix.value}-menu__sub`,
       {
         [`${classPrefix.value}-is-opened`]: isOpen.value,
-      },
-    ]);
-    const arrowClass = computed(() => [
-      {
-        [`${classPrefix.value}-fake-arrow--active`]: isOpen.value,
       },
     ]);
 
@@ -266,6 +300,22 @@ export default defineComponent({
       open(props.value);
     };
 
+    // S2 规范：鼠标按下时显示点击效果（白色字体 + 蓝色背景）
+    const handleMouseDown = (e: MouseEvent) => {
+      if (isActive.value || props.disabled || isOpen.value) {
+        return;
+      }
+      if (e.button !== 0) return; // 只处理鼠标左键
+      isClick.value = true;
+    };
+
+    // S2 规范：鼠标释放或离开时清除点击效果
+    const handleMouseUp = () => {
+      setTimeout(() => {
+        isClick.value = false;
+      }, 100);
+    };
+
     const renderPopup = (triggerElement: Slots[]) => {
       let placement: PopupPlacement = 'right-top';
       if (!isNested.value && isHead) {
@@ -331,7 +381,14 @@ export default defineComponent({
     const renderHeadSubmenu = () => {
       const icon = renderTNodeJSX('icon');
       const normalSubmenu = [
-        <div ref={submenuRef} class={submenuClass.value} onClick={handleSubmenuItemClick}>
+        <div
+          ref={submenuRef}
+          class={submenuClass.value}
+          onClick={handleSubmenuItemClick}
+          onPointerdown={handleMouseDown}
+          onPointerup={handleMouseUp}
+          onPointerleave={handleMouseUp}
+        >
           {icon}
           <span class={[`${classPrefix.value}-menu__content`]}>{renderTNodeJSX('title', { silent: true })}</span>
         </div>,
@@ -343,10 +400,6 @@ export default defineComponent({
       const triggerElement = [
         icon,
         <span class={[`${classPrefix.value}-menu__content`]}>{renderTNodeJSX('title', { silent: true })}</span>,
-        <FakeArrow
-          overlayClassName={/menu/i.test(instance?.parent.proxy.$options.name) ? arrowClass.value : null}
-          overlayStyle={{ transform: `rotate(${needRotate ? -90 : 0}deg)` }}
-        />,
       ];
 
       return mode.value === 'normal' ? normalSubmenu : renderPopup(triggerElement);
@@ -357,7 +410,8 @@ export default defineComponent({
       const icon = renderTNodeJSX('icon');
       const child = renderContent('default', 'content');
       let parent = instance.parent;
-      let paddingLeft = 44;
+      // S2 规范：根据 thirdMode 决定子菜单的 padding-left（popup: 98px, normal: 44px）
+      let paddingLeft = thirdMode?.value === 'popup' ? 98 : 44;
 
       while (parent && parent.type.name !== 'TMenu') {
         if (parent.type.name === 'TSubmenu') {
@@ -371,15 +425,17 @@ export default defineComponent({
       const needRotate = mode.value === 'popup' && isNested.value;
 
       const normalSubmenu = [
-        <div ref={submenuRef} class={submenuClass.value} onClick={handleSubmenuItemClick}>
+        <div
+          ref={submenuRef}
+          class={submenuClass.value}
+          onClick={handleSubmenuItemClick}
+          onPointerdown={handleMouseDown}
+          onPointerup={handleMouseUp}
+          onPointerleave={handleMouseUp}
+        >
+          <span class={arrowSpaceClass.value}>{hasContent && <ChevronRightIcon class={arrowClass.value} />}</span>
           {icon}
           <span class={[`${classPrefix.value}-menu__content`]}>{renderTNodeJSX('title', { silent: true })}</span>
-          {hasContent && (
-            <FakeArrow
-              overlayClassName={arrowClass.value}
-              overlayStyle={{ transform: `rotate(${needRotate ? -90 : 0}deg)` }}
-            />
-          )}
         </div>,
         <Transition
           name={transitionClass.value}
@@ -397,12 +453,10 @@ export default defineComponent({
       ];
 
       const triggerElement = [
+        <span class={arrowSpaceClass.value}></span>,
         icon,
         <span class={[`${classPrefix.value}-menu__content`]}>{renderTNodeJSX('title', { silent: true })}</span>,
-        <FakeArrow
-          overlayClassName={/menu/i.test(parent.proxy.$options.name) ? arrowClass.value : null}
-          overlayStyle={{ transform: `rotate(${needRotate ? -90 : 0}deg)`, 'margin-left': 'auto' }}
-        />,
+        <EllipsisIcon class={`${classPrefix.value}-menu-more`} />,
       ];
 
       return mode.value === 'normal' ? normalSubmenu : renderPopup(triggerElement);
