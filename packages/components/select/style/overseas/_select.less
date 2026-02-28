@@ -1,0 +1,466 @@
+/**
+ * Select 组件海外版主样式
+ * @description 海外版 Select 组件的样式覆盖
+ *
+ * ⚠️ 重要：所有样式覆盖必须使用 .t-select 作为父选择器，确保不影响其他组件！
+ *
+ * 文件结构：
+ * 1. .t-select--overseas - 主选择器（包含所有内部样式）
+ *    - 基础样式 & 输入框样式
+ *    - 尺寸变体（小/大）
+ *    - 后缀图标样式
+ *    - Tag 样式
+ *    - 可过滤模式样式
+ *    - 单选 Tag 模式样式
+ *    - 禁用状态样式
+ *    - 兼容性下拉面板样式
+ * 2. .t-select__dropdown--overseas - 下拉面板样式（独立，挂载在 body）
+ */
+
+@import './_var.less';
+
+// ============================================================
+// 海外版 Select 主选择器
+// ============================================================
+
+.t-select--overseas {
+  // ----------------------------------------------------------
+  // 基础样式 & 输入框样式
+  // ----------------------------------------------------------
+
+  .t-select-input--multiple .t-input--prefix {
+    display: flex;
+  }
+
+  .t-select-input {
+    .t-input {
+      padding-top: @select-padding-vertical;
+      padding-bottom: @select-padding-vertical;
+      padding-left: 6px;
+      min-height: @select-height-default;
+      border-color: @select-border-color;
+      background-color: @select-bg-color;
+
+      &:hover:not(.t-is-disabled) {
+        border-color: @select-border-color-hover;
+      }
+    }
+
+    // 焦点状态 - 2px 品牌色边框
+    .t-input--focused,
+    .t-is-focused {
+      border-width: @select-dropdown-border-width;
+      border-color: @select-border-color-active;
+      box-shadow: none;
+    }
+
+    // 关键：.t-input__prefix 宽度设置，使 Tag 省略号生效
+    .t-input:is(.t-input--prefix) {
+      .t-input__prefix {
+        max-width: 100%;
+        overflow: hidden;
+      }
+    }
+  }
+
+  // ----------------------------------------------------------
+  // 尺寸变体
+  // ----------------------------------------------------------
+
+  // 小尺寸输入框
+  &.t-size-s .t-select-input .t-input {
+    min-height: @select-height-s;
+  }
+
+  // 大尺寸输入框
+  &.t-size-l .t-select-input .t-input {
+    min-height: @select-height-l;
+  }
+
+  // ----------------------------------------------------------
+  // 后缀图标样式 - bulletpoint 无旋转
+  // ----------------------------------------------------------
+
+  .t-select__right-icon--overseas {
+    color: @select-icon-color;
+    transition: color 0.2s ease;
+    transform: none !important; // 禁止旋转动画
+
+    &.t-select__right-icon--active {
+      color: @select-icon-color-active;
+    }
+  }
+
+  .t-is-focused .t-input__suffix-clear {
+    color: @select-icon-color-active;
+  }
+
+  // ----------------------------------------------------------
+  // Tag 样式 - 关闭按钮在文本左侧（RTL 风格）
+  // ----------------------------------------------------------
+
+  .t-tag {
+    flex-direction: row-reverse;
+    height: @select-tag-height;
+    overflow: hidden;
+    max-width: 100%;
+    font-size: 14px;
+
+    .t-tag__icon-close {
+      margin-left: 0;
+      margin-right: 4px;
+      flex-shrink: 0; // 关闭按钮不收缩
+    }
+
+    // Tag 内部文本省略号样式
+    > span {
+      display: block;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  // 小尺寸 Tag
+  &.t-size-s .t-tag {
+    height: @select-tag-height-s;
+  }
+
+  // 大尺寸 Tag
+  &.t-size-l .t-tag {
+    height: @select-tag-height-l;
+  }
+
+  // ----------------------------------------------------------
+  // optionWarp: true 时，Tag 内文本换行显示
+  // ----------------------------------------------------------
+
+  &.t-select--option-warp {
+    // 输入框高度自适应，允许被 Tag 换行内容撑开
+    .t-select-input .t-input {
+      height: auto;
+      padding-top: @select-padding-vertical;
+      padding-bottom: @select-padding-vertical;
+    }
+
+    // prefix 区域允许内容撑开
+    .t-select-input .t-input:is(.t-input--prefix) .t-input__prefix {
+      overflow: visible;
+    }
+
+    .t-tag {
+      height: auto;
+      margin-top: 3px;
+      margin-bottom: 3px;
+      padding-top: 3px;
+      padding-bottom: 3px;
+
+      > span {
+        display: block;
+        width: 100%;
+        overflow: visible;
+        text-overflow: unset;
+        white-space: normal;
+        word-wrap: break-word;
+        word-break: break-all;
+      }
+    }
+  }
+
+  // ----------------------------------------------------------
+  // 可过滤模式
+  // ----------------------------------------------------------
+
+  &.t-select--filterable {
+    // 后缀图标绝对定位，与已选 Tag 行垂直居中
+    .t-select-input .t-input .t-input__suffix {
+      position: absolute;
+      top: 0;
+      right: 8px;
+      height: @select-height-default;
+    }
+
+    // 为绝对定位的 suffix 预留空间，避免内容与图标重叠
+    .t-select-input .t-input {
+      padding-right: 36px !important;
+    }
+
+    // 聚焦时：input 在 Tag 下方独占一行
+    .t-select-input .t-input.t-input--prefix.t-input--focused {
+      flex-wrap: wrap;
+      height: auto;
+      padding: @select-padding-vertical 6px;
+
+      .t-input__prefix {
+        width: 100%;
+        flex-wrap: wrap;
+        // prefix 有内容时，底部加间距与搜索输入框分隔
+        &:not(:empty) {
+          margin-bottom: @select-padding-vertical;
+        }
+      }
+    }
+
+    // 未聚焦且有已选 Tag 时：隐藏搜索输入框，只显示 Tag
+    .t-select-input .t-input.t-input--prefix:not(.t-input--focused):has(.t-tag) {
+      flex-wrap: nowrap;
+
+      .t-input__prefix {
+        flex: 1;
+      }
+
+      input,
+      .t-input__input-pre {
+        display: none;
+      }
+    }
+  }
+
+  // ----------------------------------------------------------
+  // 单选 Tag 模式
+  // ----------------------------------------------------------
+
+  &.t-select-tag-true {
+    .t-select-input .t-tag {
+      flex-direction: row-reverse;
+
+      > span {
+        text-align: left;
+      }
+    }
+
+     // 清除单选 Tag 模式下 prefix 的右 margin 需要保留0.1px让输入框独占一行
+    .t-select-input .t-input__prefix:not(:empty) {
+      margin-right: 0.1px;
+    }
+  }
+
+  // ----------------------------------------------------------
+  // 禁用状态
+  // ----------------------------------------------------------
+
+  .t-select-input .t-input.t-is-disabled {
+    background-color: @bg-color-component-disabled;
+    border-color: @border-color-component-disabled;
+    color: @select-color-disabled;
+
+    .t-tag .t-tag__icon-close {
+      cursor: not-allowed;
+    }
+
+    .t-input__suffix > .t-icon {
+      cursor: not-allowed;
+      color: @select-color-disabled;
+    }
+  }
+
+  // ----------------------------------------------------------
+  // 兼容性下拉面板样式（Popup 在组件内部渲染时）
+  // ----------------------------------------------------------
+
+  .t-select__dropdown .t-popup__content {
+    border: @select-dropdown-border-width solid @select-border-color-active;
+    border-top: none; // 移除顶部边框，与输入框无缝衔接
+    border-radius: 0 0 @border-radius-default @border-radius-default; // 只有底部圆角
+    box-shadow: none;
+    padding: 0;
+    max-height: @select-dropdown-max-height;
+    overflow-y: auto;
+  }
+}
+
+// ============================================================
+// 海外版下拉面板样式
+// 注意：Popup 是挂载在 body 上的，不在 .t-select--overseas 内部
+// ============================================================
+
+.t-select__dropdown--overseas {
+  // ----------------------------------------------------------
+  // 下拉面板位置调整 - 与选择器紧贴（无间隙）
+  // ----------------------------------------------------------
+
+  // 下方弹出
+  &.t-popup[data-popper-placement^='bottom']:is(.t-popup-select, .t-select__dropdown) {
+    margin-top: -3.5px !important;
+
+    .t-popup__content {
+      border-top: none; // 移除顶部边框
+      border-radius: 0 0 @border-radius-default @border-radius-default; // 只有底部圆角
+    }
+  }
+
+  // 上方弹出
+  &.t-popup[data-popper-placement^='top']:is(.t-popup-select, .t-select__dropdown) {
+    margin-bottom: -3.5px !important;
+
+    .t-popup__content {
+      border-bottom: none; // 移除底部边框
+      border-radius: @border-radius-default @border-radius-default 0 0; // 只有顶部圆角
+    }
+  }
+
+  // ----------------------------------------------------------
+  // 下拉面板内容区域样式
+  // ----------------------------------------------------------
+
+  .t-popup__content {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    border: @select-dropdown-border-width solid @select-border-color-active;
+    box-shadow: none;
+    padding: 0;
+    max-height: @select-dropdown-max-height;
+    overflow-y: auto;
+
+    // 加载提示定位（不遮挡海外 2px 边框）
+    .t-select__loading-tips {
+      left: @select-dropdown-border-width;
+      right: @select-dropdown-border-width;
+      top: 0;
+      bottom: @select-dropdown-border-width;
+    }
+
+    // 选项列表
+    .t-select__list {
+      padding: 0;
+
+      .t-select-option {
+        height: auto;
+        padding: 0 var(--td-comp-paddingLR-s);
+
+        + .t-select-option {
+          margin-top: unset !important;
+        }
+      }
+    }
+  }
+
+  // ----------------------------------------------------------
+  // 选项样式
+  // ----------------------------------------------------------
+
+  .t-select-option {
+    border-radius: unset; // 选项无圆角
+    min-height: @select-option-height-default;
+    padding: @select-option-padding;
+    color: @select-option-color;
+
+    // 隐藏 ripple 波纹效果
+    // 波纹容器特征：position: absolute + overflow: hidden + pointer-events: none
+    // 直接子元素 div 且无 class（ripple 容器没有 class）
+    > div:not([class]) {
+      display: none !important;
+    }
+
+    // ----------------------------------------------------------
+    // optionWarp 文本换行/省略样式
+    // ----------------------------------------------------------
+
+    // 换行显示（optionWarp: true）
+    span.wrap {
+      position: relative;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    // 省略显示（optionWarp: false，默认）
+    span.nowrap {
+      position: relative;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    // 多选模式下 checkbox label 内的文本样式
+    .t-checkbox__label {
+      color: @select-option-color;
+      flex: 1;
+      overflow: hidden;
+
+      span.wrap {
+        position: relative;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        word-break: break-all;
+      }
+
+      span.nowrap {
+        position: relative;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    // checkbox 占满宽度
+    .t-checkbox {
+      width: 100%;
+    }
+
+    // Hover 状态 - 排除鼠标按下状态
+    &:hover:not(.t-is-disabled):not(.t-is-mouseDown) {
+      background-color: @select-option-bg-color-hover;
+      color: @brand-color;
+
+      .t-checkbox__label {
+        color: @brand-color;
+      }
+    }
+
+    // 选中状态 - 浅品牌色背景，排除鼠标按下状态
+    &.t-is-selected:not(.t-is-mouseDown) {
+      background-color: @select-option-bg-color-selected !important;
+      color: @select-option-color !important;
+
+      .t-checkbox__label {
+        color: @select-option-color !important;
+      }
+    }
+
+    // 鼠标按下状态 - 最高优先级（排除禁用状态）
+    &.t-is-mouseDown:not(.t-is-disabled) {
+      background-color: @brand-color !important;
+      color: @text-color-anti !important;
+
+      // 多选模式下的 checkbox 完整覆盖
+      .t-checkbox {
+        background-color: @brand-color !important;
+      }
+
+      .t-checkbox__label {
+        background-color: @brand-color !important;
+        color: @text-color-anti !important;
+      }
+    }
+
+    // 禁用状态
+    &.t-is-disabled {
+      color: @select-color-disabled;
+      cursor: not-allowed;
+      background-color: transparent !important;
+
+      // 禁用状态下 checkbox 保持原样
+      .t-checkbox,
+      // .t-checkbox__input,
+      .t-checkbox__label {
+        background-color: transparent !important;
+      }
+    }
+  }
+
+  // ----------------------------------------------------------
+  // 选项尺寸变体
+  // ----------------------------------------------------------
+
+  &.t-size-s .t-select-option {
+    min-height: @select-option-height-s;
+  }
+
+  &.t-size-l .t-select-option {
+    min-height: @select-option-height-l;
+  }
+}

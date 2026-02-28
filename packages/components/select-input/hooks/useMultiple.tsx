@@ -103,6 +103,8 @@ export function useMultiple(props: TdSelectInputProps, context: SetupContext, po
         inputClass: {
           [`${classPrefix.value}-input--focused`]: p.popupVisible,
         },
+        // allowInput 模式下始终保持 placeholder（覆盖 TagInput 内部清空逻辑）
+        ...(props.allowInput ? { placeholder: props.placeholder } : {}),
         ...props.inputProps,
       },
       suffixIcon: !disable.value && props.loading ? () => <Loading loading size="small" /> : props.suffixIcon,

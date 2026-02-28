@@ -162,13 +162,13 @@ export function useSingle(
     }
 
     if (singleValueDisplay) {
-      if (
-        !value.value ||
-        (props.valueDisplayOptions?.useInputDisplay && popupVisible) ||
-        (popupVisible && props.allowInput)
-      ) {
+      if (!value.value) {
         return [label];
       }
+      if (props.valueDisplayOptions?.useInputDisplay && popupVisible) {
+        return [label];
+      }
+      // allowInput 模式下（filterable），聚焦时保留 Tag 不隐藏
     }
     return [label, singleValueDisplay];
   };
