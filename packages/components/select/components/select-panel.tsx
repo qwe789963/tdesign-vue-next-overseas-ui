@@ -28,6 +28,7 @@ export default defineComponent({
     filter: TdSelectProps.filter,
     scroll: TdSelectProps.scroll,
     keys: TdSelectProps.keys,
+    optionWarp: TdSelectProps.optionWarp,
   },
   setup(props, { expose }) {
     const COMPONENT_NAME = usePrefixClass('select');
@@ -56,6 +57,7 @@ export default defineComponent({
           value={props.inputValue}
           label={`${props.inputValue}`}
           createAble={true}
+          optionWarp={props.optionWarp}
           class={`${COMPONENT_NAME.value}__create-option--special`}
         />
       </ul>
@@ -98,6 +100,7 @@ export default defineComponent({
                     })}
                 index={index}
                 multiple={props.multiple}
+                optionWarp={props.optionWarp}
                 v-slots={item.slots}
                 onRowMounted={handleRowMounted}
               />

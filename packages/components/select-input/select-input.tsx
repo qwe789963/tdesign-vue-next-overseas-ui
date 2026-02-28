@@ -1,4 +1,15 @@
-import { computed, defineComponent, onBeforeUnmount, onMounted, PropType, ref, SetupContext, toRefs, watch } from 'vue';
+import {
+  computed,
+  defineComponent,
+  nextTick,
+  onBeforeUnmount,
+  onMounted,
+  PropType,
+  ref,
+  SetupContext,
+  toRefs,
+  watch,
+} from 'vue';
 import Popup, { PopupInstanceFunctions, PopupProps, PopupVisibleChangeContext } from '../popup';
 import props from './props';
 import { TdSelectInputProps } from './type';
@@ -43,7 +54,11 @@ export default defineComponent({
 
     const { tOverlayInnerStyle, innerPopupVisible, onInnerPopupVisibleChange } = useOverlayInnerStyle(props);
 
-    const { isSingleFocus, commonInputProps, onInnerClear, renderSelectSingle } = useSingle(props, context, popupRef);
+    const { inputRef, isSingleFocus, commonInputProps, onInnerClear, renderSelectSingle } = useSingle(
+      props,
+      context,
+      popupRef,
+    );
 
     const { isMultipleFocus, tagInputRef, renderSelectMultiple } = useMultiple(props, context, popupRef);
 
@@ -73,6 +88,20 @@ export default defineComponent({
         selectInputRef.value.addEventListener('keydown', addKeyboardEventListener);
       } else {
         selectInputRef.value.removeEventListener('keydown', addKeyboardEventListener);
+      }
+    });
+
+    // 可过滤模式下，popup 打开时自动聚焦到过滤输入框
+    const actualVisible = computed(() => popupVisible.value ?? innerPopupVisible.value);
+    watch(actualVisible, (visible) => {
+      if (visible && allowInput.value) {
+        nextTick(() => {
+          if (multiple.value) {
+            tagInputRef.value?.focus?.();
+          } else {
+            inputRef.value?.focus?.();
+          }
+        });
       }
     });
 

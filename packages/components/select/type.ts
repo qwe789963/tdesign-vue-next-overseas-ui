@@ -214,7 +214,31 @@ export interface TdSelectProps<T extends SelectOption = SelectOption> {
    * 用于控制选中值的类型。假设数据选项为：`[{ label: '姓名', value: 'name' }]`，value 表示值仅返回数据选项中的 value， object 表示值返回全部数据。
    * @default value
    */
-  valueType?: 'value' | 'object';
+  valueType?: 'value' | 'object' | 'label';
+  /**
+   * 海外版扩展属性：自定义后缀图标名称
+   * 海外版默认使用 bulletpoint 图标替换标准版的箭头图标
+   * @default 'bulletpoint'
+   */
+  suffixIconOs?: string;
+  /**
+   * 海外版扩展属性：单选时是否使用 Tag 标签样式展示选中值
+   * 注意：海外版 Tag 的关闭按钮位于文本左侧（RTL 风格）
+   * @default true
+   */
+  singleUseTag?: boolean;
+  /**
+   * 海外版扩展属性：单选时是否显示前置 Label（与 singleUseTag 配合使用）
+   * @default false
+   */
+  singleUseLabel?: boolean;
+  /**
+   * 海外版扩展属性：Option 选项文本是否换行显示
+   * - false: 文本超出时省略（ellipsis）
+   * - true: 文本超出时换行
+   * @default false
+   */
+  optionWarp?: boolean;
   /**
    * 输入框失去焦点时触发
    */
