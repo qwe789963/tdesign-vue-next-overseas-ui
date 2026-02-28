@@ -6,17 +6,17 @@
   <t-space direction="vertical">
     <t-space>
       <t-radio-group v-model="multiple" variant="default-filled">
-        <t-radio-button :value="false">单文件上传</t-radio-button>
-        <t-radio-button :value="true">多文件上传</t-radio-button>
+        <t-radio-button :value="false">Single File Upload</t-radio-button>
+        <t-radio-button :value="true">Multiple File Upload</t-radio-button>
       </t-radio-group>
     </t-space>
     <t-space>
-      <t-checkbox v-model="disabled">禁用状态</t-checkbox>
-      <t-checkbox v-if="multiple" v-model="uploadInOneRequest">多个文件一个请求上传</t-checkbox>
-      <t-checkbox v-if="multiple" v-model="isBatchUpload">整体替换上传</t-checkbox>
-      <t-checkbox v-model="autoUpload">自动上传</t-checkbox>
+      <t-checkbox v-model="disabled">Disabled Status</t-checkbox>
+      <t-checkbox v-if="multiple" v-model="uploadInOneRequest">Upload Multiple Files with Single Request</t-checkbox>
+      <t-checkbox v-if="multiple" v-model="isBatchUpload">Global replacement upload</t-checkbox>
+      <t-checkbox v-model="autoUpload">Automatic Upload</t-checkbox>
       <t-button v-if="!autoUpload" variant="base" theme="default" style="height: 22px" @click="uploadFiles">
-        点击手动上传
+        Click to upload manually
       </t-button>
     </t-space>
 
@@ -26,7 +26,6 @@
         ref="uploadRef1"
         v-model="files1"
         action="https://service-bv448zsw-1257786608.gz.apigw.tencentcs.com/api/upload-demo"
-        :headers="{ a: 'N1', b: 'N2' }"
         :placeholder="multiple ? '文件数量不超过 5 个' : '要求文件大小在 1M 以内'"
         :multiple="multiple"
         :auto-upload="autoUpload"
@@ -42,7 +41,9 @@
         @one-file-success="onOneFileSuccess"
         @validate="onValidate"
       />
+    </t-space>
 
+    <t-space>
       <t-upload
         ref="uploadRef2"
         v-model="files2"
@@ -54,11 +55,11 @@
         :trigger-button-props="{ theme: 'primary', variant: 'base' }"
         placeholder="这是一段没有文件时的占位文本"
         action="//service-bv448zsw-1257786608.gz.apigw.tencentcs.com/api/upload-demo"
-        :style="{ marginLeft: '40px' }"
         @fail="handleFail"
-        @progress="handleProgress"
       />
+    </t-space>
 
+    <t-space>
       <!-- formatResponse 可控制上传成功或者失败 -->
       <!-- tips="文件上传失败示例" 和 status="error" 控制固定文本显示 -->
       <t-upload
@@ -72,7 +73,6 @@
         :format-response="formatResponse"
         placeholder="文件上传失败示例"
         action="//service-bv448zsw-1257786608.gz.apigw.tencentcs.com/api/upload-demo"
-        :style="{ marginLeft: '60px' }"
         @fail="handleFail"
       >
         <!-- 自定义文件列表，示例代码有效，勿删 -->
@@ -128,21 +128,8 @@ watch(multiple, (multiple) => {
           size: 1000,
         },
         {
-          name: '这是一个上传中的文件',
-          status: 'progress',
-          percent: 30,
-          url: 'https://tdesign.gtimg.com/site/source/figma-pc.png',
-          size: 1000,
-        },
-        {
           name: '这是一个上传失败的文件',
           status: 'fail',
-          url: 'https://tdesign.gtimg.com/site/source/figma-pc.png',
-          size: 1000,
-        },
-        {
-          name: '这是一个等待上传的文件',
-          status: 'waiting',
           url: 'https://tdesign.gtimg.com/site/source/figma-pc.png',
           size: 1000,
         },
@@ -154,16 +141,16 @@ const handleFail = ({ file }) => {
   MessagePlugin.error(`文件 ${file.name} 上传失败`);
 };
 
-function handleSelectChange(files, context) {
-  console.log('onSelectChange', files, context);
+function handleSelectChange(files) {
+  console.log('onSelectChange', files);
 }
 
 const handleSuccess = (params) => {
-  console.log('success', params);
+  console.log(params);
   MessagePlugin.success('上传成功');
 };
 
-// 多文件上传，一个文件一个请求场景，每个文件也会单独触发上传成功的事件
+// 多文件上传，一个文件一个请求场景,每个文件也会单独触发上传成功的事件
 const onOneFileSuccess = (params) => {
   console.log('onOneFileSuccess', params);
 };
@@ -199,12 +186,10 @@ const uploadFiles = () => {
   uploadRef3.value.uploadFiles();
 };
 
-const formatResponse = () => {
-  return { error: '上传失败，请重试' };
-};
-
-const handleProgress = (params) => {
-  console.log('progress', params);
+// 用于格式化接口响应值，error 会被用于上传失败的提示文字；url 表示文件/图片地址
+// error 为真时，组件会判定为上传失败
+const formatResponse = (res) => {
+  return { error: '上传失败，请重试', url: res.url };
 };
 
 /** 单个文件校验方法，示例代码有效，勿删 */
@@ -215,7 +200,7 @@ const handleProgress = (params) => {
 
 /** 全部文件一次性校验方法，示例代码有效，勿删 */
 // const beforeAllFilesUpload = () => {
-//   MessagePlugin.error(`文件不满足条件`);
+//   MessagePlugin.error('文件不满足条件');
 //   return false;
 // };
 </script>

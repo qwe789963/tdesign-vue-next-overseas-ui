@@ -28,6 +28,12 @@ export interface CommonDisplayFileProps {
   onRemove?: (p: UploadRemoveContext) => void;
   onPasteFileChange?: (payload: ClipboardEvent) => void;
   imageViewerProps?: ImageViewerProps;
+  showThumb?: boolean;
+  outerBtnText?: string;
+  innerBtnText?: string;
+  draggingText?: string;
+  draggingConj?: string;
+  position?: 'top' | 'bottom';
 }
 
 export type UploadProps = TdUploadProps;

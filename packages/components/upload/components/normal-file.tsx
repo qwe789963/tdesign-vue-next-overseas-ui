@@ -5,6 +5,8 @@ import {
   CheckCircleFilledIcon as TdCheckCircleFilledIcon,
   ErrorCircleFilledIcon as TdErrorCircleFilledIcon,
   CloseCircleFilledIcon as TdCloseCircleFilledIcon,
+  FileCopyIcon as TdViewBoxAIcon,
+  DeleteIcon as TdDeleteIcon,
 } from 'tdesign-icons-vue-next';
 import TLoading from '../../loading';
 import Link from '../../link';
@@ -30,14 +32,24 @@ const NormalFile = defineComponent({
 
     const locale = computed(() => props.locale as UploadConfig);
 
-    const { CloseIcon, TimeFilledIcon, CheckCircleFilledIcon, ErrorCircleFilledIcon, CloseCircleFilledIcon } =
-      useGlobalIcon({
-        CloseIcon: TdCloseIcon,
-        TimeFilledIcon: TdTimeFilledIcon,
-        CheckCircleFilledIcon: TdCheckCircleFilledIcon,
-        ErrorCircleFilledIcon: TdErrorCircleFilledIcon,
-        CloseCircleFilledIcon: TdCloseCircleFilledIcon,
-      });
+    const {
+      CloseIcon,
+      TimeFilledIcon,
+      CheckCircleFilledIcon,
+      ErrorCircleFilledIcon,
+      CloseCircleFilledIcon,
+      DeleteIcon,
+    } = useGlobalIcon({
+      CloseIcon: TdCloseIcon,
+      TimeFilledIcon: TdTimeFilledIcon,
+      CheckCircleFilledIcon: TdCheckCircleFilledIcon,
+      ErrorCircleFilledIcon: TdErrorCircleFilledIcon,
+      CloseCircleFilledIcon: TdCloseCircleFilledIcon,
+      DeleteIcon: TdDeleteIcon,
+    });
+
+    // ViewBoxAIcon 直接使用，不通过 useGlobalIcon
+    const ViewBoxAIcon = TdViewBoxAIcon;
 
     const renderTNodeJSX = useTNodeJSX();
 
@@ -63,6 +75,7 @@ const NormalFile = defineComponent({
             class={`${uploadPrefix}__single-display-text ${uploadPrefix}__display-text--margin`}
             key={file.name + index + file.percent + file.status}
           >
+            <ViewBoxAIcon />
             {file.url ? (
               <Link
                 href={file.url}
@@ -89,7 +102,7 @@ const NormalFile = defineComponent({
             )}
             {file.status === 'progress' && renderProgress(file.percent)}
             {!disabled.value && file.status !== 'progress' && (
-              <CloseIcon
+              <DeleteIcon
                 class={`${uploadPrefix}__icon-delete`}
                 onClick={({ e }: { e: MouseEvent }) => props.onRemove({ e, file, index })}
               />
@@ -161,13 +174,13 @@ const NormalFile = defineComponent({
         <div class={classes}>
           {theme.value === 'file-input' && renderFilePreviewAsInput()}
 
+          {fileListDisplay === null ? null : fileListDisplay || renderFilePreviewAsText(displayFiles)}
+
           {slots.default?.()}
 
           {theme.value === 'file' && props.placeholder && !displayFiles[0] && (
             <small class={[props.tipsClasses, props.placeholderClass]}>{props.placeholder}</small>
           )}
-
-          {fileListDisplay === null ? null : fileListDisplay || renderFilePreviewAsText(displayFiles)}
 
           {/* 单文件上传失败要显示失败的原因 */}
           {!props.multiple && displayFiles[0]?.status === 'fail' && theme.value === 'file' ? (

@@ -170,12 +170,12 @@ export interface GlobalConfigProvider {
 
 export interface AlertConfig {
   /**
-   * 语言配置，“收起”描述文本
+   * 语言配置，"收起"描述文本
    * @default ''
    */
   collapseText?: string;
   /**
-   * 语言配置，“展开更多”描述文本
+   * 语言配置，"展开更多"描述文本
    * @default ''
    */
   expandText?: string;
@@ -183,12 +183,12 @@ export interface AlertConfig {
 
 export interface AnchorConfig {
   /**
-   * 语言配置，“链接复制成功”描述文本
+   * 语言配置，"链接复制成功"描述文本
    * @default ''
    */
   copySuccessText?: string;
   /**
-   * 语言配置，“复制链接” 描述文本
+   * 语言配置，"复制链接" 描述文本
    * @default ''
    */
   copyText?: string;
@@ -196,7 +196,7 @@ export interface AnchorConfig {
 
 export interface AutoCompleteConfig {
   /**
-   * 语言配置，“暂无数据”描述文本
+   * 语言配置，"暂无数据"描述文本
    * @default ''
    */
   empty?: string;
@@ -223,31 +223,31 @@ export interface CalendarConfig {
    */
   firstDayOfWeek?: number;
   /**
-   * 语言配置，“隐藏周末”描述文本
+   * 语言配置，"隐藏周末"描述文本
    * @default ''
    */
   hideWeekend?: string;
   /**
-   * 语言配置，模式切换时的“月”描述文本
+   * 语言配置，模式切换时的"月"描述文本
    * @default ''
    */
   monthRadio?: string;
   /**
-   * 语言配置，“月”选择描述文本。示例：`'{month} 月'`
+   * 语言配置，"月"选择描述文本。示例：`'{month} 月'`
    */
   monthSelection?: string | ((data: { month: number }) => string);
   /**
-   * 语言配置，“显示周末”描述文本
+   * 语言配置，"显示周末"描述文本
    * @default ''
    */
   showWeekend?: string;
   /**
-   * 语言配置，“本月”描述文本
+   * 语言配置，"本月"描述文本
    * @default ''
    */
   thisMonth?: string;
   /**
-   * 语言配置，“今天”描述文本
+   * 语言配置，"今天"描述文本
    * @default ''
    */
   today?: string;
@@ -257,12 +257,12 @@ export interface CalendarConfig {
    */
   week?: string;
   /**
-   * 语言配置，模式切换时的“年”描述文本
+   * 语言配置，模式切换时的"年"描述文本
    * @default ''
    */
   yearRadio?: string;
   /**
-   * 语言配置，“年”选择描述文本，示例：`'{year} 年'`
+   * 语言配置，"年"选择描述文本，示例：`'{year} 年'`
    * @default ''
    */
   yearSelection?: string;
@@ -270,17 +270,17 @@ export interface CalendarConfig {
 
 export interface CascaderConfig {
   /**
-   * 语言配置，“暂无数据”描述文本
+   * 语言配置，"暂无数据"描述文本
    * @default ''
    */
   empty?: string;
   /**
-   * 语言配置，“加载中”描述文本
+   * 语言配置，"加载中"描述文本
    * @default ''
    */
   loadingText?: string;
   /**
-   * 语言配置，“请选择”占位描述文本
+   * 语言配置，"请选择"占位描述文本
    * @default ''
    */
   placeholder?: string;
@@ -288,99 +288,99 @@ export interface CascaderConfig {
 
 export interface ChatConfig {
   /**
-   * 语言配置，“请输入消息”占位描述文本
+   * 语言配置，"请输入消息"占位描述文本
    * @default ''
    */
   placeholder?: string;
   /**
-   * 语言配置，“中止”占位描述文本
+   * 语言配置，"中止"占位描述文本
    * @default ''
    */
   stopBtnText?: string;
   /**
-   * 语言配置，“重新生成”占位描述文本
+   * 语言配置，"重新生成"占位描述文本
    * @default ''
    */
   refreshTipText?: string;
   /**
-   * 语言配置，“复制”占位描述文本
+   * 语言配置，"复制"占位描述文本
    * @default ''
    */
   copyTipText?: string;
   /**
-   * 语言配置，“点赞”占位描述文本
+   * 语言配置，"点赞"占位描述文本
    * @default ''
    */
   likeTipText?: string;
   /**
-   * 语言配置，“点踩”占位描述文本
+   * 语言配置，"点踩"占位描述文本
    * @default ''
    */
   dislikeTipText?: string;
   /**
-   * 语言配置，“复制代码”占位描述文本
+   * 语言配置，"复制代码"占位描述文本
    * @default ''
    */
   copyCodeBtnText?: string;
   /**
-   * 语言配置，“已复制”占位描述文本
+   * 语言配置，"已复制"占位描述文本
    * @default ''
    */
   copyCodeSuccessText?: string;
   /**
-   * 语言配置，“清空历史记录”占位描述文本
+   * 语言配置，"清空历史记录"占位描述文本
    * @default ''
    */
   clearHistoryBtnText?: string;
   /**
-   * 语言配置，“已成功复制到剪贴板”占位描述文本
+   * 语言配置，"已成功复制到剪贴板"占位描述文本
    * @default ''
    */
   copyTextSuccess?: string;
   /**
-   * 语言配置，“复制到剪贴板失败”占位描述文本
+   * 语言配置，"复制到剪贴板失败"占位描述文本
    * @default ''
    */
   copyTextFail?: string;
   /**
-   * 语言配置，“确定要清空消息”占位描述文本
+   * 语言配置，"确定要清空消息"占位描述文本
    * @default ''
    */
   confirmClearHistory?: string;
   /**
-   * 语言配置，“思考中”占位描述文本
+   * 语言配置，"思考中"占位描述文本
    * @default ''
    */
   loadingText?: string;
   /**
-   * 语言配置，“已深度思考”占位描述文本
+   * 语言配置，"已深度思考"占位描述文本
    * @default ''
    */
   loadingEndText?: string;
   /**
-   * 语言配置，“上传图片”占位描述文本
+   * 语言配置，"上传图片"占位描述文本
    * @default ''
    */
   uploadImageText?: string;
   /**
-   * 语言配置，“上传附件”占位描述文本
+   * 语言配置，"上传附件"占位描述文本
    * @default ''
    */
   uploadAttachmentText?: string;
 }
 export interface ColorPickerConfig {
   /**
-   * 语言配置，“确定清空最近使用的颜色吗？”清空颜色确认文案
+   * 语言配置，"确定清空最近使用的颜色吗？"清空颜色确认文案
    * @default ''
    */
   clearConfirmText?: string;
   /**
-   * 语言配置，“最近使用颜色” 区域标题文本
+   * 语言配置，"最近使用颜色" 区域标题文本
    * @default ''
    */
   recentColorTitle?: string;
   /**
-   * 语言配置，“系统预设颜色” 区域标题文本
+   * 语言配置，"系统预设颜色" 区域标题文本
    * @default ''
    */
   swatchColorTitle?: string;
@@ -388,12 +388,12 @@ export interface ColorPickerConfig {
 
 export interface DatePickerConfig {
   /**
-   * 语言配置，“确定” 描述文本
+   * 语言配置，"确定" 描述文本
    * @default ''
    */
   confirm?: string;
   /**
-   * 语言配置，“日” 描述文本
+   * 语言配置，"日" 描述文本
    * @default ''
    */
   dayAriaLabel?: string;
@@ -418,7 +418,7 @@ export interface DatePickerConfig {
    */
   format?: string;
   /**
-   * 语言配置，“月” 描述文本
+   * 语言配置，"月" 描述文本
    * @default ''
    */
   monthAriaLabel?: string;
@@ -427,22 +427,22 @@ export interface DatePickerConfig {
    */
   months?: string[];
   /**
-   * 语言配置，“下个十年” 描述文本
+   * 语言配置，"下个十年" 描述文本
    * @default ''
    */
   nextDecade?: string;
   /**
-   * 语言配置，“下个月” 描述文本
+   * 语言配置，"下个月" 描述文本
    * @default ''
    */
   nextMonth?: string;
   /**
-   * 语言配置，“下一年” 描述文本
+   * 语言配置，"下一年" 描述文本
    * @default ''
    */
   nextYear?: string;
   /**
-   * 语言配置，“此刻” 描述文本
+   * 语言配置，"此刻" 描述文本
    * @default ''
    */
   now?: string;
@@ -451,17 +451,17 @@ export interface DatePickerConfig {
    */
   placeholder?: { date?: string; month?: string; year?: string };
   /**
-   * 语言配置，“上个十年” 描述文本
+   * 语言配置，"上个十年" 描述文本
    * @default ''
    */
   preDecade?: string;
   /**
-   * 语言配置，“上个月” 描述文本
+   * 语言配置，"上个月" 描述文本
    * @default ''
    */
   preMonth?: string;
   /**
-   * 语言配置，“上一年” 描述文本
+   * 语言配置，"上一年" 描述文本
    * @default ''
    */
   preYear?: string;
@@ -474,22 +474,22 @@ export interface DatePickerConfig {
    */
   quarters?: string[];
   /**
-   * 语言配置，“ 至 ” 范围分隔符描述文本，示例：' ~ '
+   * 语言配置，" 至 " 范围分隔符描述文本，示例：' ~ '
    * @default ''
    */
   rangeSeparator?: string;
   /**
-   * 语言配置，“选择日期” 描述文本
+   * 语言配置，"选择日期" 描述文本
    * @default ''
    */
   selectDate?: string;
   /**
-   * 语言配置，“选择时间” 描述文本
+   * 语言配置，"选择时间" 描述文本
    * @default ''
    */
   selectTime?: string;
   /**
-   * 语言配置，“周” 描述文本
+   * 语言配置，"周" 描述文本
    * @default ''
    */
   weekAbbreviation?: string;
@@ -498,7 +498,7 @@ export interface DatePickerConfig {
    */
   weekdays?: string[];
   /**
-   * 语言配置，“年” 描述文本
+   * 语言配置，"年" 描述文本
    * @default ''
    */
   yearAriaLabel?: string;
@@ -506,7 +506,7 @@ export interface DatePickerConfig {
 
 export interface DescriptionsConfig {
   /**
-   * 字段旁边的冒号，中文为“：”
+   * 字段旁边的冒号，中文为"："
    * @default ''
    */
   colonText?: string;
@@ -539,7 +539,7 @@ export interface DialogConfig {
 
 export interface DrawerConfig {
   /**
-   * 语言配置，“取消”描述文本
+   * 语言配置，"取消"描述文本
    * @default ''
    */
   cancel?: string | ButtonProps;
@@ -554,7 +554,7 @@ export interface DrawerConfig {
    */
   closeOnOverlayClick?: boolean;
   /**
-   * 语言配置，“确认”描述文本
+   * 语言配置，"确认"描述文本
    * @default ''
    */
   confirm?: string | ButtonProps;
@@ -578,7 +578,7 @@ export interface EmptyConfig {
 
 export interface FormConfig {
   /**
-   * 字段旁边的冒号，中文为“：”
+   * 字段旁边的冒号，中文为"："
    * @default ''
    */
   colonText?: string;
@@ -619,12 +619,12 @@ export interface GuideConfig {
 
 export interface ImageConfig {
   /**
-   * 图片加载失败显示的文本，中文默认为“图片无法显示”
+   * 图片加载失败显示的文本，中文默认为"图片无法显示"
    * @default ''
    */
   errorText?: string;
   /**
-   * 图片加载中显示的文本，中文默认为“图片加载中”
+   * 图片加载中显示的文本，中文默认为"图片加载中"
    * @default ''
    */
   loadingText?: string;
@@ -636,27 +636,27 @@ export interface ImageConfig {
 
 export interface ImageViewerConfig {
   /**
-   * 全局语言配置，默认为 “图片加载失败，可尝试重新加载”
+   * 全局语言配置，默认为 "图片加载失败，可尝试重新加载"
    * @default ''
    */
   errorText?: string;
   /**
-   * 全局语言配置，默认为 “镜像”
+   * 全局语言配置，默认为 "镜像"
    * @default ''
    */
   mirrorTipText?: string;
   /**
-   * 全局语言配置，默认为 “原始大小”
+   * 全局语言配置，默认为 "原始大小"
    * @default ''
    */
   originalSizeTipText?: string;
   /**
-   * 全局语言配置，默认为 “预览”
+   * 全局语言配置，默认为 "预览"
    * @default ''
    */
   previewText?: string;
   /**
-   * 全局语言配置，默认为 “旋转”
+   * 全局语言配置，默认为 "旋转"
    * @default ''
    */
   rotateTipText?: string;
@@ -669,7 +669,7 @@ export interface InputConfig {
    */
   autocomplete?: string;
   /**
-   * 语言配置，“请输入”占位符描述文本
+   * 语言配置，"请输入"占位符描述文本
    * @default ''
    */
   placeholder?: string;
@@ -702,7 +702,7 @@ export interface PaginationConfig {
    */
   jumpTo?: string;
   /**
-   * 语言配置，“页”描述文本
+   * 语言配置，"页"描述文本
    * @default ''
    */
   page?: string;
@@ -715,11 +715,11 @@ export interface PaginationConfig {
 
 export interface PopconfirmConfig {
   /**
-   * 语言配置，“取消”描述文本
+   * 语言配置，"取消"描述文本
    */
   cancel?: string | ButtonProps;
   /**
-   * 语言配置，“确定”描述文本
+   * 语言配置，"确定"描述文本
    */
   confirm?: string | ButtonProps;
   /**
@@ -730,17 +730,17 @@ export interface PopconfirmConfig {
 
 export interface QRCodeConfig {
   /**
-   * 语言配置，“二维码过期”描述文本
+   * 语言配置，"二维码过期"描述文本
    * @default ''
    */
   expiredText?: string;
   /**
-   * 语言配置，“点击刷新”描述文本
+   * 语言配置，"点击刷新"描述文本
    * @default ''
    */
   refreshText?: string;
   /**
-   * 语言配置，“已扫描”描述文本
+   * 语言配置，"已扫描"描述文本
    * @default ''
    */
   scannedText?: string;
@@ -759,7 +759,7 @@ export interface SelectConfig {
    */
   clearIcon?: TNode;
   /**
-   * 语言配置，“暂无数据”描述文本
+   * 语言配置，"暂无数据"描述文本
    * @default ''
    */
   empty?: string;
@@ -769,12 +769,12 @@ export interface SelectConfig {
    */
   filterable?: boolean;
   /**
-   * 语言配置，“加载中”描述文本
+   * 语言配置，"加载中"描述文本
    * @default ''
    */
   loadingText?: string;
   /**
-   * 语言配置，“请选择”占位符描述文本
+   * 语言配置，"请选择"占位符描述文本
    * @default ''
    */
   placeholder?: string;
@@ -793,37 +793,37 @@ export interface StepsConfig {
 
 export interface TableConfig {
   /**
-   * 语言配置，“取消” 描述文本
+   * 语言配置，"取消" 描述文本
    * @default ''
    */
   cancelText?: string;
   /**
-   * 语言配置，过滤功能中，“清空筛选” 描述文本
+   * 语言配置，过滤功能中，"清空筛选" 描述文本
    * @default ''
    */
   clearFilterResultButtonText?: string;
   /**
-   * 语言配置，列配置功能中，“列配置” 按钮描述文本
+   * 语言配置，列配置功能中，"列配置" 按钮描述文本
    * @default ''
    */
   columnConfigButtonText?: string;
   /**
-   * 语言配置，“请选择需要在表格中显示的数据列” 描述文本，列配置功能中弹框顶部描述
+   * 语言配置，"请选择需要在表格中显示的数据列" 描述文本，列配置功能中弹框顶部描述
    * @default ''
    */
   columnConfigDescriptionText?: string;
   /**
-   * 语言配置，“表格列配置” 描述文本，列配置功能中弹框的标题
+   * 语言配置，"表格列配置" 描述文本，列配置功能中弹框的标题
    * @default ''
    */
   columnConfigTitleText?: string;
   /**
-   * 语言配置，“确认” 描述文本
+   * 语言配置，"确认" 描述文本
    * @default ''
    */
   confirmText?: string;
   /**
-   * 语言配置，“暂无数据” 描述文本
+   * 语言配置，"暂无数据" 描述文本
    */
   empty?: string | TNode;
   /**
@@ -840,22 +840,22 @@ export interface TableConfig {
    */
   hideSortTips?: boolean;
   /**
-   * 语言配置，“点击加载更多” 描述文本
+   * 语言配置，"点击加载更多" 描述文本
    * @default ''
    */
   loadingMoreText?: string;
   /**
-   * 语言配置，“正在加载中，请稍后” 描述文本
+   * 语言配置，"正在加载中，请稍后" 描述文本
    * @default ''
    */
   loadingText?: string;
   /**
-   * 语言配置，“重置” 描述文本
+   * 语言配置，"重置" 描述文本
    * @default ''
    */
   resetText?: string;
   /**
-   * 语言配置，过滤功能中，过滤条件和结果描述文本，示例：'搜索“{result}”，找到 {count} 条结果'
+   * 语言配置，过滤功能中，过滤条件和结果描述文本，示例：'搜索"{result}"，找到 {count} 条结果'
    * @default ''
    */
   searchResultText?: string;
@@ -903,17 +903,17 @@ export interface TagConfig {
 
 export interface TimePickerConfig {
   /**
-   * 语言配置，“上午”描述文本
+   * 语言配置，"上午"描述文本
    * @default ''
    */
   anteMeridiem?: string;
   /**
-   * 语言配置，“确定”描述文本
+   * 语言配置，"确定"描述文本
    * @default ''
    */
   confirm?: string;
   /**
-   * 语言配置，“此刻”描述文本
+   * 语言配置，"此刻"描述文本
    * @default ''
    */
   now?: string;
@@ -923,7 +923,7 @@ export interface TimePickerConfig {
    */
   placeholder?: string;
   /**
-   * 语言配置，“下午”描述文本
+   * 语言配置，"下午"描述文本
    * @default ''
    */
   postMeridiem?: string;
@@ -931,17 +931,17 @@ export interface TimePickerConfig {
 
 export interface TransferConfig {
   /**
-   * 语言配置，“暂无数据”空数据描述文本
+   * 语言配置，"暂无数据"空数据描述文本
    * @default ''
    */
   empty?: string;
   /**
-   * 语言配置，“请输入关键词搜索”占位符描述文本
+   * 语言配置，"请输入关键词搜索"占位符描述文本
    * @default ''
    */
   placeholder?: string;
   /**
-   * 语言配置，穿梭框标题描述文本，示例：“{checked} / {total} 项”
+   * 语言配置，穿梭框标题描述文本，示例："{checked} / {total} 项"
    * @default ''
    */
   title?: string;
@@ -949,7 +949,7 @@ export interface TransferConfig {
 
 export interface TreeConfig {
   /**
-   * 语言配置，“暂无数据”描述文本
+   * 语言配置，"暂无数据"描述文本
    * @default ''
    */
   empty?: string;
@@ -961,17 +961,17 @@ export interface TreeConfig {
 
 export interface TreeSelectConfig {
   /**
-   * 语言配置，“暂无数据”描述文本
+   * 语言配置，"暂无数据"描述文本
    * @default ''
    */
   empty?: string;
   /**
-   * 语言配置，“加载中”描述文本
+   * 语言配置，"加载中"描述文本
    * @default ''
    */
   loadingText?: string;
   /**
-   * 语言配置，“请选择”占位符描述文本
+   * 语言配置，"请选择"占位符描述文本
    * @default ''
    */
   placeholder?: string;
@@ -979,17 +979,17 @@ export interface TreeSelectConfig {
 
 export interface TypographyConfig {
   /**
-   * 语言配置，“收起”描述文本
+   * 语言配置，"收起"描述文本
    * @default ''
    */
   collapseText?: string;
   /**
-   * 语言配置，“复制成功”描述文本
+   * 语言配置，"复制成功"描述文本
    * @default ''
    */
   copiedText?: string;
   /**
-   * 语言配置，“展开”描述文本
+   * 语言配置，"展开"描述文本
    * @default ''
    */
   expandText?: string;
@@ -997,12 +997,12 @@ export interface TypographyConfig {
 
 export interface UploadConfig {
   /**
-   * 语言配置，“取消上传” 描述文本
+   * 语言配置，"取消上传" 描述文本
    * @default ''
    */
   cancelUploadText?: string;
   /**
-   * 语言配置，拖拽相关。示例：{ dragDropText: '释放图标', draggingText: '拖拽到此区域', clickAndDragText: '点击上方“选择文件”或将文件拖到此区域' }
+   * 语言配置，拖拽相关。示例：{ dragDropText: '释放图标', draggingText: '拖拽到此区域', clickAndDragText: '点击上方"选择文件"或将文件拖到此区域' }
    */
   dragger?: UploadConfigDragger;
   /**
@@ -1026,12 +1026,12 @@ export interface UploadConfig {
 
 export interface UploadConfigDragger {
   /**
-   * 语言配置，“ 点击上方“选择文件”或将文件拖到此区域 ” 描述文本
+   * 语言配置，" 点击上方"选择文件"或将文件拖到此区域 " 描述文本
    * @default ''
    */
   clickAndDragText?: string;
   /**
-   * 语言配置，“释放图标” 描述文本
+   * 语言配置，"释放图标" 描述文本
    * @default ''
    */
   dragDropText?: string;
@@ -1040,31 +1040,36 @@ export interface UploadConfigDragger {
    * @default ''
    */
   draggingText?: string;
+  /**
+   * 语言配置，拖拽区域分隔符文本（如 'or' 或 '或'）
+   * @default ''
+   */
+  draggingConj?: string;
 }
 
 export interface UploadConfigFileList {
   /**
-   * 语言配置，“文件名” 描述文本
+   * 语言配置，"文件名" 描述文本
    * @default ''
    */
   fileNameText?: string;
   /**
-   * 语言配置，“上传日期” 描述文本
+   * 语言配置，"上传日期" 描述文本
    * @default ''
    */
   fileOperationDateText?: string;
   /**
-   * 语言配置，“操作” 描述文本
+   * 语言配置，"操作" 描述文本
    * @default ''
    */
   fileOperationText?: string;
   /**
-   * 语言配置，“文件尺寸” 描述文本
+   * 语言配置，"文件尺寸" 描述文本
    * @default ''
    */
   fileSizeText?: string;
   /**
-   * 语言配置，“状态” 描述文本
+   * 语言配置，"状态" 描述文本
    * @default ''
    */
   fileStatusText?: string;
@@ -1072,22 +1077,22 @@ export interface UploadConfigFileList {
 
 export interface UploadConfigProgress {
   /**
-   * 语言配置，“上传失败”文本描述
+   * 语言配置，"上传失败"文本描述
    * @default ''
    */
   failText?: string;
   /**
-   * 语言配置，“上传成功”文本描述
+   * 语言配置，"上传成功"文本描述
    * @default ''
    */
   successText?: string;
   /**
-   * 语言配置，“上传中”文本描述
+   * 语言配置，"上传中"文本描述
    * @default ''
    */
   uploadingText?: string;
   /**
-   * 语言配置，“待上传”文本描述
+   * 语言配置，"待上传"文本描述
    * @default ''
    */
   waitingText?: string;
@@ -1107,6 +1112,7 @@ export interface UploadTriggerUploadText {
   image?: string;
   normal?: string;
   fileInput?: string;
+  s2FileInput?: string;
   reupload?: string;
   continueUpload?: string;
   delete?: string;

@@ -5,6 +5,7 @@ import NormalFile from './components/normal-file';
 import DraggerFile from './components/dragger-file';
 import ImageCard from './components/image-card';
 import MultipleFlowList from './components/multiple-flow-list';
+import S2FileFlowList from './components/s2-file-flow-list';
 import Button from '../button';
 import { CommonDisplayFileProps, UploadProps } from './types';
 import CustomFile from './components/custom-file';
@@ -112,6 +113,12 @@ export default defineComponent({
       uploadPastedFiles: props.uploadPastedFiles,
       onPasteFileChange: onPasteFileChange,
       imageViewerProps: props.imageViewerProps,
+      showThumb: props.showThumb,
+      outerBtnText: props.outerBtnText,
+      innerBtnText: props.innerBtnText,
+      draggingText: props.draggingText,
+      draggingConj: props.draggingConj,
+      position: props.position,
     }));
 
     const dragProps: UploadDragEvents = {
@@ -225,6 +232,22 @@ export default defineComponent({
       </CustomFile>
     );
 
+    const getS2FileNode = () => (
+      <S2FileFlowList
+        {...commonDisplayFileProps.value}
+        accept={props.accept}
+        dragEvents={dragProps}
+        triggerUpload={triggerUpload}
+        uploadFiles={uploadFiles}
+        v-slots={{
+          fileListDisplay: slots.fileListDisplay,
+          'file-list-display': slots['file-list-display'],
+          outerBtnTextTrigger: slots.outerBtnTextTrigger,
+          default: slots.trigger,
+        }}
+      />
+    );
+
     return () => (
       <div class={uploadClasses.value} onPaste={props.uploadPastedFiles ? onPasteFileChange : undefined}>
         <input
@@ -241,6 +264,7 @@ export default defineComponent({
         {['file', 'image'].includes(props.theme) && props.draggable && getSingleFileDraggerUploadNode()}
         {props.theme === 'image' && !props.draggable && getImageCardUploadNode()}
         {['image-flow', 'file-flow'].includes(props.theme) && getFlowListNode()}
+        {props.theme === 's2-file' && getS2FileNode()}
         {props.theme === 'custom' && getCustomFile()}
 
         {Boolean(props.tips || slots.tips) && (

@@ -146,8 +146,42 @@ export default {
     type: Boolean,
     default: true,
   },
-  /** 是否在文件列表中显示缩略图，`theme=file-flow` 时有效 */
+  /** 是否在文件列表中显示缩略图，`theme=file-flow` 或 `theme=s2-file` 时有效 */
   showThumbnail: Boolean,
+  /** 是否显示缩略图，`theme=s2-file` 时有效，可在单个文件中覆盖 */
+  showThumb: {
+    type: Boolean,
+    default: true,
+  },
+  /** 外部按钮文本，`theme=s2-file` 时有效 */
+  outerBtnText: {
+    type: String,
+    default: '',
+  },
+  /** 内部按钮文本，`theme=s2-file` 时有效 */
+  innerBtnText: {
+    type: String,
+    default: '',
+  },
+  /** 拖拽提示文本，`theme=s2-file` 时有效 */
+  draggingText: {
+    type: String,
+    default: '',
+  },
+  /** 拖拽分隔符文本，`theme=s2-file` 时有效 */
+  draggingConj: {
+    type: String,
+    default: '',
+  },
+  /** 按钮位置，`theme=s2-file` 时有效，可选值：'top' | 'bottom' */
+  position: {
+    type: String as PropType<TdUploadProps['position']>,
+    default: 'bottom' as TdUploadProps['position'],
+    validator(val: TdUploadProps['position']): boolean {
+      if (!val) return true;
+      return ['top', 'bottom'].includes(val);
+    },
+  },
   /** 是否显示上传进度 */
   showUploadProgress: {
     type: Boolean,
@@ -165,13 +199,13 @@ export default {
       return ['default', 'success', 'warning', 'error'].includes(val);
     },
   },
-  /** 组件风格。custom 表示完全自定义风格；file 表示默认文件上传风格；file-input 表示输入框形式的文件上传；file-flow 表示文件批量上传；image 表示默认图片上传风格；image-flow 表示图片批量上传 */
+  /** 组件风格。custom 表示完全自定义风格；file 表示默认文件上传风格；file-input 表示输入框形式的文件上传；file-flow 表示文件批量上传；image 表示默认图片上传风格；image-flow 表示图片批量上传；s2-file 表示海外版文件上传风格 */
   theme: {
     type: String as PropType<TdUploadProps['theme']>,
     default: 'file' as TdUploadProps['theme'],
     validator(val: TdUploadProps['theme']): boolean {
       if (!val) return true;
-      return ['custom', 'file', 'file-input', 'file-flow', 'image', 'image-flow'].includes(val);
+      return ['custom', 'file', 'file-input', 'file-flow', 'image', 'image-flow', 's2-file'].includes(val);
     },
   },
   /** 组件下方文本提示，可以使用 `status` 定义文本 */

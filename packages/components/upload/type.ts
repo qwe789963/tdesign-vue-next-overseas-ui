@@ -155,10 +155,40 @@ export interface TdUploadProps<T extends UploadFile = UploadFile> {
    */
   showImageFileName?: boolean;
   /**
-   * 是否在文件列表中显示缩略图，`theme=file-flow` 时有效
+   * 是否在文件列表中显示缩略图，`theme=file-flow` 或 `theme=s2-file` 时有效
    * @default false
    */
   showThumbnail?: boolean;
+  /**
+   * 是否显示缩略图，`theme=s2-file` 时有效，可在单个文件中覆盖
+   * @default false
+   */
+  showThumb?: boolean;
+  /**
+   * 外部按钮文本，`theme=s2-file` 时有效
+   * @default ''
+   */
+  outerBtnText?: string;
+  /**
+   * 内部按钮文本，`theme=s2-file` 时有效
+   * @default ''
+   */
+  innerBtnText?: string;
+  /**
+   * 拖拽提示文本，`theme=s2-file` 时有效
+   * @default ''
+   */
+  draggingText?: string;
+  /**
+   * 拖拽分隔符文本，`theme=s2-file` 时有效
+   * @default ''
+   */
+  draggingConj?: string;
+  /**
+   * 按钮位置，`theme=s2-file` 时有效，可选值：'top' | 'bottom'
+   * @default 'bottom'
+   */
+  position?: 'top' | 'bottom';
   /**
    * 是否显示上传进度
    * @default true
@@ -173,10 +203,10 @@ export interface TdUploadProps<T extends UploadFile = UploadFile> {
    */
   status?: 'default' | 'success' | 'warning' | 'error';
   /**
-   * 组件风格。custom 表示完全自定义风格；file 表示默认文件上传风格；file-input 表示输入框形式的文件上传；file-flow 表示文件批量上传；image 表示默认图片上传风格；image-flow 表示图片批量上传
+   * 组件风格。custom 表示完全自定义风格；file 表示默认文件上传风格；file-input 表示输入框形式的文件上传；file-flow 表示文件批量上传；image 表示默认图片上传风格；image-flow 表示图片批量上传；s2-file 表示海外版文件上传风格
    * @default file
    */
-  theme?: 'custom' | 'file' | 'file-input' | 'file-flow' | 'image' | 'image-flow';
+  theme?: 'custom' | 'file' | 'file-input' | 'file-flow' | 'image' | 'image-flow' | 's2-file';
   /**
    * 组件下方文本提示，可以使用 `status` 定义文本
    */
@@ -358,6 +388,10 @@ export interface UploadFile extends PlainObject {
    * @default ''
    */
   url?: string;
+  /**
+   * 是否显示缩略图，`theme=s2-file` 时有效
+   */
+  showThumb?: boolean;
 }
 
 export type ResponseType = { error?: string; url?: string; status?: 'fail' | 'success'; files?: UploadFile[] } & Record<

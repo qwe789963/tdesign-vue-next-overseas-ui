@@ -1,0 +1,231 @@
+// S2 海外版上传组件样式
+@import './_var.less';
+
+// 普通文件上传样式
+.@{prefix}-upload__placeholder {
+  color: var(--td-text-color-placeholder);
+}
+
+.@{prefix}-upload__display-text--margin {
+  margin-bottom: var(--td-comp-margin-l);
+}
+
+.@{prefix}-upload__single-display-text {
+  color: var(--td-text-color-primary);
+  font: var(--td-font-body-medium);
+  display: flex;
+  align-items: center;
+
+  .@{prefix}-upload__flow-status .t-icon {
+    font-size: 16px;
+  }
+
+  > .t-icon {
+    &:first-child {
+      margin-right: 4px;
+      font-size: 20px;
+    }
+  }
+
+  > .t-icon-delete {
+    margin-left: auto;
+    cursor: pointer;
+  }
+}
+
+// S2 文件上传样式
+.@{prefix}-upload {
+  &__s2 {
+    display: flex;
+    max-width: @upload-s2-max-width;
+
+    &-empty {
+      font-size: @upload-s2-font-size;
+      box-sizing: border-box;
+      width: @upload-s2-empty-width;
+      height: @upload-s2-empty-height;
+      border-radius: var(--td-radius-default);
+      border: @upload-card-box-border;
+      background: @upload-s2-empty-background;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: @upload-s2-empty-color;
+      padding-top: 40px;
+
+      p {
+        line-height: 1;
+      }
+    }
+
+    &-or {
+      width: @upload-or-size;
+      height: @upload-or-size;
+      line-height: @upload-or-size;
+      border-radius: var(--td-radius-circle);
+      text-align: center;
+      background: var(--td-font-white-1);
+      margin: @upload-s2-or-margin;
+      overflow: hidden;
+    }
+
+    &-list {
+      font: @upload-card-font;
+      overflow: hidden;
+      padding: 0;
+      margin-bottom: @upload-s2-list-margin-bottom;
+      display: flex;
+      flex-direction: column;
+
+      & .@{prefix}-is-disabled {
+        & :hover {
+          cursor: not-allowed;
+        }
+      }
+    }
+
+    &-item {
+      box-sizing: border-box;
+      list-style: none;
+      border-bottom: @upload-s2-content-border;
+
+      &::after {
+        content: '';
+        display: block;
+      }
+
+      &.@{prefix}-is--error {
+        & .t-icon-warning_fill {
+          color: @upload-card-item-error-icon-warning-color;
+          margin-bottom: @upload-card-item-error-icon-warning-margin-bottom;
+        }
+
+        & .@{prefix}-upload__s2-status {
+          color: @upload-card-item-status-color;
+        }
+      }
+    }
+
+    &-file-icon {
+      margin-right: @upload-s2-icon-margin-right;
+
+      > .t-icon {
+        font-size: @upload-icon-size-large;
+        color: @upload-s2-icon-file-color;
+      }
+    }
+
+    // 成功状态 CheckIcon 颜色
+    & .t-icon-check {
+      color: var(--td-success-color);
+    }
+
+    &-mask-item {
+      margin-left: auto;
+
+      > .t-icon {
+        cursor: pointer;
+        font-size: @upload-icon-size;
+        color: @upload-s2-icon-del-color;
+      }
+    }
+
+    & .t-icon-loading {
+      margin-bottom: @upload-card-icon-loading-margin-bottom;
+    }
+
+    &-name {
+      padding-left: @upload-s2-name-padding;
+      margin-top: @upload-s2-name-margin-top;
+      color: @upload-s2-name-color;
+      margin-right: var(--td-comp-margin-s);
+      font-size: 14px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      p {
+        line-height: var(--td-font-size-base);
+      }
+
+      p.@{prefix}-upload__s2-filename {
+        color: @upload-s2-name-color;
+        margin-bottom: @upload-s2-filename-margin-bottom;
+      }
+
+      p.@{prefix}-upload__s2-tip {
+        margin-bottom: var(--td-pop-padding-m);
+      }
+
+      span {
+        margin-left: @upload-s2-small-margin-left;
+        color: @upload-s2-notice-color;
+      }
+    }
+
+    &-content {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+      box-sizing: border-box;
+      padding: @upload-s2-content-padding;
+      border-radius: @upload-card-img-wrap-border-radius;
+    }
+
+    &-status-wrap {
+      text-align: center;
+
+      > svg {
+        margin-bottom: @upload-card-status-wrap-svg-margin-bottom;
+      }
+
+      .t-icon,
+      .@{prefix}-loading {
+        font-size: @upload-icon-size-large;
+      }
+    }
+
+    &-mask {
+      color: @upload-card-mask-text-color;
+      will-change: transform;
+      border-radius: var(--td-radius-small);
+
+      &:hover &-img {
+        opacity: 1;
+        transition: opacity 0.2s ease-in-out;
+      }
+    }
+
+    &-image {
+      height: @upload-s2-img-height;
+      width: @upload-s2-img-width;
+      border-radius: var(--td-radius-small);
+    }
+
+    &-mask-img {
+      height: @upload-s2-img-height;
+      width: @upload-s2-img-width;
+      background-color: @upload-card-mask-bg-color;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+
+      > .t-icon {
+        cursor: pointer;
+        font-size: @upload-icon-size;
+        color: @upload-icon-color;
+      }
+    }
+
+    &-status {
+      color: @upload-card-status-color;
+      font: @upload-card-status-font;
+    }
+  }
+}
