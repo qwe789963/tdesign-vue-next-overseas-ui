@@ -4,15 +4,15 @@
 
 ## 功能概述
 
-将 `tdesign-vue-overseas`（Vue 2）的 Select 组件海外版样式和交互特性迁移到 `tdesign-vue-next-overseas`（Vue 3）。
+将 `s2-overseas-ui`（Vue 2）的 Select 组件海外版样式和交互特性迁移到 `tdesign-vue-next-overseas`（Vue 3）。
 
 ## 关键文件
 
 ### 源文件（Vue 2 海外版 - 参考）
-- `tdesign-vue-overseas/packages/overseas/src/select/select.tsx` - 组件主文件
-- `tdesign-vue-overseas/packages/overseas/src/select/props.ts` - Props 定义
-- `tdesign-vue-overseas/packages/overseas/src/select/style/_select.less` - 主样式
-- `tdesign-vue-overseas/packages/overseas/src/select/style/_var.less` - 样式变量
+- `s2-overseas-ui/packages/overseas/src/select/select.tsx` - 组件主文件
+- `s2-overseas-ui/packages/overseas/src/select/props.ts` - Props 定义
+- `s2-overseas-ui/packages/overseas/src/select/style/_select.less` - 主样式
+- `s2-overseas-ui/packages/overseas/src/select/style/_var.less` - 样式变量
 
 ### 目标文件（Vue 3 - 已修改）
 

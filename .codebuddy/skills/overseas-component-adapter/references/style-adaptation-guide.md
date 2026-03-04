@@ -19,7 +19,7 @@
 
 开始之前，准备以下资源：
 1. **根目录海外样式**（`overseas/style/`）— 优先检查是否已有可复用的变量和 token
-2. Vue 2 海外组件样式（如果存在于 `tdesign-vue-overseas/`）
+2. Vue 2 海外组件样式（如果存在于 `s2-overseas-ui/`）
 3. 当前 Vue 3 组件的样式目录
 4. 全局海外变量文件（`overseas/style/_variables.less`）
 

@@ -203,11 +203,11 @@ setup(props) {
 
 ### 新增 Props
 
-1. **检查 Vue 2 海外版示例**：在 `tdesign-vue-overseas/` 中查找该组件是否有 example/demo 使用了新增的 prop
+1. **检查 Vue 2 海外版示例**：在 `s2-overseas-ui/` 中查找该组件是否有 example/demo 使用了新增的 prop
 2. **有示例** → 询问用户是否在当前项目中增加对应 example
    ```
    ❓ **新增 Props 示例确认**：
-   - `propA`（用途）— Vue 2 海外版有示例：`tdesign-vue-overseas/.../xxx-demo.vue`
+   - `propA`（用途）— Vue 2 海外版有示例：`s2-overseas-ui/.../xxx-demo.vue`
    是否在当前项目中增加对应 example？
    ```
 3. **无示例** → 忽略，不询问

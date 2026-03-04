@@ -14,7 +14,7 @@
 ### 1.1 Vue 2 海外版组件结构
 
 ```
-tdesign-vue-overseas/packages/overseas/src/select/
+s2-overseas-ui/packages/overseas/src/select/
 ├── __tests__/           # 测试文件
 ├── _example/            # 示例文件
 ├── hooks/               # 自定义 Hooks

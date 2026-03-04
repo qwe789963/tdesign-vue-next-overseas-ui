@@ -37,7 +37,7 @@ tdesign-vue-next-s2/                          # Vue 3 主仓库（当前项目�
 │       │           └── _select.less
 │       └── ...（其他组件）
 │
-└── tdesign-vue-overseas/                      # Vue 2 海外版独立仓库（参考源）
+└── s2-overseas-ui/                      # Vue 2 海外版独立仓库（参考源）
     └── packages/
         └── overseas/
             └── src/                           # Vue 2 组件源码（80+ 组件）
@@ -132,7 +132,7 @@ import '../../../overseas/style/theme/_index.less';
 
 ## Vue 2 海外版库结构
 
-Vue 2 海外版库（`tdesign-vue-overseas/`）是一个独立的 monorepo：
+Vue 2 海外版库（`s2-overseas-ui/`）是一个独立的 monorepo：
 
 - **包名**：`@tencent/s2-overseas-ui`
 - **Vue 版本**：Vue 2.6 + `@vue/composition-api`

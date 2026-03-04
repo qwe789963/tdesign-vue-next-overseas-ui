@@ -19,7 +19,7 @@
 
 ### 目标
 
-将 `tdesign-vue-overseas`（Vue 2）项目中的 Select 组件海外版样式和交互特性迁移到当前项目（`tdesign-vue-next-overseas`，Vue 3），确保：
+将 `s2-overseas-ui`（Vue 2）项目中的 Select 组件海外版样式和交互特性迁移到当前项目（`tdesign-vue-next-overseas`，Vue 3），确保：
 
 1. **样式一致性**：迁移后的组件在视觉上与 Vue 2 版本完全一致
 2. **交互一致性**：所有交互效果（焦点、hover、按下状态等）与原版相同
@@ -67,10 +67,10 @@
 
 | 用途 | Vue 2 海外版位置 | Vue 3 目标位置 |
 |------|-----------------|----------------|
-| 组件主文件 | `tdesign-vue-overseas/.../select/select.tsx` | `packages/components/select/select.tsx` |
-| Props 定义 | `tdesign-vue-overseas/.../select/props.ts` | `packages/components/select/props.ts` |
-| 主样式 | `tdesign-vue-overseas/.../select/style/_select.less` | `packages/components/select/style/overseas/_select.less` |
-| 样式变量 | `tdesign-vue-overseas/.../select/style/_var.less` | `packages/components/select/style/overseas/_var.less` |
+| 组件主文件 | `s2-overseas-ui/.../select/select.tsx` | `packages/components/select/select.tsx` |
+| Props 定义 | `s2-overseas-ui/.../select/props.ts` | `packages/components/select/props.ts` |
+| 主样式 | `s2-overseas-ui/.../select/style/_select.less` | `packages/components/select/style/overseas/_select.less` |
+| 样式变量 | `s2-overseas-ui/.../select/style/_var.less` | `packages/components/select/style/overseas/_var.less` |
 | SelectInput | - | `packages/components/select-input/` |
 | TagInput | - | `packages/components/tag-input/tag-input.tsx` |
 

@@ -5,7 +5,7 @@ description: "MUST be loaded when ANY of these conditions is true: (1) The user 
 
 # 海外组件适配器
 
-将 TDesign Vue 3 组件适配为海外 UI 样式。通过迁移 Vue 2 海外版 TDesign 组件库（`tdesign-vue-overseas/`）的样式和逻辑，遵循项目已建立的三层适配架构进行改造。
+将 TDesign Vue 3 组件适配为海外 UI 样式。通过迁移 Vue 2 海外版 TDesign 组件库（`s2-overseas-ui/`）的样式和逻辑，遵循项目已建立的三层适配架构进行改造。
 
 ## 触发条件
 
@@ -38,7 +38,7 @@ description: "MUST be loaded when ANY of these conditions is true: (1) The user 
 
 ### 步骤 1：研究 Vue 2 海外版实现
 
-1. **定位 Vue 2 源码**：在 `tdesign-vue-overseas/packages/overseas/src/<组件>/` 下找到对应组件
+1. **定位 Vue 2 源码**：在 `s2-overseas-ui/packages/overseas/src/<组件>/` 下找到对应组件
 2. **阅读 Vue 2 组件源码**（`.tsx` 文件），了解：
    - 海外专属 Props（如 `suffixIconOs`、`singleUseTag`、`optionWarp`）
    - 海外专属 CSS 类名（如 `.t-select--overseas`、`.t-<组件>--overseas`）
@@ -181,13 +181,13 @@ description: "MUST be loaded when ANY of these conditions is true: (1) The user 
 
 #### 新增 Props 的 Example 处理
 
-1. **检查 Vue 2 海外版示例**：在 `tdesign-vue-overseas/` 中查找该组件是否有对应的 example/demo 使用了新增的 prop
+1. **检查 Vue 2 海外版示例**：在 `s2-overseas-ui/` 中查找该组件是否有对应的 example/demo 使用了新增的 prop
 2. **有示例** → 询问用户是否在当前项目中增加对应示例：
    ```
    ❓ **新增 Props 示例确认**：
    本次为 `<组件>` 组件新增了以下 Props：
-   - `propA`（用途说明）— 在 Vue 2 海外版中有示例：`tdesign-vue-overseas/.../xxx-demo.vue`
-   - `propB`（用途说明）— 在 Vue 2 海外版中有示例：`tdesign-vue-overseas/.../yyy-demo.vue`
+   - `propA`（用途说明）— 在 Vue 2 海外版中有示例：`s2-overseas-ui/.../xxx-demo.vue`
+   - `propB`（用途说明）— 在 Vue 2 海外版中有示例：`s2-overseas-ui/.../yyy-demo.vue`
    
    是否需要在当前项目中增加对应的 example 示例？
    示例文件位置：`packages/components/<组件>/_example/`

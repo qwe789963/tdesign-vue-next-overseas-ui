@@ -35,8 +35,8 @@
 9. **快速跳转文案格式变化**：当前格式"跳至 [1] / 3 页"，目标格式"[1] of 6 pages"（去掉"跳至"前缀，后缀改为"of X pages"）
 10. **分页大小选择器位置和格式**：当前格式"10 条/页"位于左侧统计旁，目标选择器显示为纯数字（如"20"），文字标签改为"Items per page"前置于选择器左侧
 
-**分页内 Select 下拉适配（参考 tdesign-vue-overseas）**：
-11. **新增 pageSizeDsc prop**：参照 `tdesign-vue-overseas` 实现 `pageSizeDsc` 属性，用于在选择器左侧显示"Items per page"等每页条数说明文字
+**分页内 Select 下拉适配（参考 s2-overseas-ui）**：
+11. **新增 pageSizeDsc prop**：参照 `s2-overseas-ui` 实现 `pageSizeDsc` 属性，用于在选择器左侧显示"Items per page"等每页条数说明文字
 12. **分页内 Select 局部样式调整**：由于之前对 Select 组件的海外改造影响了分页中的下拉选择器，需在 Pagination 作用域内局部调整 Select 的表现：
     - 默认宽度缩小（约 70px），仅显示纯数字
     - 下拉图标改为小型下拉箭头（`caret-down-small`），不使用默认的列表图标
@@ -153,7 +153,7 @@
 - [x] `pageSizeDsc` 标签使用 `page-size-dsc` CSS 类名，`font-weight: bold`
 - [x] 选择器宽度 `70px`，设置 `autoWidth: true`
 - [x] 切换分页大小功能不受影响
-- [x] 参考 `tdesign-vue-overseas` 的实现方式
+- [x] 参考 `s2-overseas-ui` 的实现方式
 
 #### FR-009: 适配分页跳转区域样式
 **描述**: 调整跳转输入框和标签区域的样式
@@ -421,7 +421,7 @@
 ### 参考资料
 - 海外版目标截图：用户提供的目标 UI 截图
 - 当前版本 UI：用户提供的当前 UI 截图
-- **tdesign-vue-overseas 分页实现**：`tdesign-vue-overseas/packages/overseas/src/pagination/` — `pageSizeDsc` prop 和 Select 局部调整的参考实现
+- **s2-overseas-ui 分页实现**：`s2-overseas-ui/packages/overseas/src/pagination/` — `pageSizeDsc` prop 和 Select 局部调整的参考实现
 - 现有海外适配组件：`specs/003-button-overseas-adaptation/`
 - Pagination 组件源码：`packages/components/pagination/`
 - Pagination 样式源码：`packages/common/style/web/components/pagination/`
@@ -431,7 +431,7 @@
 | 版本 | 日期 | 变更说明 | 作者 |
 |------|------|----------|------|
 | 1.0.0 | 2026-03-03 | 实现完成：更新所有 FR 验收标准为已完成，补充实际实现细节（CSS 变量具体值、选择器写法、totalPage 渲染插槽、省略号模式禁用、PaginationMini padding 修复），状态改为 Completed | AI Assistant |
-| 0.4.0 | 2026-03-02 | 补充：pageSizeDsc prop、分页内 Select 局部样式调整（宽度、图标、纯文本显示），参考 tdesign-vue-overseas | AI Assistant |
+| 0.4.0 | 2026-03-02 | 补充：pageSizeDsc prop、分页内 Select 局部样式调整（宽度、图标、纯文本显示），参考 s2-overseas-ui | AI Assistant |
 | 0.3.0 | 2026-03-02 | 更正：项目为纯海外版本，移除国内版兼容约束，增加组件间影响关注点 | AI Assistant |
 | 0.2.0 | 2026-03-02 | 补充：首页/末页图标替换、按钮尺寸缩小、总量统计和跳转文案格式变化、分页大小选择器格式变化 | AI Assistant |
 | 0.1.0 | 2026-03-02 | 初始版本 | AI Assistant |

@@ -135,6 +135,6 @@ pnpm run test:vue
 | 数据模型 | `specs/007-pagination-overseas-adaptation/data-model.md` |
 | CSS 变量契约 | `specs/007-pagination-overseas-adaptation/contracts/css-variables.md` |
 | Props 契约 | `specs/007-pagination-overseas-adaptation/contracts/pagination-props.ts` |
-| Vue2 海外参考 | `tdesign-vue-overseas/packages/overseas/src/pagination/` |
+| Vue2 海外参考 | `s2-overseas-ui/packages/overseas/src/pagination/` |
 | 海外全局 Token | `overseas/style/_variables.less` |
 | 现有 Pagination 源码 | `packages/components/pagination/` |

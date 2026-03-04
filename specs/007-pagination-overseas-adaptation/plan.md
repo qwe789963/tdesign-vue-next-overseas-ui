@@ -21,7 +21,7 @@
 ## 🎯 实施概览
 
 ### 目标
-将 TDesign Vue Next 的 Pagination 分页组件调整为海外样式，包括样式调整和组件逻辑修改。参照 `tdesign-vue-overseas`（Vue 2 版本）的分页实现进行迁移适配。本项目为纯海外版本，所有修改直接应用于组件本身，无需兼容国内版本。
+将 TDesign Vue Next 的 Pagination 分页组件调整为海外样式，包括样式调整和组件逻辑修改。参照 `s2-overseas-ui`（Vue 2 版本）的分页实现进行迁移适配。本项目为纯海外版本，所有修改直接应用于组件本身，无需兼容国内版本。
 
 ### 范围
 **包含**:
@@ -67,15 +67,15 @@
 
 #### 决策 3: 国际化处理 - 硬编码英文文案
 **决定**: 总量统计和跳转文案直接使用英文硬编码（如 `items`、`of`、`pages`），不通过国际化 key  
-**理由**: 项目为纯海外版本，无需国内版本兼容；参照 `tdesign-vue-overseas` 的实现方式，直接硬编码英文文案
+**理由**: 项目为纯海外版本，无需国内版本兼容；参照 `s2-overseas-ui` 的实现方式，直接硬编码英文文案
 
 #### 决策 4: Select 局部调整 - selectProps 透传
 **决定**: 通过 `selectProps` prop 透传默认属性（`singleUseTag: false`、`suffixIconOs: 'caret-down-small'`），而非全局 CSS 覆盖  
-**理由**: 确保分页内 Select 的调整不影响全局 Select 组件；与 `tdesign-vue-overseas` 实现方式一致
+**理由**: 确保分页内 Select 的调整不影响全局 Select 组件；与 `s2-overseas-ui` 实现方式一致
 
 #### 决策 5: pageSizeDsc prop - 新增字符串属性
 **决定**: 在 `type.ts` 和 `props.ts` 中新增 `pageSizeDsc` 字符串属性  
-**理由**: 参照 `tdesign-vue-overseas` 的实现，该 prop 用于在 Select 左侧渲染 "Items per page" 等描述文字
+**理由**: 参照 `s2-overseas-ui` 的实现，该 prop 用于在 Select 左侧渲染 "Items per page" 等描述文字
 
 ---
 
@@ -84,7 +84,7 @@
 ### 阶段 0: 研究 (0.5 天)
 
 **研究任务**:
-1. **R1: Vue2 海外分页实现分析**: 阅读 `tdesign-vue-overseas/packages/overseas/src/pagination/` 源码，确认所有海外差异点
+1. **R1: Vue2 海外分页实现分析**: 阅读 `s2-overseas-ui/packages/overseas/src/pagination/` 源码，确认所有海外差异点
 2. **R2: 国际化 key 可用性**: 确认 `globalConfig.value.total` 和 `globalConfig.value.totalPages` 是否支持参数化格式
 3. **R3: Select selectProps 透传机制**: 确认 `singleUseTag` 和 `suffixIconOs` 属性在当前 Select 组件中是否可用
 4. **R4: 海外全局 Token 可用性**: 检查 `overseas/style/_variables.less` 中的 token 是否满足 Pagination 的样式需求
@@ -157,7 +157,7 @@ mkdir -p packages/components/pagination/style/overseas
 #### 任务 2.2: 迁移 CSS 变量 (1h)
 **文件**: `style/overseas/_var.less`
 
-参照 `tdesign-vue-overseas` 的 `_var.less`，主要差异变量：
+参照 `s2-overseas-ui` 的 `_var.less`，主要差异变量：
 - 按钮高度: `@comp-size-s` (28px) 替代 `@comp-size-m` (32px)
 - 输入框宽度: `70px`
 - 间距: 更小的 margin 值

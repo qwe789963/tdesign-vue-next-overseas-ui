@@ -1,13 +1,12 @@
 import { computed, defineComponent, toRefs, PropType } from 'vue';
 import {
   BrowseIcon as TdBrowseIcon,
-  DeleteIcon as TdDeleteIcon,
   CheckCircleFilledIcon as TdCheckCircleFilledIcon,
   ErrorCircleFilledIcon as TdErrorCircleFilledIcon,
   TimeFilledIcon as TdTimeFilledIcon,
   CheckIcon as TdCheckIcon,
-  FileIcon as TdFileIcon,
 } from 'tdesign-icons-vue-next';
+import { FileIcon as TdFileIcon, DeleteIcon as TdDeleteIcon } from '../../../../overseas/icons';
 import { useGlobalIcon, useTNodeJSX } from '@tdesign/shared-hooks';
 import ImageViewer from '../../image-viewer';
 import { CommonDisplayFileProps } from '../types';

@@ -67,7 +67,7 @@ pnpm run dev:vue
 |----------|----------|
 | Alert (`packages/components/alert/`) | 组件整体结构、ConfigProvider 消费模式、海外样式架构 |
 | Button (`packages/components/button/`) | 海外样式入口切换方式 |
-| Vue 2 Copyright (`tdesign-vue-overseas/.../copyright/`) | 原始业务逻辑和样式定义 |
+| Vue 2 Copyright (`s2-overseas-ui/.../copyright/`) | 原始业务逻辑和样式定义 |
 
 ## 注意事项
 

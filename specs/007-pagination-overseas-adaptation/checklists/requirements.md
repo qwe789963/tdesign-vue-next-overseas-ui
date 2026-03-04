@@ -59,12 +59,12 @@
 
 ## v0.4.0 补充需求覆盖
 
-- [x] FR-008 更新：新增 `pageSizeDsc` prop，参照 tdesign-vue-overseas 实现
+- [x] FR-008 更新：新增 `pageSizeDsc` prop，参照 s2-overseas-ui 实现
 - [x] FR-011 更新：分页内 Select 局部样式调整（宽度缩小、小型箭头图标、纯文本非 Tag、禁用清除）
 - [x] 新增场景 5：验证分页 Select 不影响全局 Select
 - [x] 场景 4 更新：增加 Select 下拉展开效果验证
 - [x] 风险评估：增加"分页内 Select 局部调整泄露到全局"风险项
-- [x] 参考资料：增加 tdesign-vue-overseas 参考链接
+- [x] 参考资料：增加 s2-overseas-ui 参考链接
 
 ## v0.3.0 更正
 

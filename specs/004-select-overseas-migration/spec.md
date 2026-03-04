@@ -12,12 +12,12 @@
 
 ### 1.1 目标
 
-将 `tdesign-vue-overseas`（Vue 2）项目中的 Select（下拉选择器）组件的海外版样式和交互特性迁移到当前项目（`tdesign-vue-next-overseas`，Vue 3），确保迁移后的组件在样式、功能和交互效果上与 Vue 2 版本**完全一致**。
+将 `s2-overseas-ui`（Vue 2）项目中的 Select（下拉选择器）组件的海外版样式和交互特性迁移到当前项目（`tdesign-vue-next-overseas`，Vue 3），确保迁移后的组件在样式、功能和交互效果上与 Vue 2 版本**完全一致**。
 
 ### 1.2 背景
 
 - 当前项目（Vue 3）的 Select 组件基于 TDesign 官方组件库，缺少海外版特有的样式和交互特性
-- `tdesign-vue-overseas`（Vue 2）版本包含海外业务定制的样式和属性，如：
+- `s2-overseas-ui`（Vue 2）版本包含海外业务定制的样式和属性，如：
   - 自定义后缀图标（`suffixIconOs`）
   - 单选 Tag 标签样式（`singleUseTag`）
   - 单选前置 Label 样式（`singleUseLabel`）
@@ -338,7 +338,7 @@
 - `packages/shared/hooks/` - 共享 Hooks（useCommonClassName）
 
 ### 6.2 外部依赖
-- `tdesign-vue-overseas` - Vue 2 海外版源码（参考）
+- `s2-overseas-ui` - Vue 2 海外版源码（参考）
 - `tdesign-icons-vue-next` - 图标库（BulletpointIcon）
 
 ---
@@ -356,8 +356,8 @@
 ### 8.1 参考文件
 
 **Vue 2 海外版源码位置**:
-- 组件：`tdesign-vue-overseas/packages/overseas/src/select/`
-- 样式：`tdesign-vue-overseas/packages/overseas/src/select/style/`
+- 组件：`s2-overseas-ui/packages/overseas/src/select/`
+- 样式：`s2-overseas-ui/packages/overseas/src/select/style/`
 
 **Vue 3 目标位置**:
 - 组件：`packages/components/select/`

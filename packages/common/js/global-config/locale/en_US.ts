@@ -148,7 +148,7 @@ export default {
       uploadingText: 'Uploading',
       waitingText: 'Waiting',
       failText: 'Failed',
-      successText: 'Success',
+      successText: 'Successfully Uploaded',
     },
   },
   form: {

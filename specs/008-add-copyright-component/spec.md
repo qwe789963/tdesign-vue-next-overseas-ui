@@ -116,7 +116,7 @@
 
 ### 参考资料
 
-- Vue 2 海外版 copyright 组件实现：`tdesign-vue-overseas/packages/overseas/src/copyright/`
+- Vue 2 海外版 copyright 组件实现：`s2-overseas-ui/packages/overseas/src/copyright/`
 - Alert 组件海外适配实现（样式架构参考）：`packages/components/alert/`
 - Button 组件海外适配实现（样式架构参考）：`packages/components/button/`
 

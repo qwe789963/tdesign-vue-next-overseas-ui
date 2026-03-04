@@ -2,31 +2,51 @@
 description: 
 alwaysApply: true
 enabled: true
-updatedAt: 2026-03-04T02:41:35.764Z
+updatedAt: 2026-03-04T09:19:45.877Z
 provider: 
 ---
 
-# speckit.implement 执行时必须检查 Skill 触发条件
+# 海外组件 Skill 触发条件（overseas-component-adapter）
 
-## 规则
+## 规则优先级：最高
 
-执行 `speckit.implement` 或类似实现命令时，在读取 `implementation/tasks.md` 文件**之后、开始编码之前**，**必须**执行以下检查流程：
+本规则适用于**所有对话场景**，不仅限于 `speckit.implement`。
 
-### 1. 扫描关键字
+## 触发条件（满足任意一项即触发）
 
-检查 `tasks.md` 和 `spec.md` 的标题、任务描述、故事名称中是否包含以下关键字：
+### 1. 用户消息关键字扫描
 
-- 海外、overseas、海外样式、overseas style、海外组件、overseas adaptation、overseas UI
+每次收到用户新消息时，**首先**扫描消息内容是否包含以下关键字（不区分大小写）：
 
-### 2. 检查文件路径
+- 海外、overseas、海外样式、overseas style、海外组件、overseas component
+- overseas adaptation、overseas UI、海外适配、海外版
 
-检查任务中是否涉及创建或修改以下目录的文件：
+### 2. Spec/Tasks 文件关键字扫描
 
-- `style/overseas/`
-- `overseas/` 全局样式目录
+执行 `speckit.implement` 或类似实现命令时，在读取 `implementation/tasks.md` 和 `spec.md` 文件**之后**，检查标题、任务描述、故事名称中是否包含上述关键字。
 
-### 3. 触发 Skill
+### 3. 文件路径匹配
 
-若上述任意一项匹配，**必须立即**通过 `use_skill` 工具加载 `overseas-component-adapter` skill，**然后再**继续执行实现任务。
+任务涉及创建或修改以下目录的文件：
 
-**禁止**在匹配条件满足时跳过 skill 加载直接编码。
+- `style/overseas/` 目录
+- `overseas/` 海外样式目录
+- `packages\components` 组件目录
+
+## 执行流程
+
+1. **第一步（最先执行）**：检测到任意触发条件 → **立即**调用 `use_skill("overseas-component-adapter")`
+2. **第二步**：等待 skill 加载完成
+3. **第三步**：按照 skill 定义的工作流程进行后续操作（分析、编码等）
+
+## 禁止事项
+
+- ❌ **禁止**在未加载 skill 的情况下对海外组件进行任何代码分析或输出分析报告
+- ❌ **禁止**在未加载 skill 的情况下对海外组件进行任何代码修改
+- ❌ **禁止**以"先分析再加载"为由延迟 skill 加载
+- ❌ **禁止**在匹配条件满足时跳过 skill 加载直接编码
+
+## 注意事项
+
+- 若 skill 在当前对话中已加载，则无需重复加载
+- 此规则优先于其他工作流程规则执行

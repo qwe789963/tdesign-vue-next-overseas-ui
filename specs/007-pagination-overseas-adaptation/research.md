@@ -9,11 +9,11 @@
 ## R1: Vue2 海外分页实现分析
 
 ### 研究内容
-阅读 `tdesign-vue-overseas/packages/overseas/src/pagination/` 源码，确认所有海外差异点。
+阅读 `s2-overseas-ui/packages/overseas/src/pagination/` 源码，确认所有海外差异点。
 
 ### 发现
 
-**参考文件**: `tdesign-vue-overseas/packages/overseas/src/pagination/pagination.tsx`
+**参考文件**: `s2-overseas-ui/packages/overseas/src/pagination/pagination.tsx`
 
 海外版 Vue2 分页组件与标准版的核心差异如下：
 
